@@ -78,184 +78,163 @@ function SuccessContent() {
   const isPaid = liveOrder?.paymentStatus === 'paid'
 
   return (
-    <div className="bg-[#FBF6F8] min-h-[85vh] py-10 sm:py-16 text-[#2B1822]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="bg-[#FBF6F8] min-h-[75vh] py-4 sm:py-6 text-[#2B1822] flex items-center justify-center">
+      <div className="max-w-lg w-full mx-auto px-4 sm:px-6">
 
-        {/* Main Card */}
-        <div className="bg-white border border-[#E8C4D4]/70 rounded-3xl p-6 sm:p-10 shadow-sm text-center space-y-6">
+        {/* Main Compact Card */}
+        <div className="bg-white border border-[#E8C4D4]/70 rounded-3xl p-5 sm:p-6 shadow-lg shadow-[#6B2D5C]/5 text-center space-y-4">
 
-          {/* Header Icon */}
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-full flex items-center justify-center mx-auto shadow-xs">
-            <WhatsAppIcon className="w-9 h-9 sm:w-11 sm:h-11 fill-current" />
-          </div>
-
+          {/* Header Icon & Status Pill */}
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-50 text-amber-900 border border-amber-200 font-sans">
-              <Clock className="w-3.5 h-3.5" />
+            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 border border-emerald-200/80 rounded-full flex items-center justify-center mx-auto shadow-xs">
+              <WhatsAppIcon className="w-6 h-6 fill-current" />
+            </div>
+
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-900 border border-amber-200/70 font-sans">
+              <Clock className="w-3 h-3 text-amber-700" />
               <span>Awaiting WhatsApp Confirmation</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
+            <h1 className="text-lg sm:text-xl font-sans font-bold text-[#2B1822] tracking-tight">
               Order Initiated Successfully!
             </h1>
 
-            <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto font-sans leading-relaxed">
-              Your order details have been securely recorded. Please send the pre-filled message on WhatsApp so our concierge team can verify stock and share payment instructions.
+            <p className="text-[11px] sm:text-xs text-[#2B1822]/70 max-w-sm mx-auto font-sans leading-relaxed">
+              Your order has been recorded. Tap below to send details on WhatsApp so our concierge team can verify stock and share payment instructions.
             </p>
           </div>
 
           {/* Primary Action Button: Re-open WhatsApp */}
-          <div className="pt-2">
+          <div>
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-sm tracking-wider uppercase rounded-full shadow-lg hover:shadow-xl transition-all cursor-pointer font-sans active:scale-[0.99]"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs tracking-wider uppercase rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer font-sans active:scale-[0.98]"
             >
-              <WhatsAppIcon className="w-5 h-5 fill-current" />
+              <WhatsAppIcon className="w-4 h-4 fill-current" />
               <span>Send Order on WhatsApp</span>
-              <ExternalLink className="w-4 h-4 ml-1 opacity-80" />
+              <ExternalLink className="w-3.5 h-3.5 ml-0.5 opacity-90" />
             </a>
-            <p className="text-[11px] text-stone-500 font-sans mt-2">
-              Opens WhatsApp Web or mobile app. Tap &ldquo;Send&rdquo; inside WhatsApp to hand off your order.
+            <p className="text-[10px] text-stone-400 font-sans mt-1">
+              Opens WhatsApp Web / Mobile app with your order pre-filled.
             </p>
           </div>
 
-          {/* Order Details Summary Box */}
-          <div className="bg-[#FBF6F8] border border-[#E8C4D4]/70 rounded-2xl p-5 sm:p-6 text-left space-y-3.5 font-sans max-w-xl mx-auto">
-            <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-              <span className="text-stone-500">Order Reference</span>
-              <strong className="font-mono text-[#6B2D5C] text-sm font-bold tracking-wide">
-                #{orderId}
-              </strong>
-            </div>
-
-            {orderSnapshot?.customerName && (
-              <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-                <span className="text-stone-500">Customer Name</span>
-                <span className="font-semibold text-[#2B1822]">{orderSnapshot.customerName}</span>
+          {/* Compact Order Details Box */}
+          <div className="bg-[#FDFBFC] border border-[#E8C4D4]/60 rounded-2xl p-3.5 sm:p-4 text-left font-sans space-y-2">
+            
+            {/* Header row: Order Ref & Total */}
+            <div className="flex justify-between items-center pb-2 border-b border-[#E8C4D4]/50">
+              <div>
+                <span className="text-[10px] uppercase tracking-wider text-stone-400 font-bold block">Order Reference</span>
+                <strong className="font-mono text-[#6B2D5C] text-sm font-extrabold tracking-wide">
+                  #{orderId}
+                </strong>
               </div>
-            )}
-
-            {orderSnapshot?.customerPhone && (
-              <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-                <span className="text-stone-500">WhatsApp Mobile</span>
-                <span className="font-semibold text-[#2B1822]">+91 {orderSnapshot.customerPhone}</span>
+              <div className="text-right">
+                <span className="text-[10px] uppercase tracking-wider text-stone-400 font-bold block">Total Payable</span>
+                <span className="font-bold text-[#6B2D5C] text-base">
+                  {orderSnapshot?.currencySymbol || '₹'}
+                  {Number(orderSnapshot?.grandTotal ?? liveOrder?.grandTotal ?? 0).toLocaleString('en-IN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
-            )}
-
-            <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-              <span className="text-stone-500">Payment Method</span>
-              <span className="font-semibold text-[#2B1822]">Manual UPI / Bank Transfer</span>
             </div>
 
-            <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-              <span className="text-stone-500">Total Payable</span>
-              <span className="font-bold text-[#6B2D5C] text-sm">
-                {orderSnapshot?.currencySymbol || '₹'}
-                {Number(orderSnapshot?.grandTotal ?? liveOrder?.grandTotal ?? 0).toLocaleString('en-IN', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
-            </div>
+            {/* Details 2-Column Grid */}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs pt-0.5">
+              {orderSnapshot?.customerName && (
+                <div>
+                  <span className="text-[11px] text-stone-400 block">Customer</span>
+                  <span className="font-semibold text-[#2B1822] truncate block">{orderSnapshot.customerName}</span>
+                </div>
+              )}
 
-            <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
-              <span className="text-stone-500">Payment Status</span>
-              <span className={`inline-flex items-center gap-1 font-bold text-xs px-2.5 py-0.5 rounded-full ${isPaid
-                  ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-amber-100 text-amber-900'
+              {orderSnapshot?.customerPhone && (
+                <div>
+                  <span className="text-[11px] text-stone-400 block">WhatsApp Mobile</span>
+                  <span className="font-semibold text-[#2B1822] block">+91 {orderSnapshot.customerPhone}</span>
+                </div>
+              )}
+
+              <div>
+                <span className="text-[11px] text-stone-400 block">Payment Mode</span>
+                <span className="font-semibold text-[#2B1822] block">Manual UPI / Bank</span>
+              </div>
+
+              <div>
+                <span className="text-[11px] text-stone-400 block">Payment Status</span>
+                <span className={`inline-flex items-center gap-1 font-bold text-[10px] px-2 py-0.5 rounded-full mt-0.5 ${
+                  isPaid
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-amber-100 text-amber-900'
                 }`}>
-                {isPaid ? 'Paid & Verified' : 'Awaiting Payment'}
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center text-xs">
-              <span className="text-stone-500">Order Status</span>
-              <span className="font-bold text-[#6B2D5C] capitalize">
-                {orderStatus.replace(/_/g, ' ')}
-              </span>
+                  {isPaid ? 'Paid & Verified' : 'Awaiting Payment'}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Phase 7: Step-by-Step Manual Payment Workflow Guide */}
-          <div className="text-left space-y-4 pt-4 border-t border-[#E8C4D4]/60">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#6B2D5C] font-sans flex items-center gap-1.5">
-              <span>Next Steps: How Your Order Will Be Processed</span>
-            </h3>
+          {/* Compact 4-Step Pipeline */}
+          <div className="text-left space-y-2 pt-2 border-t border-[#E8C4D4]/50">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B2D5C] font-sans block">
+              What Happens Next:
+            </span>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans">
-
-              <div className="p-3.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
-                <div className="flex items-center gap-2 font-bold text-[#2B1822]">
-                  <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center text-[10px]">1</span>
-                  <span>Review on WhatsApp</span>
-                </div>
-                <p className="text-stone-600 text-[11px] leading-relaxed">
-                  Our official team checks availability in our Ayurvedic dispensary and confirms shipping charges.
-                </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-sans">
+              <div className="p-2.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
+                <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white inline-flex items-center justify-center text-[10px] font-bold mx-auto">1</span>
+                <p className="text-[11px] font-bold text-[#2B1822] leading-tight">Send on WA</p>
+                <p className="text-[10px] text-stone-500 leading-tight">Verify stock</p>
               </div>
 
-              <div className="p-3.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
-                <div className="flex items-center gap-2 font-bold text-[#2B1822]">
-                  <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center text-[10px]">2</span>
-                  <span>Official UPI / QR Shared</span>
-                </div>
-                <p className="text-stone-600 text-[11px] leading-relaxed">
-                  We share our verified business UPI ID or payment QR code directly in the WhatsApp chat.
-                </p>
+              <div className="p-2.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
+                <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white inline-flex items-center justify-center text-[10px] font-bold mx-auto">2</span>
+                <p className="text-[11px] font-bold text-[#2B1822] leading-tight">UPI / QR</p>
+                <p className="text-[10px] text-stone-500 leading-tight">Shared in chat</p>
               </div>
 
-              <div className="p-3.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
-                <div className="flex items-center gap-2 font-bold text-[#2B1822]">
-                  <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center text-[10px]">3</span>
-                  <span>Complete Payment &amp; Verify</span>
-                </div>
-                <p className="text-stone-600 text-[11px] leading-relaxed">
-                  Pay via GPay, PhonePe, Paytm, or NetBanking. Share the reference / UTR on WhatsApp for verification.
-                </p>
+              <div className="p-2.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
+                <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white inline-flex items-center justify-center text-[10px] font-bold mx-auto">3</span>
+                <p className="text-[11px] font-bold text-[#2B1822] leading-tight">Pay &amp; Verify</p>
+                <p className="text-[10px] text-stone-500 leading-tight">Share UTR</p>
               </div>
 
-              <div className="p-3.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
-                <div className="flex items-center gap-2 font-bold text-[#2B1822]">
-                  <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center text-[10px]">4</span>
-                  <span>Dispatch &amp; Live Tracking</span>
-                </div>
-                <p className="text-stone-600 text-[11px] leading-relaxed">
-                  Products are dispatched within 24 hours. You receive live airway bill tracking on WhatsApp.
-                </p>
+              <div className="p-2.5 bg-[#FBF6F8] rounded-xl border border-[#E8C4D4]/50 space-y-1">
+                <span className="w-5 h-5 rounded-full bg-[#6B2D5C] text-white inline-flex items-center justify-center text-[10px] font-bold mx-auto">4</span>
+                <p className="text-[11px] font-bold text-[#2B1822] leading-tight">Dispatch</p>
+                <p className="text-[10px] text-stone-500 leading-tight">Within 24h</p>
               </div>
-
             </div>
           </div>
 
-          {/* Security Alert (Phase 7 & 10) */}
-          <div className="p-4 bg-amber-50/70 border border-amber-200/80 rounded-2xl flex items-start gap-3 text-left font-sans text-xs text-amber-900">
-            <ShieldAlert className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <strong className="block font-bold">Important Security Notice</strong>
-              <p className="text-[11px] text-amber-800 leading-relaxed">
-                LOVIXA team will <strong>NEVER</strong> ask for your UPI PIN, banking passwords, OTPs, or credit card numbers. Never share confidential payment credentials with anyone.
-              </p>
-            </div>
+          {/* Compact Security Strip */}
+          <div className="p-2.5 bg-amber-50/70 border border-amber-200/70 rounded-xl flex items-center gap-2 text-left font-sans text-[11px] text-amber-900">
+            <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0" />
+            <p className="leading-tight text-stone-600">
+              <strong className="text-amber-900">Security Note:</strong> LOVIXA team will <strong>NEVER</strong> ask for your UPI PIN, passwords, or OTPs.
+            </p>
           </div>
 
-          {/* Footer CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-[#E8C4D4]/50 font-sans">
+          {/* Compact Footer CTAs */}
+          <div className="flex items-center justify-center gap-2.5 pt-2 border-t border-[#E8C4D4]/50 font-sans">
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto px-6 py-2.5 border border-[#E8C4D4] bg-white text-[#2B1822] font-semibold text-xs rounded-full hover:bg-[#FBF6F8] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-2xs uppercase tracking-wider"
+              className="px-4 py-2 border border-[#E8C4D4] bg-white text-[#2B1822] font-semibold text-xs rounded-full hover:bg-[#FBF6F8] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs uppercase tracking-wider"
             >
-              <Printer className="w-4 h-4 text-[#6B2D5C]" />
-              <span>Print Order Details</span>
+              <Printer className="w-3.5 h-3.5 text-[#6B2D5C]" />
+              <span>Print Details</span>
             </button>
 
             <Link
               href="/products"
-              className="w-full sm:w-auto px-7 py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white font-semibold text-xs rounded-full transition-colors flex items-center justify-center gap-2 shadow-md cursor-pointer uppercase tracking-wider"
+              className="px-5 py-2 bg-[#6B2D5C] hover:bg-[#562349] text-white font-semibold text-xs rounded-full transition-colors flex items-center justify-center gap-1.5 shadow-sm cursor-pointer uppercase tracking-wider"
             >
               <span>Continue Shopping</span>
-              <ArrowRight className="w-4 h-4 text-[#E8C4D4]" />
+              <ArrowRight className="w-3.5 h-3.5 text-[#E8C4D4]" />
             </Link>
           </div>
 
