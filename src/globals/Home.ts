@@ -31,7 +31,6 @@ export const Home: GlobalConfig = {
     drafts: true,
   },
   hooks: {
-    beforeOperation: [stripIdBeforeOperationHook],
     beforeValidate: [stripIdHook],
     beforeChange: [createCaptureRawSectionsGlobalHook({ sourceTable: 'home' })],
     afterRead: [createReadMappedGlobalSectionsHook({ sourceTable: 'home' })],

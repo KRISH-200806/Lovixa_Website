@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       collection: 'seo-reports',
       id,
       overrideAccess: true,
-      data: { manualChecks },
+      data: { manualChecks } as any,
     })
 
     return NextResponse.json({ success: true, manualChecks: (updated as { manualChecks?: unknown }).manualChecks })

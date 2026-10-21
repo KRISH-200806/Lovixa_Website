@@ -885,7 +885,7 @@ export async function GET(request: NextRequest) {
     // Execute non-blocking telemetry & collection count queries in parallel
     const [usersRes, pagesRes, mediaRes, formsRes] = await Promise.allSettled([
       payload.count({ collection: 'users', overrideAccess: true }),
-      payload.count({ collection: 'other-pages', overrideAccess: true }),
+      payload.count({ collection: 'pages', overrideAccess: true }),
       payload.count({ collection: 'media', overrideAccess: true }),
       payload.count({ collection: 'form-submissions', overrideAccess: true }),
     ])

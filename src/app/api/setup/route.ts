@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     const user = await payload.create({
       collection: 'users',
-      data: { email, password },
+      data: { email, password, role: 'admin' } as any,
       overrideAccess: true,
     })
 
@@ -82,28 +82,28 @@ export async function POST(request: NextRequest) {
     // real content on a re-run attempt (blocked anyway by the guard above,
     // but keeps this function safe to reason about independently).
     const [home, header] = await Promise.all([
-      payload.findGlobal({ slug: 'home', overrideAccess: true }),
+      payload.findGlobal({ slug: 'home' as never, overrideAccess: true }),
       payload.findGlobal({ slug: 'header', overrideAccess: true }),
     ])
 
     const heroTitle = (home as { hero?: { title?: string } })?.hero?.title
     if (!heroTitle) {
       await payload.updateGlobal({
-        slug: 'home',
+        slug: 'home' as never,
         overrideAccess: true,
         data: {
           hero: {
             title: siteName || 'Welcome',
             subtitle: 'Edit this from /admin — Home → Hero.',
           },
-        },
+        } as any,
       })
     }
 
     const currentSiteName = (header as { siteName?: string })?.siteName
     const currentLogo = (header as { logo?: unknown })?.logo
 
-    const headerUpdate: { siteName?: string; logo?: number } = {}
+    const headerUpdate: { siteName?: string; logo?: unknown } = {}
     if (siteName && (!currentSiteName || currentSiteName === 'Your Site Name')) {
       headerUpdate.siteName = siteName
     }
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
           filePath: path.resolve(process.cwd(), 'public/branding/placeholder-logo.svg'),
           overrideAccess: true,
         })
-        headerUpdate.logo = logoDoc.id as number
+        headerUpdate.logo = logoDoc.id
       } catch (err) {
         // Non-fatal — admin creation already succeeded above; a missing
         // placeholder logo shouldn't fail the whole setup flow.
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
       await payload.updateGlobal({
         slug: 'header',
         overrideAccess: true,
-        data: headerUpdate,
+        data: headerUpdate as any,
       })
     }
 

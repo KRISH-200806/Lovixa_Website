@@ -13,7 +13,7 @@ import { SITEMAP_COLLECTIONS } from '@/lib/seo/sitemap-sources'
  */
 export async function GET() {
   const homeData = await getHomePageData()
-  const homeDescription = homeData?.hero?.subtitle || SITE_DESCRIPTION
+  const homeDescription = (homeData as any)?.hero?.subtitle || SITE_DESCRIPTION
 
   const collectionLines = await Promise.all(
     SITEMAP_COLLECTIONS.map((source) => getCollectionLlmsLines(source)),

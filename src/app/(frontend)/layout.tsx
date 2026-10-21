@@ -86,14 +86,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <head>
         {/* Runtime CSS vars for both modes, admin-editable — see starter-kit/22-theme-management.md */}
-        <ThemeStyle themeSettings={themeSettings} />
+        <ThemeStyle themeSettings={themeSettings as any} />
       </head>
       <body suppressHydrationWarning>
         {/* Site-wide GEO/AEO structured data — page-level JSON-LD (FAQPage, Article,
             BreadcrumbList) is added per-page, not here. See lib/seo/jsonld.tsx. */}
         <JsonLd
           data={[
-            organizationSchema({ logoPath: getMediaUrl(headerData?.logo) || undefined }),
+            organizationSchema({ logoPath: getMediaUrl((headerData as any)?.logo) || undefined }),
             websiteSchema(),
           ]}
         />

@@ -342,3 +342,6 @@ export function CartDrawer() {
     </div>
   )
 }
+
+export default CartDrawer
+

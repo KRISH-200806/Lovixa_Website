@@ -15,8 +15,8 @@ export const contentType = 'image/png'
 
 export default async function Image() {
   const { themeSettings } = await getHeaderFooterForLayout()
-  const mode = themeSettings?.mode === 'light' ? 'light' : 'dark'
-  const colors = themeSettings?.[mode] || DARK_THEME_DEFAULTS
+  const mode = (themeSettings as any)?.mode === 'light' ? 'light' : 'dark'
+  const colors = (themeSettings as any)?.[mode] || DARK_THEME_DEFAULTS
 
   return new ImageResponse(
     (

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { AlertTriangle, RefreshCw } from "lucide-react";

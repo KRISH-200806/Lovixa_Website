@@ -10,7 +10,7 @@ const tones: Record<Tone, string> = {
 }
 
 /** Small pill label for statuses and tags. */
-export default function Badge({
+export function Badge({
   tone = 'neutral',
   className,
   children,
@@ -31,3 +31,6 @@ export default function Badge({
     </span>
   )
 }
+
+export default Badge
+

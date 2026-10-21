@@ -135,7 +135,7 @@ function UpiBadge() {
   )
 }
 
-export function Footer() {
+export function Footer({ data }: { data?: any } = {}) {
   const router = useRouter()
   const { openCart } = useCartStore()
   const { user, openAuthModal } = useAuth()
@@ -600,3 +600,6 @@ export function Footer() {
     </footer>
   )
 }
+
+export default Footer
+

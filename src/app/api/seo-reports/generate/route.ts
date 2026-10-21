@@ -20,11 +20,11 @@ import type { User } from '@/payload-types'
  */
 async function fetchTargetDoc(payload: BasePayload, target: SeoReportTarget) {
   if (target.type === 'global') {
-    return payload.findGlobal({ slug: target.slug as 'home', overrideAccess: true })
+    return payload.findGlobal({ slug: target.slug as never, overrideAccess: true })
   }
 
   const result = await payload.find({
-    collection: (target.collectionSlug ?? 'other-pages') as 'other-pages',
+    collection: (target.collectionSlug ?? 'other-pages') as never,
     where: { slug: { equals: target.slug } },
     limit: 1,
     depth: 0,
@@ -66,7 +66,7 @@ async function generateOneReport(payload: BasePayload, userId: User['id'], targe
       gscSnapshot: gsc as unknown as Record<string, unknown> | null,
       generatedBy: userId,
       status: 'draft',
-    },
+    } as any,
   })
 }
 

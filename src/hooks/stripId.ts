@@ -96,3 +96,6 @@ export const stripIdHook: GlobalBeforeValidateHook = ({ data }) => {
   const sanitized = sanitizeRootSystemFields(data)
   return sanitized ?? data
 }
+
+export const stripIdBeforeOperationHook = stripIdHook
+

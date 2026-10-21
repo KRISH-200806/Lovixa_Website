@@ -19,7 +19,6 @@ export const BackupSettings: GlobalConfig = {
     update: staffOnly,
   },
   hooks: {
-    beforeOperation: [stripIdBeforeOperationHook],
     beforeValidate: [stripIdHook],
   },
   fields: [

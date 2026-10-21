@@ -21,7 +21,6 @@ export const PreviewSettings: GlobalConfig = {
     update: staffOnly,
   },
   hooks: {
-    beforeOperation: [stripIdBeforeOperationHook],
     beforeValidate: [stripIdHook],
     afterChange: [createRevalidateGlobalHook('preview-settings'), createAuditLogGlobalHook('preview-settings')],
   },

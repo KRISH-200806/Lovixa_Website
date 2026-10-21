@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
         turnstileVerified: Boolean(turnstileToken),
         spamScore: 'clean',
         status: 'new',
-      },
+      } as any,
       overrideAccess: true,
     })
   } catch (dbErr: any) {

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 /** Surface container for grouped content. */
-export default function Card({
+export function Card({
   className,
   children,
 }: {
@@ -14,3 +14,6 @@ export default function Card({
     </div>
   )
 }
+
+export default Card
+

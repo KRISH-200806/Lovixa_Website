@@ -1,16 +1,13 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import {
-  Button,
-  Input,
-  Card,
-  Modal,
-  Badge,
-  Skeleton,
-  ProductCardSkeleton,
-  ErrorBoundary,
-} from "../components/ui";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { Card } from "../components/ui/Card";
+import { Modal } from "../components/ui/Modal";
+import { Badge } from "../components/ui/Badge";
+import { Skeleton, ProductCardSkeleton } from "../components/ui/Skeleton";
+import { ErrorBoundary } from "../components/ui/ErrorBoundary";
 
 describe("UI Primitive Component Library", () => {
   describe("Button Component", () => {

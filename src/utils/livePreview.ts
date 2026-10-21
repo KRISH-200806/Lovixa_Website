@@ -13,8 +13,8 @@ export const LIVE_PREVIEW_BREAKPOINTS = [
  */
 export const createLivePreviewUrl = (
   getPath: (data: Record<string, unknown>) => string,
-): GeneratePreviewURL => {
-  return async ({ data, req }) => {
+): any => {
+  return async ({ data, req }: { data?: any; req?: any } = {}) => {
     try {
       if (process.env.NEXT_PUBLIC_ENABLE_LIVE_PREVIEW === 'false') {
         return null

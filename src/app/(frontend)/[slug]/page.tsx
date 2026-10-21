@@ -16,7 +16,7 @@ type PageProps = {
 }
 
 async function getPageData(slug: string, options?: { draft?: boolean }) {
-  return getMappedCollectionDoc(COLLECTION_SLUG, COLLECTION_SLUG, slug, options) as Promise<{
+  return getMappedCollectionDoc(COLLECTION_SLUG, COLLECTION_SLUG, slug) as Promise<{
     id?: unknown
     title?: string
     hero?: { title?: string; subtitle?: string; accentColor?: string }
@@ -67,8 +67,7 @@ export default async function OtherPage({ params, searchParams }: PageProps) {
   if (!pageData) return notFound()
 
   const { themeSettings } = await getHeaderFooterForLayout()
-  const mode = themeSettings?.mode === 'light' ? 'light' : 'dark'
-  const fallbackAccent = themeSettings?.[mode]?.brand500
+  const fallbackAccent = (themeSettings as any)?.primaryColor || 'var(--color-brand-500)'
 
   return (
     <main>

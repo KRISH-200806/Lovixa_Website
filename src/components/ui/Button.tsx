@@ -29,7 +29,7 @@ const base =
  * Shared button. Renders an `<a>` when `href` is provided, otherwise a `<button>`.
  * Use everywhere instead of raw button/anchor styling.
  */
-export default function Button({
+export function Button({
   variant = 'primary',
   size = 'md',
   className,
@@ -57,3 +57,6 @@ export default function Button({
     </button>
   )
 }
+
+export default Button
+
