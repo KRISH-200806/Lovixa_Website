@@ -337,7 +337,9 @@ export default function CartPage() {
                         {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
                       </span>
                       <span className="font-medium text-[#2B1822]">
-                        {taxConfig?.pricesIncludeTax ? `Included (${formatPrice(taxAmount)})` : formatPrice(taxAmount)}
+                        {taxConfig?.pricesIncludeTax !== false
+                          ? `Included in price (${formatPrice(taxAmount)})`
+                          : `+${formatPrice(taxAmount)}`}
                       </span>
                     </div>
                   )}

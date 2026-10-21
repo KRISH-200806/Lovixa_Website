@@ -139,7 +139,7 @@ export function StoreSettingsProvider({
         useCartStore.getState().setTaxConfig({
           enabled: initialSettings.tax.enabled !== false,
           ratePercentage: typeof initialSettings.tax.ratePercentage === 'number' ? initialSettings.tax.ratePercentage : 18,
-          pricesIncludeTax: Boolean(initialSettings.tax.pricesIncludeTax),
+          pricesIncludeTax: initialSettings.tax.pricesIncludeTax !== false,
           taxLabel: initialSettings.tax.taxLabel || 'GST (Inclusive)',
         })
       }
@@ -170,7 +170,7 @@ export function StoreSettingsProvider({
             useCartStore.getState().setTaxConfig({
               enabled: data.tax.enabled !== false,
               ratePercentage: typeof data.tax.ratePercentage === 'number' ? data.tax.ratePercentage : 18,
-              pricesIncludeTax: Boolean(data.tax.pricesIncludeTax),
+              pricesIncludeTax: data.tax.pricesIncludeTax !== false,
               taxLabel: data.tax.taxLabel || 'GST (Inclusive)',
             })
           }
