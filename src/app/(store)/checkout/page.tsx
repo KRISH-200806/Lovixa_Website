@@ -52,6 +52,8 @@ export default function CheckoutPage() {
     getDiscountAmount,
     getShippingFee,
     getGrandTotal,
+    getTaxAmount,
+    taxConfig,
     coupon,
     clearCart,
   } = useCartStore()
@@ -115,6 +117,7 @@ export default function CheckoutPage() {
   const subtotal = getSubtotal()
   const discount = getDiscountAmount()
   const shipping = getShippingFee()
+  const taxAmount = getTaxAmount()
   const grandTotal = getGrandTotal()
 
   // Configurable shipping thresholds
@@ -241,7 +244,7 @@ export default function CheckoutPage() {
         discountTotal: convertedDiscount,
         couponCode: coupon?.code,
         shippingTotal: convertedShipping,
-        taxTotal: 0,
+        taxTotal: Number((taxAmount * rate).toFixed(2)),
         grandTotal: convertedGrandTotal,
         paymentProvider: 'whatsapp_manual',
       }
@@ -853,10 +856,24 @@ export default function CheckoutPage() {
                   </span>
                 </div>
 
+                {taxConfig?.enabled !== false && (
+                  <div className="flex justify-between text-xs text-stone-500">
+                    <span>
+                      {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
+                    </span>
+                    <span className="font-medium text-[#2B1822]">
+                      {taxConfig?.pricesIncludeTax ? `Included (${formatPrice(taxAmount)})` : formatPrice(taxAmount)}
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex justify-between text-base font-sans font-bold text-[#2B1822] border-t border-[#E8C4D4]/70 pt-3">
                   <span>Grand Total</span>
                   <span className="text-[#6B2D5C]">{formatPrice(grandTotal)}</span>
                 </div>
+                <p className="text-[10px] text-stone-400 text-right font-sans">
+                  Inclusive of all taxes (GST)
+                </p>
               </div>
 
               {/* Highlights */}
