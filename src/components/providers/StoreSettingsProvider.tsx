@@ -47,6 +47,12 @@ export interface StoreSettingsData {
     enableRazorpay?: boolean
     enableCashOnDelivery?: boolean
   }
+  contact?: {
+    phone?: string
+    supportHours?: string
+    email?: string
+    address?: string
+  }
 }
 
 export interface StoreSettingsContextValue {

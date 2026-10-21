@@ -191,6 +191,20 @@ export const StoreSettings: GlobalConfig = {
       ],
     },
     {
+      name: 'contact',
+      type: 'group',
+      label: 'Official Store Contact Details',
+      admin: {
+        description: 'Customer helpline, support email, address, and working hours displayed across the footer and store.',
+      },
+      fields: [
+        { name: 'phone', type: 'text', label: 'Support Phone Number', defaultValue: '+91 97124 60509' },
+        { name: 'supportHours', type: 'text', label: 'Support Working Hours', defaultValue: 'Mon - Sat: 10:00 AM – 6:00 PM' },
+        { name: 'email', type: 'text', label: 'Support Email', defaultValue: 'lovixacosmetic@gmail.com' },
+        { name: 'address', type: 'textarea', label: 'Registered Business Address', defaultValue: 'Yogi Chowk Rd, Jai Bhawani Society, Punagam, Varachha, Surat, Gujarat 395011' },
+      ],
+    },
+    {
       name: 'gateways',
       type: 'group',
       fields: [

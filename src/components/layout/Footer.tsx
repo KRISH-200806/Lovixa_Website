@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { useCartStore } from '@/lib/cart/cart-store'
 import { useAuth } from '@/components/providers/AuthProvider'
+import { useStoreSettings } from '@/components/providers/StoreSettingsProvider'
 
 // Social Icons matching Tezvi
 function FacebookIcon({ className = 'w-5 h-5' }: { className?: string }) {
@@ -139,6 +140,11 @@ export function Footer({ data }: { data?: any } = {}) {
   const router = useRouter()
   const { openCart } = useCartStore()
   const { user, openAuthModal } = useAuth()
+  const storeSettings = useStoreSettings()
+
+  const phone = storeSettings?.contact?.phone || '+91 97124 60509'
+  const email = storeSettings?.contact?.email || 'lovixacosmetic@gmail.com'
+  const address = storeSettings?.contact?.address || 'Yogi Chowk Rd, Jai Bhawani Society, Punagam, Varachha, Surat, Gujarat 395011'
 
   // Mobile Accordion States
   const [linksOpen, setLinksOpen] = useState(false)
@@ -206,16 +212,16 @@ export function Footer({ data }: { data?: any } = {}) {
 
             <div className="pt-2 space-y-1.5 text-xs text-[#FBF6F8]/75 font-sans leading-relaxed">
               <p className="text-[11px] leading-snug">
-                Yogi Chowk Rd, Jai Bhawani Society, Punagam, Varachha, Surat, Gujarat 395011
+                {address}
               </p>
               <p className="pt-0.5">
-                <a href="tel:+919712460509" className="hover:text-[#E8C4D4] transition-colors font-medium">
-                  +91 97124 60509
+                <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-[#E8C4D4] transition-colors font-medium">
+                  {phone}
                 </a>
               </p>
               <p>
-                <a href="mailto:lovixacosmetic@gmail.com" className="hover:text-[#E8C4D4] transition-colors">
-                  lovixacosmetic@gmail.com
+                <a href={`mailto:${email}`} className="hover:text-[#E8C4D4] transition-colors">
+                  {email}
                 </a>
               </p>
             </div>
@@ -402,15 +408,15 @@ export function Footer({ data }: { data?: any } = {}) {
 
             <div className="pt-1 space-y-1 text-xs text-[#FBF6F8]/70 font-sans">
               <p className="text-[11px] leading-snug">
-                Yogi Chowk Rd, Jai Bhawani Society, Punagam, Varachha, Surat, Gujarat 395011
+                {address}
               </p>
               <p>
-                <a href="tel:+919712460509" className="hover:text-[#E8C4D4] transition-colors font-medium">
-                  +91 97124 60509
+                <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-[#E8C4D4] transition-colors font-medium">
+                  {phone}
                 </a>
                 {' • '}
-                <a href="mailto:lovixacosmetic@gmail.com" className="hover:text-[#E8C4D4] transition-colors">
-                  lovixacosmetic@gmail.com
+                <a href={`mailto:${email}`} className="hover:text-[#E8C4D4] transition-colors">
+                  {email}
                 </a>
               </p>
             </div>
