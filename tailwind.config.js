@@ -101,6 +101,14 @@ export default {
         serif: ['var(--font-heading)', 'Outfit', 'sans-serif'],
         editorial: ['var(--font-heading)', 'Outfit', 'sans-serif'],
       },
+      scale: {
+        '98': '0.98',
+        '102': '1.02',
+      },
+      boxShadow: {
+        '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      },
     },
   },
   plugins: [],
