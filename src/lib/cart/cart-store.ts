@@ -33,7 +33,7 @@ export interface ShippingConfig {
 export interface TaxConfig {
   enabled: boolean
   ratePercentage: number
-  pricesIncludeTax?: boolean
+  pricesIncludeTax: boolean
   taxLabel?: string
 }
 
@@ -214,8 +214,8 @@ export const useCartStore = create<CartStore>()(
         const taxableAmount = Math.max(0, getSubtotal() - getDiscountAmount())
         const taxRate = (typeof cfg.ratePercentage === 'number' ? cfg.ratePercentage : 18) / 100
 
-        // If prices include tax (e.g. GST in India):
-        if (cfg.pricesIncludeTax) {
+        // If prices include tax (default for India & cosmetics):
+        if (cfg.pricesIncludeTax !== false) {
           // Included tax portion = amount - (amount / (1 + rate))
           return Math.round((taxableAmount - taxableAmount / (1 + taxRate)) * 100) / 100
         }
@@ -226,8 +226,8 @@ export const useCartStore = create<CartStore>()(
       getGrandTotal: () => {
         const { getSubtotal, getDiscountAmount, getShippingFee, getTaxAmount, taxConfig = DEFAULT_TAX_CONFIG } = get()
         const cfg = taxConfig || DEFAULT_TAX_CONFIG
-        // Only add tax on top if prices DO NOT already include tax!
-        const taxOnTop = cfg.enabled !== false && !cfg.pricesIncludeTax ? getTaxAmount() : 0
+        // Only add extra tax on top if explicitly set to exclusive (pricesIncludeTax === false)
+        const taxOnTop = cfg.enabled !== false && cfg.pricesIncludeTax === false ? getTaxAmount() : 0
         const total = getSubtotal() - getDiscountAmount() + getShippingFee() + taxOnTop
         return Math.max(0, Math.round(total * 100) / 100)
       },
@@ -253,13 +253,17 @@ export const useCartStore = create<CartStore>()(
         items: state.items,
         coupon: state.coupon,
       }),
-      merge: (persistedState: any, currentState: CartStore) => {
+      merge: (persistedState: any, currentState: CartStore): CartStore => {
         return {
           ...currentState,
           items: Array.isArray(persistedState?.items) ? persistedState.items : [],
           coupon: persistedState?.coupon || undefined,
           shippingConfig: currentState.shippingConfig || DEFAULT_SHIPPING_CONFIG,
-          taxConfig: currentState.taxConfig || DEFAULT_TAX_CONFIG,
+          taxConfig: {
+            ...DEFAULT_TAX_CONFIG,
+            ...(currentState.taxConfig || {}),
+            pricesIncludeTax: currentState.taxConfig?.pricesIncludeTax !== false,
+          },
         }
       },
     }
