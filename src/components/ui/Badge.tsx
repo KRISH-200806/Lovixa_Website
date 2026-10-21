@@ -1,28 +1,32 @@
+import React from 'react'
 import { cn } from '@/lib/cn'
 
-type Tone = 'brand' | 'neutral' | 'success' | 'error'
+export type BadgeTone = 'brand' | 'blush' | 'neutral' | 'success' | 'gold'
 
-const tones: Record<Tone, string> = {
-  brand: 'bg-brand-500/15 text-brand-500',
-  neutral: 'bg-neutral-800 text-neutral-400',
-  success: 'bg-semantic-success/15 text-semantic-success',
-  error: 'bg-semantic-error/15 text-semantic-error',
-}
-
-/** Small pill label for statuses and tags. */
-export function Badge({
-  tone = 'neutral',
-  className,
-  children,
-}: {
-  tone?: Tone
+export interface BadgeProps {
+  tone?: BadgeTone
   className?: string
   children: React.ReactNode
-}) {
+}
+
+const tones: Record<BadgeTone, string> = {
+  brand: 'bg-[#6B2D5C] text-white shadow-xs',
+  blush: 'bg-[#E8C4D4]/30 text-[#6B2D5C] border border-[#E8C4D4]/60',
+  neutral: 'bg-stone-100 text-[#2B1822]/80 border border-stone-200',
+  success: 'bg-emerald-50 text-emerald-800 border border-emerald-200',
+  gold: 'bg-amber-50 text-amber-900 border border-amber-200',
+}
+
+/** Small luxury pill label for statuses, offers, and tags. */
+export function Badge({
+  tone = 'blush',
+  className,
+  children,
+}: BadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-radius-pill px-3 py-1 font-sans text-body-xs font-medium',
+        'inline-flex items-center gap-1.5 px-3 py-1 font-sans text-[10px] sm:text-[11px] font-bold uppercase tracking-widest rounded-full',
         tones[tone],
         className,
       )}
@@ -33,4 +37,3 @@ export function Badge({
 }
 
 export default Badge
-

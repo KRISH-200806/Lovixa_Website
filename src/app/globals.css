@@ -86,6 +86,88 @@
   }
 }
 
+@layer components {
+  /* ========================================================
+     LOVIXA BRAND DESIGN SYSTEM: UNIFIED TYPOGRAPHY & BUTTONS
+     ======================================================== */
+
+  /* 1. Section Eyebrow (Mini badge above title) */
+  .section-eyebrow,
+  .ui-eyebrow {
+    @apply text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#6B2D5C] font-sans inline-block;
+  }
+
+  /* 2. Section Title (Standard H2 for all store & home sections) */
+  .section-title,
+  .ui-section-title {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2B1822] tracking-tight leading-tight font-sans;
+  }
+
+  /* 3. Section Description / Subtitle */
+  .section-desc,
+  .ui-section-desc {
+    @apply text-xs sm:text-sm text-[#2B1822]/75 leading-relaxed font-sans max-w-xl mx-auto mt-2;
+  }
+
+  /* 4. Page Title (Primary H1 on banners and detail pages) */
+  .page-title,
+  .ui-page-title {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2B1822] tracking-tight leading-tight font-sans;
+  }
+
+  /* 5. Card Title (H3 on product cards and grid tiles) */
+  .card-title,
+  .ui-card-title {
+    @apply text-sm sm:text-base font-bold text-[#2B1822] leading-snug font-sans;
+  }
+
+  /* 6. Body Content (Readable paragraphs and narrative text) */
+  .body-content,
+  .ui-body {
+    @apply text-sm sm:text-base text-[#2B1822]/80 leading-relaxed font-sans;
+  }
+
+  /* 7. Detail & Fine Print (Labels, metadata, timestamps) */
+  .detail-text,
+  .ui-detail {
+    @apply text-xs sm:text-[13px] text-[#2B1822]/65 leading-normal font-sans;
+  }
+
+  /* 8. Primary Button (Rich Plum Pill) */
+  .btn-primary,
+  .ui-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-[#6B2D5C] hover:bg-[#562349] text-white font-sans text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-200 active:scale-98 shadow-xs cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* 9. Secondary Button (White / Soft Blush Border Pill) */
+  .btn-secondary,
+  .ui-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white hover:bg-[#FBF6F8] text-[#2B1822] hover:text-[#6B2D5C] border border-[#E8C4D4] font-sans text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-200 active:scale-98 shadow-2xs cursor-pointer select-none;
+  }
+
+  /* 10. Outline Button (Plum Border Pill) */
+  .btn-outline,
+  .ui-btn-outline {
+    @apply inline-flex items-center justify-center gap-2 bg-transparent hover:bg-[#6B2D5C] text-[#6B2D5C] hover:text-white border-2 border-[#6B2D5C] font-sans text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-200 active:scale-98 cursor-pointer select-none;
+  }
+
+  /* 11. Ghost Button */
+  .btn-ghost,
+  .ui-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 bg-transparent hover:bg-[#E8C4D4]/30 text-[#2B1822] hover:text-[#6B2D5C] font-sans text-xs sm:text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-full transition-all duration-200 active:scale-98 cursor-pointer select-none;
+  }
+
+  /* 12. Standard Brand Surface Card */
+  .ui-card {
+    @apply bg-white rounded-2xl border border-[#E8C4D4]/60 p-6 shadow-xs hover:shadow-md transition-all duration-300;
+  }
+
+  /* 13. Standard Brand Pill Badge */
+  .ui-badge {
+    @apply inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#6B2D5C] bg-[#E8C4D4]/30 px-3 py-1 rounded-full border border-[#E8C4D4]/60 font-sans;
+  }
+}
+
 /* Custom Scrollbar for Luxury Experience */
 ::-webkit-scrollbar {
   width: 8px;

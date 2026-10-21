@@ -79,7 +79,7 @@ export function PageHeaderBanner({
               {badge}
             </span>
           )}
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-semibold text-[#2B1822] tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight leading-tight">
             {title}
             {highlightTitle && (
               <>
@@ -89,7 +89,7 @@ export function PageHeaderBanner({
             )}
           </h1>
           {subtitle && (
-            <p className="mt-2 text-xs sm:text-sm text-stone-600 font-sans leading-relaxed line-clamp-2">
+            <p className="mt-2 text-xs sm:text-sm text-[#2B1822]/75 font-sans leading-relaxed line-clamp-2">
               {subtitle}
             </p>
           )}

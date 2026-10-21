@@ -118,7 +118,7 @@ export default function CartPage() {
             <div className="w-20 h-20 rounded-full bg-white border border-[#E8C4D4]/60 flex items-center justify-center text-[#6B2D5C] mx-auto mb-6 shadow-xs">
               <ShoppingBag className="w-9 h-9" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#2B1822] mb-3">
+            <h2 className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822] mb-3">
               Your shopping bag is currently empty
             </h2>
             <p className="text-sm text-stone-600 leading-relaxed font-sans mb-8 max-w-md mx-auto">
@@ -126,7 +126,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs sm:text-sm font-bold tracking-widest uppercase transition-all shadow-md font-sans cursor-pointer"
+              className="btn-primary !px-8 !py-4 shadow-md inline-flex items-center gap-2"
             >
               <span>Explore Collection</span>
               <ArrowRight className="w-4 h-4 text-[#E8C4D4]" />
@@ -161,7 +161,7 @@ export default function CartPage() {
                             sizes="96px"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center font-serif font-bold text-lg text-[#2B1822]/40">
+                          <div className="w-full h-full flex items-center justify-center font-sans font-bold text-lg text-[#2B1822]/40">
                             LX
                           </div>
                         )}
@@ -170,7 +170,7 @@ export default function CartPage() {
                       <div className="min-w-0 space-y-1">
                         <Link
                           href={item.slug ? `/products/${item.slug}` : '/products'}
-                          className="font-serif font-bold text-base sm:text-lg text-[#2B1822] hover:text-[#6B2D5C] transition-colors line-clamp-1"
+                          className="font-sans font-bold text-base sm:text-lg text-[#2B1822] hover:text-[#6B2D5C] transition-colors line-clamp-1"
                         >
                           {item.title}
                         </Link>
@@ -219,7 +219,7 @@ export default function CartPage() {
                       </div>
 
                       <div className="text-right">
-                        <span className="font-serif font-bold text-base text-[#2B1822] block">
+                        <span className="font-sans font-bold text-base text-[#2B1822] block">
                           {formatPrice(item.price * item.quantity)}
                         </span>
                         <button
@@ -250,7 +250,7 @@ export default function CartPage() {
             {/* Right Column: Order Summary (4 cols) */}
             <div className="lg:col-span-4">
               <div className="bg-[#E8C4D4]/25 border border-[#E8C4D4]/70 rounded-3xl p-6 sm:p-8 space-y-6 sticky top-28 shadow-2xs">
-                <h2 className="text-lg font-serif font-bold text-[#2B1822] border-b border-[#E8C4D4]/70 pb-4">
+                <h2 className="text-lg font-sans font-bold text-[#2B1822] border-b border-[#E8C4D4]/70 pb-4">
                   Order Summary
                 </h2>
 
@@ -279,12 +279,12 @@ export default function CartPage() {
                         value={promoInput}
                         onChange={(e) => setPromoInput(e.target.value)}
                         placeholder="Enter coupon code"
-                        className="flex-1 px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-xs text-[#2B1822] uppercase placeholder:normal-case placeholder:text-stone-400 focus:outline-none focus:border-[#6B2D5C] focus:ring-1 focus:ring-[#6B2D5C] font-sans"
+                        className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-[#E8C4D4]/70 text-xs text-[#2B1822] uppercase placeholder:normal-case placeholder:text-stone-400 focus:outline-none focus:border-[#6B2D5C] focus:ring-1 focus:ring-[#6B2D5C] font-sans"
                       />
                       <button
                         type="submit"
                         disabled={isValidating || !promoInput.trim()}
-                        className="px-4 py-2.5 rounded-xl bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5 font-sans uppercase tracking-wider"
+                        className="px-5 py-2.5 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5 font-sans uppercase tracking-wider"
                       >
                         {isValidating && <Loader2 className="w-3 h-3 animate-spin" />}
                         <span>Apply</span>
@@ -326,7 +326,7 @@ export default function CartPage() {
                     </div>
                   )}
 
-                  <div className="flex justify-between text-base font-serif font-bold text-[#2B1822] pt-3 border-t border-[#E8C4D4]/70">
+                  <div className="flex justify-between text-base font-sans font-bold text-[#2B1822] pt-3 border-t border-[#E8C4D4]/70">
                     <span>Grand Total</span>
                     <span>{formatPrice(grandTotal)}</span>
                   </div>
@@ -335,7 +335,7 @@ export default function CartPage() {
                 {/* Checkout CTA */}
                 <Link
                   href="/checkout"
-                  className="w-full py-4 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs sm:text-sm font-bold tracking-widest uppercase transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer group font-sans"
+                  className="btn-primary w-full !py-4 shadow-md flex items-center justify-center gap-2 group font-sans"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-4 h-4 text-[#E8C4D4] group-hover:translate-x-1 transition-transform" />

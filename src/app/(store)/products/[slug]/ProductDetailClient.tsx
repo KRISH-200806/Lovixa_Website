@@ -281,7 +281,7 @@ export function ProductDetailClient({
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#2B1822] tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight leading-tight">
               {product.title}
             </h1>
 
@@ -299,7 +299,7 @@ export function ProductDetailClient({
 
           {/* Pricing & Stock */}
           <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 py-3.5 border-y border-[#E8C4D4]/60">
-            <span className="text-2xl sm:text-3xl font-serif font-bold text-[#2B1822]">
+            <span className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822]">
               {formatPrice(currentPrice)}
             </span>
             {currentCompareAt && currentCompareAt > currentPrice && (
@@ -664,7 +664,7 @@ export function ProductDetailClient({
               <span className="text-xs font-bold tracking-widest uppercase text-[#6B2D5C] font-sans">
                 COMPLETE YOUR ROUTINE
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-[#2B1822] mt-1">
+              <h2 className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822] tracking-tight mt-1">
                 Pair with Complementary Care
               </h2>
             </div>
@@ -694,12 +694,12 @@ export function ProductDetailClient({
                     Routine Pair
                   </span>
                   <Link href={`/products/${comp.slug}`}>
-                    <h3 className="font-serif font-bold text-sm sm:text-base text-[#2B1822] truncate hover:text-[#6B2D5C] transition-colors mt-0.5">
+                    <h3 className="font-sans font-bold text-sm sm:text-base text-[#2B1822] truncate hover:text-[#6B2D5C] transition-colors mt-0.5">
                       {comp.title}
                     </h3>
                   </Link>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="font-serif font-bold text-sm text-[#2B1822]">
+                    <span className="font-sans font-bold text-sm text-[#2B1822]">
                       {formatPrice(comp.price)}
                     </span>
                     {comp.compareAtPrice && (

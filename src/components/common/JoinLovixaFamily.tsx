@@ -45,20 +45,20 @@ export function JoinLovixaFamily() {
         </p>
 
         <form onSubmit={handleSubscribe} className="pt-3 max-w-md mx-auto">
-          <div className="bg-white rounded-2xl p-2 sm:p-2.5 shadow-sm border border-[#E8C4D4]/70 flex flex-col sm:flex-row gap-2">
+          <div className="bg-white rounded-full p-1.5 sm:p-2 shadow-sm border border-[#E8C4D4]/70 flex flex-col sm:flex-row gap-2">
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
-              className="w-full px-4 py-2.5 text-xs sm:text-sm text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none font-sans"
+              className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none font-sans bg-transparent"
               disabled={status === 'loading'}
             />
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 rounded-xl bg-[#6B2D5C] hover:bg-[#562349] text-white font-sans font-bold text-xs sm:text-sm uppercase tracking-wider transition-colors shrink-0 cursor-pointer shadow-xs flex items-center justify-center gap-1.5 disabled:opacity-70"
+              className="btn-primary !py-2.5 !px-7 shrink-0 disabled:opacity-70"
             >
               {status === 'loading' && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               <span>SUBSCRIBE</span>

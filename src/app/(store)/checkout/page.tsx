@@ -317,7 +317,7 @@ export default function CheckoutPage() {
           <div className="w-16 h-16 rounded-full bg-[#E8C4D4]/30 text-[#6B2D5C] border border-[#E8C4D4] flex items-center justify-center mx-auto shadow-2xs">
             <WhatsAppIcon className="w-8 h-8 text-[#25D366]" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#2B1822]">
+          <h1 className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822]">
             Your Bag is Empty
           </h1>
           <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto font-sans leading-relaxed">
@@ -348,7 +348,7 @@ export default function CheckoutPage() {
                 WhatsApp Direct Checkout
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#2B1822] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
               Order on WhatsApp &amp; Manual Payment
             </h1>
             <p className="text-xs sm:text-sm text-stone-600 font-sans mt-1">
@@ -381,7 +381,7 @@ export default function CheckoutPage() {
             {user ? (
               <div className="p-4 bg-white border border-[#E8C4D4]/60 rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center font-bold text-xs font-serif">
+                  <div className="w-7 h-7 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center font-bold text-xs font-sans">
                     <UserCheck className="w-4 h-4" />
                   </div>
                   <div>
@@ -761,7 +761,7 @@ export default function CheckoutPage() {
             <div className="bg-white border border-[#E8C4D4]/70 rounded-3xl p-6 sm:p-7 space-y-6 sticky top-24 shadow-2xs">
               
               <div className="flex items-center justify-between pb-3 border-b border-[#E8C4D4]/50">
-                <h3 className="font-serif text-lg font-bold text-[#2B1822]">
+                <h3 className="font-sans text-lg font-bold text-[#2B1822]">
                   Order Summary
                 </h3>
                 <span className="text-xs font-semibold text-[#6B2D5C] font-sans">
@@ -853,7 +853,7 @@ export default function CheckoutPage() {
                   </span>
                 </div>
 
-                <div className="flex justify-between text-base font-serif font-bold text-[#2B1822] border-t border-[#E8C4D4]/70 pt-3">
+                <div className="flex justify-between text-base font-sans font-bold text-[#2B1822] border-t border-[#E8C4D4]/70 pt-3">
                   <span>Grand Total</span>
                   <span className="text-[#6B2D5C]">{formatPrice(grandTotal)}</span>
                 </div>

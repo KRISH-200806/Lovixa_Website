@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X, Check, ShoppingBag, ArrowRight } from 'lucide-react'
 import { useCartStore } from '@/lib/cart/cart-store'
 import { useCurrency } from '@/components/providers/StoreSettingsProvider'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
 interface HairConcern {
   id: string
@@ -231,19 +231,12 @@ export function LovixaConcerns({ data }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header: Fully Centered with Signature Brush Stroke */}
-        <div className="text-center mb-8 sm:mb-10 relative">
-          <div className="inline-block relative">
-            <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-[#6B2D5C] block mb-1">
-              {eyebrow}
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-semibold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2 max-w-md mx-auto">
-            {subtitle}
-          </p>
+        <div className="relative">
+          <SectionHeader
+            eyebrow={eyebrow}
+            title={heading}
+            subtitle={subtitle}
+          />
 
           {/* Carousel Arrows: Only rendered when scrolling is possible */}
           {(canScrollLeft || canScrollRight) && (

@@ -1,6 +1,6 @@
 'use client'
 
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontWhyChooseData } from '@/lib/cms/products'
 
 function CleanIcon() {
@@ -111,18 +111,11 @@ export function LovixaWhyChoose({ data }: Props) {
     <section id="why-choose" className="py-14 sm:py-20 bg-[#E8C4D4]/25 border-y border-[#E8C4D4]/50 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Centered Heading with Signature Brush Stroke */}
-        <div className="text-center mb-10 sm:mb-14">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2 max-w-md mx-auto">
-            {subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="THE LOVIXA STANDARD"
+          title={heading}
+          subtitle={subtitle}
+        />
 
         {/* Pillars in Elegant Light Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">

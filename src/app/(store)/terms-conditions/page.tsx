@@ -36,7 +36,7 @@ export default function TermsConditionsPage() {
         {/* Policy Content */}
         <div className="space-y-8 text-sm sm:text-base text-[#2B1822]/80 leading-relaxed font-sans">
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               1. Acceptance of Terms
             </h2>
             <p>
@@ -45,7 +45,7 @@ export default function TermsConditionsPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               2. Authentic Product Information &amp; Cosmetic Guidance
             </h2>
             <p>
@@ -54,7 +54,7 @@ export default function TermsConditionsPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               3. Pricing, Orders &amp; Replacement Policy
             </h2>
             <p>
@@ -63,7 +63,7 @@ export default function TermsConditionsPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               4. Intellectual Property
             </h2>
             <p>
@@ -72,7 +72,7 @@ export default function TermsConditionsPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               5. Governing Law &amp; Inquiries
             </h2>
             <p>

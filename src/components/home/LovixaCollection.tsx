@@ -1,7 +1,7 @@
 'use client'
 
 import { ProductCard } from '@/components/products/ProductCard'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontProduct } from '@/lib/cms/products'
 
 const DEFAULT_TOP_PICKS: StorefrontProduct[] = [
@@ -49,21 +49,11 @@ export function LovixaCollection({ products }: { products?: StorefrontProduct[] 
   return (
     <section id="collection" className="py-12 sm:py-16 bg-[#FBF6F8] relative border-b border-[#E8C4D4]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Signature Heading with Curved Brush Underline */}
-        <div className="text-center mb-8 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#6B2D5C] font-sans block mb-1.5">
-            CURATED BOTANICAL COLLECTION
-          </span>
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-semibold text-[#2B1822] tracking-tight">
-              Signature Botanical Formulations
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2 max-w-md mx-auto font-sans">
-            Handcrafted Ayurvedic hair care rituals formulated for everyday scalp health and radiant hair
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="CURATED BOTANICAL COLLECTION"
+          title="Signature Botanical Formulations"
+          subtitle="Handcrafted Ayurvedic hair care rituals formulated for everyday scalp health and radiant hair"
+        />
 
         {/* Reusable Product Cards Grid (Centered when items don't fill 4 columns) */}
         <div

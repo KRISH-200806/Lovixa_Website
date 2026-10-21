@@ -57,7 +57,7 @@ export default function WishlistPage() {
             <div className="w-20 h-20 rounded-full bg-white border border-[#E8C4D4]/60 flex items-center justify-center text-[#6B2D5C] mx-auto mb-6 shadow-xs">
               <Heart className="w-9 h-9" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#2B1822] mb-3">
+            <h2 className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822] mb-3">
               Your wishlist is currently empty
             </h2>
             <p className="text-sm text-[#2B1822]/70 leading-relaxed font-sans mb-8 max-w-md mx-auto">
@@ -67,7 +67,7 @@ export default function WishlistPage() {
               href="/products"
               prefetch={true}
               scroll={true}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs sm:text-sm font-bold tracking-widest uppercase transition-all shadow-md font-sans cursor-pointer"
+              className="btn-primary !px-8 !py-4 inline-flex items-center gap-2 shadow-md"
             >
               <span>Explore Collection</span>
               <ArrowRight className="w-4 h-4 text-[#E8C4D4]" />
@@ -91,7 +91,7 @@ export default function WishlistPage() {
                         sizes="(max-width: 640px) 100vw, 33vw"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center font-serif font-bold text-2xl text-[#2B1822]/30">
+                      <div className="w-full h-full flex items-center justify-center font-sans font-bold text-2xl text-[#2B1822]/30">
                         LX
                       </div>
                     )}
@@ -113,13 +113,13 @@ export default function WishlistPage() {
                     href={item.slug ? `/products/${item.slug}` : '/products'}
                     prefetch={true}
                     scroll={true}
-                    className="font-serif font-bold text-lg text-[#2B1822] hover:text-[#6B2D5C] transition-colors block leading-snug mb-2"
+                    className="font-sans font-bold text-base sm:text-lg text-[#2B1822] hover:text-[#6B2D5C] transition-colors block leading-snug mb-2"
                   >
                     {item.title}
                   </Link>
 
                   <div className="flex items-center gap-2 mb-4 font-sans">
-                    <span className="text-base font-serif font-bold text-[#2B1822]">
+                    <span className="text-base font-sans font-bold text-[#2B1822]">
                       {formatPrice(item.price)}
                     </span>
                     {item.compareAtPrice && item.compareAtPrice > item.price && (
@@ -132,7 +132,7 @@ export default function WishlistPage() {
 
                 <button
                   onClick={() => handleAddToCart(item)}
-                  className="w-full py-3 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold tracking-wider uppercase transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer font-sans"
+                  className="btn-primary w-full !py-3 flex items-center justify-center gap-2"
                 >
                   <ShoppingBag className="w-3.5 h-3.5 text-[#E8C4D4]" />
                   <span>Add to Bag</span>

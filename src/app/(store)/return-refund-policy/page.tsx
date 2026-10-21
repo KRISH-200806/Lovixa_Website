@@ -36,7 +36,7 @@ export default function ReturnRefundPolicyPage() {
         {/* Policy Content */}
         <div className="space-y-8 text-sm sm:text-base text-[#2B1822]/80 leading-relaxed font-sans">
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               1. Hygiene &amp; Cosmetic Safety Guidelines
             </h2>
             <p>
@@ -45,7 +45,7 @@ export default function ReturnRefundPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               2. Transit Damage &amp; Free Replacement (Strictly No Cash Refunds)
             </h2>
             <p>
@@ -62,7 +62,7 @@ export default function ReturnRefundPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               3. Order Cancellation Prior to Dispatch
             </h2>
             <p>
@@ -71,7 +71,7 @@ export default function ReturnRefundPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               4. Replacement Only Policy (No Monetary Refunds)
             </h2>
             <p>
@@ -80,7 +80,7 @@ export default function ReturnRefundPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               5. Customer Care &amp; Replacement Inquiries
             </h2>
             <p>

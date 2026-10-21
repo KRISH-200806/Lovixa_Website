@@ -94,7 +94,7 @@ export function ProductGallery({
             </div>
           </>
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-stone-300 font-serif font-bold text-3xl">
+          <div className="w-full h-full flex items-center justify-center text-stone-300 font-sans font-bold text-3xl">
             {title.slice(0, 2).toUpperCase()}
           </div>
         )}

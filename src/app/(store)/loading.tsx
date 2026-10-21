@@ -10,7 +10,7 @@ export default function StoreLoading() {
 
       <div className="flex flex-col items-center gap-3">
         {/* Brand Monogram Shimmer */}
-        <div className="w-12 h-12 rounded-full bg-[#6B2D5C]/10 border border-[#E8C4D4]/60 flex items-center justify-center text-[#6B2D5C] font-serif font-bold text-lg animate-pulse">
+        <div className="w-12 h-12 rounded-full bg-[#6B2D5C]/10 border border-[#E8C4D4]/60 flex items-center justify-center text-[#6B2D5C] font-sans font-bold text-lg animate-pulse">
           L
         </div>
 

@@ -124,7 +124,7 @@ export default function ContactPage() {
               <PhoneCall className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-serif font-bold text-lg text-[#2B1822]">
+              <h3 className="font-sans font-bold text-base sm:text-lg text-[#2B1822]">
                 Customer Care
               </h3>
               <a
@@ -145,7 +145,7 @@ export default function ContactPage() {
               <Mail className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-serif font-bold text-lg text-[#2B1822]">
+              <h3 className="font-sans font-bold text-base sm:text-lg text-[#2B1822]">
                 Email Concierge
               </h3>
               <a
@@ -166,7 +166,7 @@ export default function ContactPage() {
               <MapPin className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-serif font-bold text-lg text-[#2B1822]">
+              <h3 className="font-sans font-bold text-base sm:text-lg text-[#2B1822]">
                 Office &amp; Presence
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-snug mt-1 font-sans">
@@ -206,7 +206,7 @@ export default function ContactPage() {
 
           {/* Form Box (6 cols) */}
           <div className="lg:col-span-6 bg-white rounded-2xl sm:rounded-3xl border border-[#E8C4D4]/60 p-6 sm:p-8 lg:p-10 shadow-xs">
-            <h2 className="font-serif font-bold text-2xl sm:text-3xl text-[#2B1822] mb-6">
+            <h2 className="font-sans font-bold text-2xl sm:text-3xl text-[#2B1822] mb-6">
               Send Us A Message
             </h2>
 
@@ -215,7 +215,7 @@ export default function ContactPage() {
                 <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="font-serif font-bold text-xl text-[#2B1822]">
+                <h3 className="font-sans font-bold text-lg sm:text-xl text-[#2B1822]">
                   Thank You for Reaching Out
                 </h3>
                 <p className="text-xs sm:text-sm text-stone-600 max-w-sm mx-auto font-sans">

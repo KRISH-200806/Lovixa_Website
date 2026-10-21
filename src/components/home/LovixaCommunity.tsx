@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontCommunityData } from '@/lib/cms/products'
 
 function InstagramIcon({ className = 'w-6 h-6' }: { className?: string }) {
@@ -98,18 +98,11 @@ export function LovixaCommunity({ data }: Props) {
     <section className="py-14 sm:py-20 bg-[#FBF6F8] relative border-b border-[#E8C4D4]/40">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Centered Heading with Signature Brush Stroke */}
-        <div className="text-center mb-10 sm:mb-12">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2 max-w-md mx-auto">
-            {subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="JOIN THE CIRCLE"
+          title={heading}
+          subtitle={subtitle}
+        />
 
         {/* 4 Square Instagram Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-14">
@@ -161,12 +154,12 @@ export function LovixaCommunity({ data }: Props) {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
               required
-              className="flex-1 px-4 py-3 rounded-none sm:rounded-sm bg-white border border-[#E8C4D4]/60 text-xs text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none focus:border-[#6B2D5C]"
+              className="flex-1 px-5 py-3 rounded-full bg-white border border-[#E8C4D4]/70 text-xs text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none focus:border-[#6B2D5C] font-sans"
             />
             <button
               type="submit"
               disabled={isLoading || subscribed}
-              className="px-6 py-3 bg-[#6B2D5C] hover:bg-[#562349] disabled:opacity-85 text-white text-xs font-bold uppercase tracking-wider transition-all rounded-none sm:rounded-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+              className="px-7 py-3 bg-[#6B2D5C] hover:bg-[#562349] disabled:opacity-85 text-white text-xs font-bold uppercase tracking-wider transition-all rounded-full flex items-center justify-center gap-1.5 cursor-pointer shrink-0 font-sans shadow-xs"
             >
               {subscribed ? (
                 <>

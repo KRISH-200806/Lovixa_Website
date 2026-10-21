@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Plus, Minus } from 'lucide-react'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontFAQsData } from '@/lib/cms/products'
 
 const DEFAULT_FAQS = [
@@ -49,18 +49,11 @@ export function LovixaFAQ({ data }: Props) {
     <section id="faq" className="py-14 sm:py-20 bg-[#FBF6F8] border-b border-[#E8C4D4]/40 relative">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Centered Heading with Signature Brush Stroke */}
-        <div className="text-center mb-10 sm:mb-12">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2">
-            {subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="RITUAL GUIDANCE"
+          title={heading}
+          subtitle={subtitle}
+        />
 
         {/* Clean Modern Accordion List */}
         <div className="bg-white rounded-2xl border border-[#E8C4D4]/60 p-5 sm:p-8 shadow-xs divide-y divide-[#E8C4D4]/30">

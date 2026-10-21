@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
         {/* Policy Content */}
         <div className="space-y-8 text-sm sm:text-base text-[#2B1822]/80 leading-relaxed font-sans">
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               1. Our Privacy Commitment
             </h2>
             <p>
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               2. Information We Collect
             </h2>
             <p>When you browse or purchase from LOVIXA COSMETIC, we collect:</p>
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               3. Payment Security &amp; Encryption
             </h2>
             <p>
@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               4. Cookies &amp; Local Storage
             </h2>
             <p>
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               5. Contact Us Regarding Your Data
             </h2>
             <p>

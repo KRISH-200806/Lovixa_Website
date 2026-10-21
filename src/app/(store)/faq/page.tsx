@@ -137,7 +137,7 @@ export default function FAQPage() {
                   onClick={() => toggle(faq.id)}
                   className="w-full text-left p-6 sm:p-7 flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
                 >
-                  <span className="text-base sm:text-lg font-serif font-bold text-[#2B1822]">
+                  <span className="text-base sm:text-lg font-sans font-bold text-[#2B1822]">
                     {faq.question}
                   </span>
                   <div
@@ -150,7 +150,7 @@ export default function FAQPage() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100 pt-4 font-sans">
+                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-xs sm:text-sm text-[#2B1822]/80 leading-relaxed border-t border-[#E8C4D4]/30 pt-4 font-sans">
                     {faq.answer}
                   </div>
                 )}
@@ -161,14 +161,14 @@ export default function FAQPage() {
 
         {/* Contact Banner */}
         <div className="p-8 sm:p-10 rounded-3xl bg-[#E8C4D4]/25 border border-[#E8C4D4]/70 text-center space-y-4">
-          <h3 className="font-serif font-bold text-2xl text-[#2B1822]">Still have questions?</h3>
-          <p className="text-xs sm:text-sm text-stone-600 font-sans max-w-md mx-auto">
+          <h3 className="font-sans font-bold text-xl sm:text-2xl text-[#2B1822]">Still have questions?</h3>
+          <p className="text-xs sm:text-sm text-[#2B1822]/75 font-sans max-w-md mx-auto">
             Our concierge team is always delighted to assist you with order questions or personalized routine advice.
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="mailto:lovixacosmetic@gmail.com"
-              className="px-6 py-3 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold tracking-wider uppercase transition-all shadow-sm flex items-center gap-2 font-sans"
+              className="btn-primary !py-2.5 !px-6"
             >
               <Mail className="w-4 h-4 text-[#E8C4D4]" />
               <span>Email Support</span>
@@ -177,7 +177,7 @@ export default function FAQPage() {
               href="/contact"
               prefetch={true}
               scroll={true}
-              className="px-6 py-3 rounded-full bg-white hover:bg-[#FBF6F8] text-[#2B1822] border border-[#E8C4D4] text-xs font-bold tracking-wider uppercase transition-all font-sans"
+              className="btn-secondary !py-2.5 !px-6"
             >
               <span>Contact Page</span>
             </Link>

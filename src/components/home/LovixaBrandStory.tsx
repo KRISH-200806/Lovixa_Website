@@ -1,7 +1,7 @@
 'use client'
 
 import { ShieldCheck, Heart, Leaf, Award } from 'lucide-react'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontBrandStoryData } from '@/lib/cms/products'
 
 const DEFAULT_SEALS = [
@@ -60,18 +60,12 @@ export function LovixaBrandStory({ data }: Props) {
     <section id="brand-story" className="py-14 sm:py-20 bg-[#FBF6F8] relative border-b border-[#E8C4D4]/40">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
-        {/* Centered Heading with Signature Brush Stroke */}
-        <div className="inline-block relative mb-6">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-            {heading}
-          </h2>
-          <BrushStroke className="text-[#6B2D5C]" />
-        </div>
-
-        {/* Editorial Story Text */}
-        <p className="text-xs sm:text-sm text-[#2B1822]/70 leading-relaxed font-sans max-w-2xl mx-auto mb-12">
-          {storyText}
-        </p>
+        <SectionHeader
+          eyebrow="OUR PHILOSOPHY"
+          title={heading}
+          subtitle={storyText}
+          className="max-w-2xl mx-auto mb-12"
+        />
 
         {/* 4 Refined Circular Botanical Trust Seals */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

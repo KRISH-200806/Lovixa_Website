@@ -5,7 +5,7 @@ import { Check, ShoppingBag, Truck, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import { useCartStore } from '@/lib/cart/cart-store'
 import { useCurrency } from '@/components/providers/StoreSettingsProvider'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontPromoBannerData } from '@/lib/cms/products'
 
 interface Props {
@@ -72,18 +72,11 @@ export function LovixaPromoBanner({ data }: Props) {
     <section className="py-12 sm:py-16 bg-[#E8C4D4]/20 border-b border-[#E8C4D4]/40 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Centered Heading with Signature Brush Stroke */}
-        <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {sectionTitle}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2 max-w-lg mx-auto">
-            {sectionSubtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow={badge}
+          title={sectionTitle}
+          subtitle={sectionSubtitle}
+        />
 
         {/* Cohesive Luxury Duo Card */}
         <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E8C4D4]/60 p-6 sm:p-8 lg:p-10 shadow-sm max-w-5xl mx-auto">
@@ -158,7 +151,7 @@ export function LovixaPromoBanner({ data }: Props) {
                 {/* Rich Plum Action Button */}
                 <button
                   onClick={handleAddDuo}
-                  className={`w-full py-3 px-6 font-sans text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-xs cursor-pointer ${
+                  className={`w-full py-3.5 px-6 rounded-full font-sans text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-xs cursor-pointer ${
                     added
                       ? 'bg-emerald-700 text-white'
                       : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98'

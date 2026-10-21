@@ -150,7 +150,7 @@ export function CartDrawer() {
                 <div className="w-16 h-16 rounded-full bg-[#E8C4D4]/30 border border-[#E8C4D4]/50 flex items-center justify-center mb-4 text-[#6B2D5C]">
                   <ShoppingBag className="w-7 h-7" />
                 </div>
-                <h3 className="text-base font-serif font-bold text-[#2B1822]">Your shopping bag is empty</h3>
+                <h3 className="text-base font-sans font-bold text-[#2B1822]">Your shopping bag is empty</h3>
                 <p className="text-xs text-[#2B1822]/70 mt-1 max-w-xs font-sans">
                   Explore our collection of thoughtful haircare and skincare essentials.
                 </p>

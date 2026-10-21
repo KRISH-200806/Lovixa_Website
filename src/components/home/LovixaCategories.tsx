@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontCategoryPedestalsData } from '@/lib/cms/products'
 
 const CATEGORY_CARDS = [
@@ -52,18 +52,11 @@ export function LovixaCategories({ data }: Props) {
     <section className="py-12 sm:py-16 bg-[#E8C4D4]/20 relative border-b border-[#E8C4D4]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Botanical Categories Heading */}
-        <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2">
-            {subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="TARGETED ESSENTIALS"
+          title={heading}
+          subtitle={subtitle}
+        />
 
         {/* 4 Pedestal Display Banners (The Wellness Shop Style) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">

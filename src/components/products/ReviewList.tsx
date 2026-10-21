@@ -135,7 +135,7 @@ export function ReviewList({
       {/* Summary Banner */}
       <div className="bg-[#FBF6F8] border border-[#E8C4D4]/70 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4 text-center sm:text-left">
-          <div className="text-4xl font-bold font-serif text-[#2B1822]">{averageRating}</div>
+          <div className="text-4xl font-bold font-sans text-[#2B1822]">{averageRating}</div>
           <div>
             <div className="flex items-center gap-1 text-[#6B2D5C]">
               {[1, 2, 3, 4, 5].map((s) => (
@@ -155,7 +155,7 @@ export function ReviewList({
 
         <button
           onClick={handleOpenReview}
-          className="px-5 py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold uppercase tracking-wider rounded-lg transition-all shadow-sm flex items-center gap-2 cursor-pointer font-sans"
+          className="btn-primary !py-2.5 !px-5"
         >
           <MessageSquare className="w-4 h-4 text-[#E8C4D4]" />
           <span>Write a Review</span>
@@ -168,7 +168,7 @@ export function ReviewList({
           <div className="bg-[#FBF6F8] border border-[#E8C4D4]/70 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-2 border-b border-[#E8C4D4]/60">
               <div>
-                <h3 className="text-lg font-serif font-bold text-[#2B1822]">Write a Customer Review</h3>
+                <h3 className="text-lg font-sans font-bold text-[#2B1822]">Write a Customer Review</h3>
                 <p className="text-[11px] text-[#2B1822]/60 flex items-center gap-1 mt-0.5 font-sans">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#6B2D5C]" />
                   Only verified buyers of this product can submit reviews
@@ -179,7 +179,7 @@ export function ReviewList({
             {submitted ? (
               <div className="py-8 text-center space-y-3">
                 <CheckCircle className="w-12 h-12 text-[#6B2D5C] mx-auto" />
-                <h4 className="font-serif font-bold text-[#2B1822] text-base">Verified Review Published!</h4>
+                <h4 className="font-sans font-bold text-[#2B1822] text-base">Verified Review Published!</h4>
                 <p className="text-xs text-[#2B1822]/60 max-w-sm mx-auto font-sans">
                   Thank you for sharing your authentic feedback. Your review is now visible to other customers.
                 </p>
@@ -316,7 +316,7 @@ export function ReviewList({
           <div className="w-12 h-12 bg-[#E8C4D4]/30 rounded-full flex items-center justify-center mx-auto mb-3 shadow-xs border border-[#E8C4D4]/60">
             <MessageSquare className="w-5 h-5 text-[#6B2D5C]" />
           </div>
-          <h3 className="text-sm font-serif font-bold text-[#2B1822]">No Customer Reviews Yet</h3>
+          <h3 className="text-sm font-sans font-bold text-[#2B1822]">No Customer Reviews Yet</h3>
           <p className="text-xs text-[#2B1822]/60 mt-1 max-w-sm mx-auto font-sans">
             Have you purchased this product? Click &quot;Write a Review&quot; to share your verified experience.
           </p>
@@ -358,7 +358,7 @@ export function ReviewList({
                     {formattedDate && <span className="text-[11px] text-stone-400 font-sans">{formattedDate}</span>}
                   </div>
                 </div>
-                <h4 className="font-serif font-semibold text-sm text-[#2B1822]">{rev.title}</h4>
+                <h4 className="font-sans font-semibold text-sm text-[#2B1822]">{rev.title}</h4>
                 <p className="text-xs text-[#2B1822]/75 leading-relaxed font-sans">{rev.comment}</p>
               </div>
             )

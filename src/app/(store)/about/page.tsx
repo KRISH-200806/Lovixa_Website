@@ -54,7 +54,7 @@ export default function AboutPage() {
           <span className="text-xs uppercase tracking-widest text-[#6B2D5C] font-medium font-sans">
             OUR PURPOSE
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#2B1822] leading-tight max-w-3xl mx-auto">
+          <h2 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl text-[#2B1822] tracking-tight leading-tight max-w-3xl mx-auto">
             Care that feels thoughtful, gentle, and authentically personal.
           </h2>
           <div className="w-16 h-px bg-[#6B2D5C] mx-auto" />
@@ -85,7 +85,7 @@ export default function AboutPage() {
               <span className="text-xs font-bold uppercase tracking-widest text-[#6B2D5C] font-sans">
                 THE LOVIXA DIFFERENCE
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] leading-snug">
+              <h3 className="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] tracking-tight leading-snug">
                 Formulated for real hair and skin, designed for everyday confidence.
               </h3>
               <p className="text-sm sm:text-base text-[#2B1822]/75 leading-relaxed font-sans">
@@ -128,7 +128,7 @@ export default function AboutPage() {
             <span className="text-xs font-bold uppercase tracking-widest text-[#6B2D5C] font-sans">
               OUR COMMITMENTS
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#2B1822]">
+            <h2 className="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] tracking-tight">
               What Guides Every Formula
             </h2>
             <p className="text-xs sm:text-sm text-[#2B1822]/70 font-sans">
@@ -147,7 +147,7 @@ export default function AboutPage() {
                   <div className="w-12 h-12 rounded-xl bg-[#FBF6F8] border border-[#E8C4D4]/50 flex items-center justify-center text-[#6B2D5C] shadow-2xs">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-serif text-lg text-[#2B1822] font-semibold">
+                  <h3 className="font-sans font-bold text-base sm:text-lg text-[#2B1822]">
                     {pillar.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#2B1822]/70 leading-relaxed font-sans">
@@ -180,7 +180,7 @@ export default function AboutPage() {
           <span className="text-xs uppercase tracking-widest text-[#6B2D5C] font-bold font-sans">
             HERE FOR YOU
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#2B1822]">
+          <h2 className="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] tracking-tight">
             Have a Question About Our Formulations?
           </h2>
           <p className="text-xs sm:text-sm text-[#2B1822]/70 max-w-xl mx-auto font-sans leading-relaxed">

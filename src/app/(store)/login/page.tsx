@@ -48,13 +48,13 @@ function LoginContent() {
       <div className="w-full max-w-md bg-white border border-[#E8C4D4]/60 rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
         <div className="bg-[#2B1822] px-6 sm:px-8 pt-8 pb-7 text-white text-center border-b border-[#2B1822]">
-          <div className="w-10 h-10 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center font-serif font-bold text-sm mx-auto mb-2.5 shadow-sm border border-[#E8C4D4]/40">
+          <div className="w-10 h-10 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center font-sans font-bold text-sm mx-auto mb-2.5 shadow-sm border border-[#E8C4D4]/40">
             L
           </div>
           <span className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#E8C4D4] block font-sans mb-1">
             LOVIXA COSMETIC
           </span>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-3xl font-sans font-bold tracking-tight text-white">
             Customer Sign In
           </h1>
           <p className="text-xs text-[#FBF6F8]/80 mt-1 font-sans">

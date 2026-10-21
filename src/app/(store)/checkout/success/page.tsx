@@ -95,7 +95,7 @@ function SuccessContent() {
               <span>Awaiting WhatsApp Confirmation</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#2B1822] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
               Order Initiated Successfully!
             </h1>
 

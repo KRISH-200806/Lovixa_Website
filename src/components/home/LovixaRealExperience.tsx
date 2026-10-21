@@ -6,7 +6,7 @@ import { Eye, Play, Check, ShoppingBag, Star, ChevronLeft, ChevronRight } from '
 import { useState, useRef } from 'react'
 import { useCartStore } from '@/lib/cart/cart-store'
 import { useCurrency } from '@/components/providers/StoreSettingsProvider'
-import { BrushStroke } from '@/components/ui/BrushStroke'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
 interface ExperienceReel {
   id: string
@@ -142,18 +142,11 @@ export function LovixaRealExperience({ data }: Props) {
     <section className="py-12 sm:py-16 bg-[#FBF6F8] relative border-b border-[#E8C4D4]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* The Wellness Shop Signature Heading */}
-        <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-block relative">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-[#2B1822] tracking-tight">
-              {heading}
-            </h2>
-            <BrushStroke className="text-[#6B2D5C]" />
-          </div>
-          <p className="text-xs sm:text-sm text-[#2B1822]/70 mt-2">
-            {subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="COMMUNITY STORIES"
+          title={heading}
+          subtitle={subtitle}
+        />
 
         {/* Video Reels Carousel */}
         <div className="relative">

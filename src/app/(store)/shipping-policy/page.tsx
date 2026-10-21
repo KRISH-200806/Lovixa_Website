@@ -36,7 +36,7 @@ export default function ShippingPolicyPage() {
         {/* Policy Content */}
         <div className="space-y-8 text-sm sm:text-base text-[#2B1822]/85 leading-relaxed font-sans">
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               1. Processing &amp; Dispatch Timeframe
             </h2>
             <p>
@@ -49,7 +49,7 @@ export default function ShippingPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               2. Pan-India Delivery Timelines
             </h2>
             <p>
@@ -68,7 +68,7 @@ export default function ShippingPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               3. Shipping Fees &amp; Thresholds
             </h2>
             <p>
@@ -77,7 +77,7 @@ export default function ShippingPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               4. Real-Time Tracking Information
             </h2>
             <p>
@@ -86,7 +86,7 @@ export default function ShippingPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-serif font-bold text-[#2B1822]">
+            <h2 className="text-xl font-sans font-bold text-[#2B1822]">
               5. Queries &amp; Delivery Assistance
             </h2>
             <p>

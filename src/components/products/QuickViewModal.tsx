@@ -101,7 +101,7 @@ export function QuickViewModal() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#2B1822]/30 font-serif text-3xl">
+              <div className="w-full h-full flex items-center justify-center text-[#2B1822]/30 font-sans font-bold text-3xl">
                 {product.title.slice(0, 2).toUpperCase()}
               </div>
             )}
@@ -136,7 +136,7 @@ export function QuickViewModal() {
               </div>
 
               {/* Title */}
-              <h2 className="text-2xl sm:text-3xl font-serif text-[#2B1822] tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-sans font-bold text-[#2B1822] tracking-tight leading-tight">
                 {product.title}
               </h2>
 
@@ -153,7 +153,7 @@ export function QuickViewModal() {
 
               {/* Price */}
               <div className="flex items-center gap-2.5 mt-3 py-2 border-y border-[#E8C4D4]/60">
-                <span className="font-serif font-bold text-2xl text-[#2B1822]">
+                <span className="font-sans font-bold text-2xl text-[#2B1822]">
                   {formatPrice(product.price)}
                 </span>
                 {product.compareAtPrice && product.compareAtPrice > product.price && (
@@ -187,7 +187,7 @@ export function QuickViewModal() {
             <div className="space-y-3 pt-3">
               <div className="flex gap-3">
                 {/* Quantity */}
-                <div className="flex items-center border border-[#E8C4D4]/60 rounded-xl px-3 py-2 bg-white">
+                <div className="flex items-center border border-[#E8C4D4]/60 rounded-full px-4 py-2 bg-white">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="text-[#2B1822]/70 hover:text-[#6B2D5C] font-bold px-1 transition-colors cursor-pointer"
@@ -206,7 +206,7 @@ export function QuickViewModal() {
                 {/* Add to Cart */}
                 <button
                   onClick={handleAddToCart}
-                  className={`flex-1 py-3 px-4 rounded-xl font-medium text-xs sm:text-sm tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`flex-1 py-3 px-6 rounded-full font-sans font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
                     isAdded
                       ? 'bg-[#562349] text-white shadow-[#6B2D5C]/20'
                       : 'bg-[#6B2D5C] hover:bg-[#562349] text-white shadow-[#6B2D5C]/20'
