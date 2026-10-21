@@ -1,0 +1,25 @@
+---
+description: Every color must be admin-editable via theme-settings — no hardcoded hex, no inline color styles. Full reference in 22-theme-management.md
+globs: src/components/**/*.{js,jsx,ts,tsx},src/app/**/*.{js,jsx,ts,tsx},tailwind.config.js
+alwaysApply: false
+---
+
+# Theme Management — Colors Are Admin-Managed, Not Static
+
+Full reference: `starter-kit/22-theme-management.md`. Every color the site renders comes from the `theme-settings` global (admin, per mode: dark/light) via CSS custom properties — not a static Tailwind hex.
+
+## Rules
+
+- **Never hardcode a color** — no raw hex (`bg-[#1A1A1A]`, `style={{ color: '#fff' }}`), no arbitrary Tailwind color value. Use the existing token classes: `bg-brand-500`, `text-neutral-400`, `bg-background`, `text-foreground`, `text-semantic-error`, `border-accent-blue`, etc.
+- **Need a color that doesn't exist yet?** Add it to `THEME_TOKEN_DEFS` in `src/lib/theme/tokens.ts` (+ both mode defaults) and the matching `var(--color-...)` in `tailwind.config.js` — never invent a one-off hex instead.
+- **`tailwind.config.js` `colors` values must all be `var(--color-...)`** — never a static hex added back in.
+- Scope is color only — radius/shadow/spacing/typography stay static; don't extend this pattern to those without a deliberate design decision.
+
+## Review gate
+
+- [ ] No raw hex or inline color style introduced
+- [ ] Any new color went through `THEME_TOKEN_DEFS` first
+- [ ] `tailwind.config.js` colors stay 100% `var(--color-...)` references
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

@@ -1,0 +1,27 @@
+---
+description: Enforce atomic stock updates, total validation, and idempotency across checkout and order flow
+globs: src/app/**/checkout/**, src/lib/payments/**, src/collections/Orders.ts, src/app/api/checkout/**
+---
+
+# E-Commerce Checkout & Order Integrity Rules
+
+## 1. Never Trust Client Prices
+- **CRITICAL**: The client sends product IDs, variant IDs, and quantities only.
+- **NEVER** accept price, subtotal, discount, or tax totals calculated on the client side.
+- All amounts must be calculated server-side from active database records during order creation and PaymentIntent initiation.
+
+## 2. Stock Verification & Reservation
+- Before initiating a payment intent or charging a customer:
+  1. Fetch active variant records with their live `inventory` count.
+  2. Verify `inventory >= requestedQuantity` (unless `allowBackorder == true`).
+  3. If stock is insufficient, abort with HTTP 409 Conflict: `INSUFFICIENT_STOCK`.
+
+## 3. Order Snapshot Pattern
+- When creating an `Order` document:
+  - Do NOT rely on live product links for pricing or title.
+  - Store an immutable **Snapshot** of the items (`title`, `sku`, `priceAtPurchase`, `image`, `optionsSnapshot`).
+  - If a merchant alters the product title or price tomorrow, existing historical orders must remain 100% accurate.
+
+## 4. Idempotency & Duplicate Prevention
+- Every checkout submission must utilize an `idempotencyKey` or check existing `paymentIntentId`.
+- Never create multiple Order records for the same successful payment charge.

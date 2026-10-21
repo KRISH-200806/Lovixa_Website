@@ -1,0 +1,32 @@
+---
+description: Application-layer security requirements — auth hardening, secrets separation, form security, upload safety. Firewall/WAF is infra, see 20-security-hardening.md
+globs: src/collections/**/*.ts,src/globals/**/*.ts,src/app/api/**/*.ts,payload.config.ts
+alwaysApply: false
+---
+
+# Security Hardening
+
+Full reference: `starter-kit/20-security-hardening.md`. Firewall/proxy/WAF (Cloudflare recommended) is an infrastructure concern set up per deployment — this rule covers what's enforceable in code.
+
+## Rules
+
+- **Never reuse `PAYLOAD_SECRET`** for anything other than Payload's own auth token signing. A public/query-string secret (revalidate endpoint, webhook verification) is always a separate env var.
+- **Secret comparison is constant-time** (`crypto.timingSafeEqual`), never a plain `!==` string compare, for any secret-gated endpoint.
+- **Any endpoint gated by a secret in a query string or header gets rate limited** (`src/lib/rateLimit.ts` at minimum — real limit belongs at the WAF).
+- **New auth-enabled collection**: confirm `maxLoginAttempts`/`lockTime` are set (Payload disables lockout by default if unset).
+- **Public form collections**: `create: publicCreate`, never `read`/`update`/`delete` open to anonymous. Verify Turnstile (`src/lib/turnstile.ts`) and disposable email (`src/lib/disposableEmail.ts`) server-side before writing, plus Zod validation.
+- **File upload collections**: `create`/`update`/`delete` explicitly `staffOnly` (or narrower) — never rely on Payload's implicit default. If SVG is an allowed mimeType, it may only ever be rendered via `next/image`/`<img>` — never `<object>`, `<embed>`, direct navigation, or `dangerouslySetInnerHTML`.
+- **Drafts are a security boundary, not just editorial** — any collection/global with `versions.drafts` must use `access.read: publicReadPublished`, never `publicRead`. See `19-draft-publish-workflow.md`.
+- **New third-party service** (analytics, embed, API): update CSP `connect-src`/`img-src`/`script-src`/`font-src` in `next.config.mjs` — don't widen with a wildcard.
+- **New security-relevant npm dependency**: verify it exists and is maintained (check the registry) before adding — don't trust a package name from memory.
+
+## Review gate
+
+- [ ] No secret reused across two different trust boundaries
+- [ ] Constant-time compare on any secret check
+- [ ] Rate limiting present on any publicly-reachable secret-gated or write endpoint
+- [ ] File upload access explicit, not implicit
+- [ ] CSP updated if a new external origin was introduced
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

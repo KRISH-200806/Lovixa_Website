@@ -1,0 +1,61 @@
+---
+description: Enforce junction-table ownership for all section-based pages
+alwaysApply: true
+---
+
+# Section Source Map Enforcement
+
+All current and future section-based pages must use `section-source-map` as the ownership layer. Do not introduce direct section rendering paths that bypass mapping.
+
+## Required for any source with `sections`
+
+- Add write sync hook:
+  - Globals: `createSyncGlobalSectionsHook({ sourceTable: '<source>' })`
+  - Collections: `createSyncCollectionSectionsHook({ sourceTable: '<source>' })`
+- Add raw-capture + mapped-read hooks:
+  - Globals:
+    - `createCaptureRawSectionsGlobalHook({ sourceTable: '<source>' })`
+    - `createReadMappedGlobalSectionsHook({ sourceTable: '<source>' })`
+  - Collections:
+    - `createCaptureRawSectionsCollectionHook({ sourceTable: '<source>' })`
+    - `createReadMappedCollectionSectionsHook({ sourceTable: '<source>' })`
+- Add read filtering before rendering:
+  - `applySectionSourceMap({ payload, sourceTable, sourceId, sections })`
+- Use a stable `sourceTable` value and exact `sourceId` for that record.
+- Never reuse the same `sourceTable` for different sources.
+
+## Migration and rollout rules
+
+- Create additive migrations only for this feature (new tables/indexes are fine).
+- Never alter or drop legacy section storage tables to implement mapping rollout.
+- Run backfill for covered sources after migration: `npm run backfill:section-source-map`.
+
+## ID integrity and anti-bleeding safeguards
+
+- Globals with `sections` must include:
+  - `beforeOperation: [stripIdBeforeOperationHook]`
+  - `beforeValidate: [stripIdHook]`
+- Collections with `sections` must include:
+  - `stripCollectionNestedIdsBeforeOperationHook`
+  - `stripCollectionNestedIdsHook`
+- Never add root-level `id` fields in global/collection schemas.
+- Never render raw unmapped `sections` for mapped sources.
+
+## New global page conventions
+
+- Keep hero as a top-level `hero` group, outside `sections`.
+- Render hero before mapped `sections`.
+- Keep `sections` on approved shared block lists so admin "Add Section" and reorder persist via source-map hooks.
+- New `sections` fields must start empty. Never set `defaultValue` on the `sections` blocks field, and never seed blocks in migrations, backfill scripts, or first-run hooks. The admin should open a brand-new page with zero sections so the user adds them via "Add Section".
+
+## PR/review checklist (must pass)
+
+- New/updated section source has capture + read + sync hook coverage.
+- No code path renders `sections` directly for mapped sources without `applySectionSourceMap`.
+- `sourceTable` is stable, unique, and correctly paired with `sourceId`.
+- ID sanitizers are present for the source type (global/collection).
+- `generate:types` and `tsc --noEmit` pass.
+
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

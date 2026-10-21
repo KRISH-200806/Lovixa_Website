@@ -1,0 +1,43 @@
+---
+description: Draft/Publish enforcement — a draft page must be invisible on the public frontend across all three layers (fetch, access control, section-map sync gate)
+globs: src/globals/**/*.ts,src/collections/**/*.ts,src/lib/cms/**/*.ts,src/hooks/sectionSourceMap.ts,src/app/(frontend)/**/*.{js,jsx,ts,tsx}
+alwaysApply: false
+---
+
+# Draft / Publish — Required Per Draft-Enabled Source
+
+Full reference: `starter-kit/19-draft-publish-workflow.md`. Three layers, all required — skipping the section-map gate is the mistake that leaks unpublished content in production.
+
+## Enabling drafts on a new global/collection
+
+1. `versions: { drafts: true }` in the config.
+2. `access: { read: publicReadPublished }` (`src/access/cms.ts`) — **not** `publicRead`. Without this, drafts leak through direct REST/GraphQL API calls even though the frontend itself won't show them.
+3. If section-mapped: use `createSyncGlobalSectionsHook`/`createSyncCollectionSectionsHook` from `src/hooks/sectionSourceMap.ts` unchanged — the draft-save gate (`isDraftSave`) is already built in. Never hand-roll a section sync hook that skips this.
+
+## Frontend fetch rule
+
+Every public fetcher passes `draft: false` explicitly and treats a null/empty result as "not accessible":
+
+```typescript
+const data = await payload.findGlobal({ slug, depth: 0, draft: false })
+if (!data) return notFound()
+```
+
+Never pass `draft: true` in frontend code — that's the admin-preview-only path.
+
+## Rules
+
+- Don't invent a homemade `published: boolean` field — use Payload's `versions.drafts`, it's the real mechanism (admin UI, `_status`, proper versioning).
+- Don't register a draft-enabled collection in `sitemap-sources.ts` without `where: { _status: { equals: 'published' } }`.
+- Don't skip `notFound()` when a mapped fetcher returns null — never render a partial/empty page instead.
+
+## Review gate
+
+- [ ] `versions.drafts: true` + `access.read: publicReadPublished` both present
+- [ ] Frontend fetch passes `draft: false`
+- [ ] Route 404s on null/empty result
+- [ ] Section-mapped source uses the standard sync hook factories, unmodified
+- [ ] `sitemap-sources.ts` entry has `where` filter if the collection has drafts
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

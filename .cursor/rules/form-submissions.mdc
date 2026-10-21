@@ -1,0 +1,42 @@
+---
+description: Auto-capture all frontend forms (contact, quotes, newsletters, demos) into Payload FormSubmissions collection with Turnstile and rate limiting
+globs: src/components/forms/**/*.tsx,src/components/sections/**/*{Form,Contact,Quote,Newsletter,Lead}*.tsx,src/app/api/contact/**/*.ts
+alwaysApply: false
+---
+
+# Form Submissions & Lead Capture Standard
+
+Full reference: `starter-kit/31-form-submissions-and-lead-management.md`.
+
+## Core Rules
+
+1. **All Public Forms Must POST to `/api/contact`**:
+   - Whenever creating a new form in UI (Contact section, Quote modal, Newsletter signup, Demo request), connect the submit handler to `POST /api/contact`.
+   - Never create ad-hoc database insertion endpoints or third-party webhooks that bypass the central validation pipeline.
+
+2. **Standard Payload Structure**:
+   ```typescript
+   {
+     name: string,             // Required
+     email: string,            // Required
+     phone?: string,           // Optional
+     subject?: string,         // Optional
+     message: string,          // Required
+     formType: 'contact' | 'quote' | 'newsletter' | 'demo' | 'custom',
+     sourcePage: string,       // window.location.pathname
+     customData?: Record<string, unknown>, // For custom fields (budget, service type)
+     turnstileToken?: string,  // Optional / required in production
+   }
+   ```
+
+3. **Reuse `<ContactForm />` When Building Sections**:
+   - For standard contact/inquiry sections, import and reuse `src/components/forms/ContactForm.tsx`.
+   - Supports `formType="quote"`, `formType="newsletter"`, `showPhone={true}`, and custom labels.
+
+4. **Zero Lost Leads**:
+   - `/api/contact` automatically writes every submission to the `FormSubmissions` collection in Payload CMS.
+   - Submissions are safely preserved in the database even if SMTP email is offline or unconfigured.
+
+5. **Security**:
+   - Every submission must pass Cloudflare Turnstile verification and disposable email check.
+   - Client IP rate-limited (max 5 requests per minute).

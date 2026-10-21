@@ -1,0 +1,91 @@
+<svg width="825" height="1000" viewBox="0 0 825 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Luxury Gradient -->
+    <linearGradient id="bg_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E3310" />
+      <stop offset="40%" stop-color="#1B5E20" />
+      <stop offset="75%" stop-color="#144A18" />
+      <stop offset="100%" stop-color="#081E09" />
+    </linearGradient>
+
+    <!-- Golden Shimmer Gradient -->
+    <linearGradient id="gold_glow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C6A15B" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#E5C887" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#936C3E" stop-opacity="0.4" />
+    </linearGradient>
+
+    <radialGradient id="ambient_light" cx="50%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#4CAF50" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#1B5E20" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#0E3310" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Soft Filter for Luxury Glow -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base Rectangle -->
+  <rect width="825" height="1000" rx="32" fill="url(#bg_gradient)" />
+  <rect width="825" height="1000" rx="32" fill="url(#ambient_light)" />
+
+  <!-- Delicate Geometric Border -->
+  <rect x="24" y="24" width="777" height="952" rx="20" stroke="url(#gold_glow)" stroke-width="1.5" stroke-opacity="0.3" fill="none" />
+  <rect x="36" y="36" width="753" height="928" rx="14" stroke="#FFFFFF" stroke-width="0.75" stroke-opacity="0.12" fill="none" />
+
+  <!-- Atmospheric Botanical Curves & Waves in Forest Greens -->
+  <g opacity="0.65">
+    <path d="M-50 850 C 200 700, 350 950, 850 680 L 850 1000 L -50 1000 Z" fill="#144A18" fill-opacity="0.6" />
+    <path d="M-50 920 C 250 800, 480 980, 850 780 L 850 1000 L -50 1000 Z" fill="#0E3310" fill-opacity="0.8" />
+  </g>
+
+  <!-- Elegant Perfume Bottle Silhouette Centerpiece -->
+  <g transform="translate(412.5, 360)" filter="url(#softGlow)">
+    <!-- Aura Ring -->
+    <circle cx="0" cy="0" r="160" fill="none" stroke="url(#gold_glow)" stroke-width="1" stroke-opacity="0.25" stroke-dasharray="4 6" />
+    <circle cx="0" cy="0" r="190" fill="none" stroke="#FFFFFF" stroke-width="0.5" stroke-opacity="0.15" />
+
+    <!-- Bottle Cap -->
+    <path d="M-24 -115 L24 -115 C28 -115 32 -110 30 -90 L26 -55 L-26 -55 L-30 -90 C-32 -110 -28 -115 -24 -115 Z" fill="url(#gold_glow)" />
+    <!-- Cap Neck Accent -->
+    <rect x="-18" y="-55" width="36" height="12" rx="2" fill="#E5C887" />
+
+    <!-- Bottle Shoulder & Body -->
+    <path d="M-75 110 C-85 60 -80 -10 -40 -35 L40 -35 C80 -10 85 60 75 110 C68 145 45 155 0 155 C-45 155 -68 145 -75 110 Z" fill="#FFFFFF" fill-opacity="0.08" stroke="url(#gold_glow)" stroke-width="2.5" />
+
+    <!-- Inner Essence Liquid Glow -->
+    <path d="M-60 105 C-68 65 -62 5 -30 -15 L30 -15 C62 5 68 65 60 105 C55 130 35 140 0 140 C-35 140 -55 130 -60 105 Z" fill="url(#ambient_light)" fill-opacity="0.8" />
+
+    <!-- Emblem Frame on Bottle -->
+    <rect x="-35" y="20" width="70" height="60" rx="6" fill="#144A18" fill-opacity="0.7" stroke="url(#gold_glow)" stroke-width="1.2" />
+    <text x="0" y="55" font-family="'Playfair Display', serif" font-size="14" font-weight="bold" fill="#E5C887" text-anchor="middle" letter-spacing="3">LOVIXA</text>
+  </g>
+
+  <!-- Botanical Leaf Motifs -->
+  <g stroke="url(#gold_glow)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.45">
+    <!-- Top Left Botanical Branch -->
+    <path d="M70 120 Q120 180 180 200" />
+    <path d="M110 150 Q130 135 140 145 Q125 160 110 150 Z" fill="url(#gold_glow)" fill-opacity="0.2" />
+    <path d="M145 175 Q175 165 180 178 Q160 190 145 175 Z" fill="url(#gold_glow)" fill-opacity="0.2" />
+    <path d="M85 135 Q70 155 80 162 Q95 150 85 135 Z" fill="url(#gold_glow)" fill-opacity="0.2" />
+
+    <!-- Bottom Right Botanical Branch -->
+    <path d="M755 860 Q700 800 640 780" />
+    <path d="M715 830 Q695 845 685 835 Q700 820 715 830 Z" fill="url(#gold_glow)" fill-opacity="0.2" />
+    <path d="M680 805 Q650 815 645 802 Q665 790 680 805 Z" fill="url(#gold_glow)" fill-opacity="0.2" />
+  </g>
+
+  <!-- Subtle Sparkles & Stars -->
+  <g fill="#E5C887" opacity="0.7">
+    <path d="M220 280 Q225 290 235 295 Q225 300 220 310 Q215 300 205 295 Q215 290 220 280 Z" />
+    <path d="M620 240 Q623 248 631 252 Q623 256 620 264 Q617 256 609 252 Q617 248 620 240 Z" transform="scale(0.8) translate(150, 40)" />
+    <path d="M260 520 Q263 526 269 529 Q263 532 260 538 Q257 532 251 529 Q257 526 260 520 Z" transform="scale(0.7) translate(100, 180)" />
+  </g>
+
+  <!-- Bottom Message Accent -->
+  <text x="412.5" y="740" font-family="'Playfair Display', serif" font-size="28" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Artisanal Luxury Fragrance</text>
+  <text x="412.5" y="775" font-family="'Urbanist', sans-serif" font-size="14" font-weight="400" fill="#A5D6A7" text-anchor="middle" letter-spacing="2">100% PURE &amp; NATURAL BOTANICALS</text>
+</svg>

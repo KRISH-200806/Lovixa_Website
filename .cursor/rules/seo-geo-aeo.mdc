@@ -1,0 +1,36 @@
+---
+description: SEO/GEO/AEO wiring — sitemap, robots, llms.txt, JSON-LD, keyword-plan-aware meta — required for every new page
+globs: src/app/(frontend)/**/*.{js,jsx,ts,tsx},src/globals/**/*.ts,src/collections/**/*.ts
+alwaysApply: false
+---
+
+# SEO / GEO / AEO — Required Per New Page
+
+Full reference: `starter-kit/17-seo-geo-aeo.md`.
+
+## Every new indexed page needs
+
+1. `generateMetadata` with `title`, `description`, `alternates.canonical` (absolute URL), `openGraph`, `twitter` — copy the pattern in `src/app/(frontend)/page.jsx`.
+2. Registered in `seoPlugin({ globals / collections })` (`payload.config.ts`) so the CMS SEO tab exists.
+3. One entry in `src/lib/seo/sitemap-sources.ts` (`SITEMAP_GLOBALS`/`SITEMAP_COLLECTIONS`) — after that, sitemap.ts and llms.txt pick up every doc in that collection automatically (live-queried, cache-tag revalidated on publish/edit/delete). Only new content TYPES need this step, not new documents.
+4. `<JsonLd data={breadcrumbSchema([...])} />` from `@/lib/seo/jsonld` for anything beyond the root page.
+5. `FaqBlock` + `<Faq>` component (`src/components/sections/shared/Faq.tsx`) for genuinely answerable Q&A content — emits `FAQPage` schema, the highest-leverage AEO signal.
+
+## Rules
+
+- Don't hand-write JSON-LD inline — use the builders in `src/lib/seo/jsonld.tsx` (`organizationSchema`, `websiteSchema`, `breadcrumbSchema`, `faqPageSchema`, `articleSchema`).
+- `Organization`/`WebSite` schema is site-wide in `layout.jsx` — never repeat per-page.
+- `FAQPage` schema must match content actually rendered visibly on the page — never emit schema for hidden/unrendered Q&A.
+- Meta title/description come from the CMS SEO tab first, falling back to `suggestSeoTitle`/`suggestSeoDescription` (keyword-plan-aware, see `16-keyword-plan-workflow.md`) — never hardcode a fallback that ignores the keyword plan.
+- Don't disable AI crawlers (`NEXT_PUBLIC_ALLOW_AI_CRAWLERS=false`) unless explicitly requested — default is allow.
+
+## Review gate
+
+- [ ] Page has canonical, OG, Twitter meta
+- [ ] Content type is in `sitemap-sources.ts` (new type only — existing collections need nothing per-doc)
+- [ ] Breadcrumb JSON-LD present (non-root pages)
+- [ ] FAQ content uses `FaqBlock`, not ad-hoc markup, when applicable
+- [ ] No duplicate `Organization`/`WebSite` schema
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

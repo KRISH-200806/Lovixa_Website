@@ -1,0 +1,231 @@
+'use client'
+
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
+
+export interface CartItem {
+  productId: string
+  variantId?: string
+  title: string
+  slug: string
+  price: number
+  compareAtPrice?: number
+  quantity: number
+  image?: string
+  optionsSummary?: string
+  maxStock?: number
+}
+
+export interface AppliedCoupon {
+  code: string
+  discountType: 'percentage' | 'fixed_amount' | 'free_shipping'
+  discountValue: number
+  minOrderAmount?: number
+  maxDiscountAmount?: number | null
+}
+
+export interface ShippingConfig {
+  flatRate: number
+  freeShippingThreshold: number
+  freeShippingEnabled: boolean
+}
+
+export interface TaxConfig {
+  enabled: boolean
+  ratePercentage: number
+  pricesIncludeTax?: boolean
+  taxLabel?: string
+}
+
+const DEFAULT_SHIPPING_CONFIG: ShippingConfig = {
+  flatRate: Number(process.env.NEXT_PUBLIC_SHIPPING_FLAT_RATE) || 9.99,
+  freeShippingThreshold: Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD) || 100,
+  freeShippingEnabled: true,
+}
+
+const DEFAULT_TAX_CONFIG: TaxConfig = {
+  enabled: true,
+  ratePercentage: Number(process.env.NEXT_PUBLIC_DEFAULT_TAX_RATE) || 8.25,
+  pricesIncludeTax: false,
+  taxLabel: 'Estimated Tax',
+}
+
+export interface CartStore {
+  items: CartItem[]
+  isOpen: boolean
+  coupon: AppliedCoupon | undefined
+  shippingConfig: ShippingConfig
+  taxConfig: TaxConfig
+  openCart: () => void
+  closeCart: () => void
+  toggleCart: () => void
+  addItem: (item: CartItem) => void
+  removeItem: (productId: string, variantId?: string) => void
+  updateQuantity: (productId: string, quantity: number, variantId?: string) => void
+  clearCart: () => void
+  applyCoupon: (coupon: AppliedCoupon) => void
+  removeCoupon: () => void
+  setShippingConfig: (config: Partial<ShippingConfig>) => void
+  setTaxConfig: (config: Partial<TaxConfig>) => void
+  getSubtotal: () => number
+  getDiscountAmount: () => number
+  getShippingFee: () => number
+  getTaxAmount: () => number
+  getGrandTotal: () => number
+  getTotalItems: () => number
+}
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [] as CartItem[],
+      isOpen: false,
+      coupon: undefined,
+      shippingConfig: DEFAULT_SHIPPING_CONFIG,
+      taxConfig: DEFAULT_TAX_CONFIG,
+
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
+      toggleCart: () => set((state: CartStore) => ({ isOpen: !state.isOpen })),
+
+      addItem: (newItem: CartItem) =>
+        set((state: CartStore) => {
+          const existingIndex = state.items.findIndex(
+            (i: CartItem) => i.productId === newItem.productId && i.variantId === newItem.variantId
+          )
+
+          if (existingIndex > -1) {
+            const updated = [...state.items]
+            const current = updated[existingIndex]
+            const maxStock = newItem.maxStock || 999
+            const newQty = Math.min(current.quantity + newItem.quantity, maxStock)
+            updated[existingIndex] = { ...current, quantity: newQty }
+            return { items: updated, isOpen: true }
+          }
+
+          return { items: [...state.items, newItem], isOpen: true }
+        }),
+
+      removeItem: (productId: string, variantId?: string) =>
+        set((state: CartStore) => ({
+          items: state.items.filter(
+            (i: CartItem) => !(i.productId === productId && i.variantId === variantId)
+          ),
+        })),
+
+      updateQuantity: (productId: string, quantity: number, variantId?: string) =>
+        set((state: CartStore) => {
+          if (quantity <= 0) {
+            return {
+              items: state.items.filter(
+                (i: CartItem) => !(i.productId === productId && i.variantId === variantId)
+              ),
+            }
+          }
+          return {
+            items: state.items.map((i: CartItem) => {
+              if (i.productId === productId && i.variantId === variantId) {
+                const maxStock = i.maxStock || 999
+                return { ...i, quantity: Math.min(quantity, maxStock) }
+              }
+              return i
+            }),
+          }
+        }),
+
+      clearCart: () => set({ items: [], coupon: undefined }),
+
+      applyCoupon: (coupon: AppliedCoupon) => set({ coupon }),
+      removeCoupon: () => set({ coupon: undefined }),
+
+      setShippingConfig: (config: Partial<ShippingConfig>) =>
+        set((state: CartStore) => ({
+          shippingConfig: { ...(state.shippingConfig || DEFAULT_SHIPPING_CONFIG), ...config },
+        })),
+
+      setTaxConfig: (config: Partial<TaxConfig>) =>
+        set((state: CartStore) => ({
+          taxConfig: { ...(state.taxConfig || DEFAULT_TAX_CONFIG), ...config },
+        })),
+
+      getSubtotal: () => {
+        const { items } = get()
+        return items.reduce((total: number, item: CartItem) => total + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0)
+      },
+
+      getDiscountAmount: () => {
+        const { coupon, getSubtotal } = get()
+        if (!coupon) return 0
+        const subtotal = getSubtotal()
+
+        if (coupon.discountType === 'percentage') {
+          const calculated = (subtotal * coupon.discountValue) / 100
+          if (coupon.maxDiscountAmount && coupon.maxDiscountAmount > 0) {
+            return Math.min(calculated, coupon.maxDiscountAmount)
+          }
+          return Math.min(calculated, subtotal)
+        }
+
+        if (coupon.discountType === 'fixed_amount') {
+          return Math.min(coupon.discountValue, subtotal)
+        }
+
+        return 0
+      },
+
+      getShippingFee: () => {
+        const { coupon, getSubtotal, shippingConfig = DEFAULT_SHIPPING_CONFIG } = get()
+        const subtotal = getSubtotal()
+        if (subtotal === 0) return 0
+        if (coupon?.discountType === 'free_shipping') return 0
+
+        const cfg = shippingConfig || DEFAULT_SHIPPING_CONFIG
+        const isFreeEnabled = cfg.freeShippingEnabled !== false
+        const threshold = typeof cfg.freeShippingThreshold === 'number' ? cfg.freeShippingThreshold : 100
+
+        if (isFreeEnabled && subtotal >= threshold) {
+          return 0
+        }
+
+        return typeof cfg.flatRate === 'number' ? cfg.flatRate : 9.99
+      },
+
+      getTaxAmount: () => {
+        const { getSubtotal, getDiscountAmount, taxConfig = DEFAULT_TAX_CONFIG } = get()
+        const cfg = taxConfig || DEFAULT_TAX_CONFIG
+        if (cfg.enabled === false) return 0
+        const taxableAmount = Math.max(0, getSubtotal() - getDiscountAmount())
+        const taxRate = (typeof cfg.ratePercentage === 'number' ? cfg.ratePercentage : 8.25) / 100
+        return taxableAmount * taxRate
+      },
+
+      getGrandTotal: () => {
+        const { getSubtotal, getDiscountAmount, getShippingFee, getTaxAmount } = get()
+        const total = getSubtotal() - getDiscountAmount() + getShippingFee() + getTaxAmount()
+        return Math.max(0, total)
+      },
+
+      getTotalItems: () => {
+        const { items } = get()
+        return items.reduce((total: number, item: CartItem) => total + (Number(item.quantity) || 1), 0)
+      },
+    }),
+    {
+      name: 'flexion_cart_storage',
+      storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : ({} as any))),
+      partialize: (state) => ({
+        items: state.items,
+        coupon: state.coupon,
+      }),
+      merge: (persistedState: any, currentState: CartStore) => {
+        return {
+          ...currentState,
+          items: Array.isArray(persistedState?.items) ? persistedState.items : [],
+          coupon: persistedState?.coupon || undefined,
+          shippingConfig: currentState.shippingConfig || DEFAULT_SHIPPING_CONFIG,
+          taxConfig: currentState.taxConfig || DEFAULT_TAX_CONFIG,
+        }
+      },
+    }
+  )
+)

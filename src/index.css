@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700;800&family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* LOVIXA Brand Design System Variables */
+  --color-brand: #1B5E20;
+  --color-brand-dark: #0E3310;
+  --color-brand-light: #2E7D32;
+  --color-brand-hover: #164F1A;
+  
+  --color-sage: #2E7D32;
+  --color-sage-dark: #1B5E20;
+  --color-sage-light: #66BB6A;
+  
+  --color-warm: #FFFFFF;
+  --color-light-bg: #E8F5E9;
+  --color-pure-white: #FFFFFF;
+  
+  --color-gold: #C6A15B;
+  --color-gold-dark: #936c3e;
+  --color-gold-light: #d3a863;
+  
+  --color-text-main: #1A1D1A;
+  --color-text-secondary: #555E57;
+  --color-text-light: #FFFFFF;
+  --color-border: #E5EAE6;
+
+  /* Legacy aliases for backward compatibility */
+  --primary-color: #1B5E20;
+  --secondary-color: #2E7D32;
+  --black: #1A1D1A;
+  --white: #ffffff;
+  --gray: #FFFFFF;
+  --gray-2: #555E57;
+
+  --facebook-color: #4267B2;
+  --google-color: #DB4437;
+  --twitter-color: #1DA1F2;
+  --insta-color: #E1306C;
+}
+
+img {
+  user-select: none;
+  -webkit-user-select: none;  /* for Safari */
+  -moz-user-select: none;     /* for Firefox */
+  -ms-user-select: none;      /* for Internet Explorer/Edge */
+  pointer-events: none;
+}
+
+* {
+  -webkit-user-select: none; 
+  -moz-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;
+}
+
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Apply Urbanist font and clean crisp white background globally */
+body {
+  font-family: 'Urbanist', 'Poppins', sans-serif;
+  background-color: #FFFFFF;
+  color: var(--color-text-main);
+  min-height: 100vh;
+}
+
+/* Navigation link animation */
+.link-animated {
+  transition: 0.4s;
+  padding: 0 5px;
+}
+
+.link-animated:hover {
+  text-shadow: 0 0 0.65px #1B5E20, 0 0 0.65px #1B5E20;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4FAF5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A5D6A7;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1B5E20;
+}
+
+/* Utility classes */
+@layer utilities {
+  .bg-warm-luxury {
+    background-color: #FFFFFF;
+  }
+  .bg-light-mint {
+    background-color: #E8F5E9;
+  }
+  .text-brand-gradient {
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .btn-lovixa-primary {
+    background-color: #1B5E20;
+    color: #FFFFFF;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-lovixa-primary:hover {
+    background-color: #164F1A;
+    box-shadow: 0 6px 18px 0 rgba(27, 94, 32, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-lovixa-primary:active {
+    transform: scale(0.97);
+  }
+  .btn-lovixa-secondary {
+    background-color: #E8F5E9;
+    color: #1B5E20;
+    border: 1px solid #C8E6C9;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-lovixa-secondary:hover {
+    background-color: #C8E6C9;
+  }
+  .card-lovixa {
+    background-color: #FFFFFF;
+    border: 1px solid #E5EAE6;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-lovixa:hover {
+    box-shadow: 0 16px 32px -6px rgba(27, 94, 32, 0.12);
+    transform: translateY(-3px);
+  }
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C6A15B, transparent);
+  }
+}

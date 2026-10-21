@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 336 33% 97.5%;
+    --foreground: 328 28% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 328 28% 13%;
+    --primary: 315 41% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 333 44% 84%;
+    --secondary-foreground: 328 28% 13%;
+    --muted: 336 33% 95%;
+    --muted-foreground: 328 12% 45%;
+    --accent: 333 44% 84%;
+    --accent-foreground: 315 41% 30%;
+    --destructive: 350 80% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 333 30% 90%;
+    --input: 333 30% 90%;
+    --ring: 315 41% 30%;
+    --radius: 0.75rem;
+
+    /* Centralized LOVIXA Brand Theme System Tokens */
+    --lovixa-background: #FBF6F8;
+    --lovixa-text: #2B1822;
+    --lovixa-text-muted: #6A5A63;
+    --lovixa-primary: #6B2D5C;
+    --lovixa-primary-hover: #562349;
+    --lovixa-secondary: #E8C4D4;
+    --lovixa-secondary-border: #F0DCE5;
+    --lovixa-dark: #2B1822;
+    --lovixa-dark-surface: #38202E;
+    --lovixa-dark-border: #4A2B3D;
+
+    /* Compatibility Vars */
+    --color-off-white: #FBF6F8;
+    --color-espresso: #2B1822;
+    --color-espresso-muted: #6A5A63;
+    --color-plum: #6B2D5C;
+    --color-plum-hover: #562349;
+    --color-blush: #E8C4D4;
+    --color-blush-border: #F0DCE5;
+
+    /* Typography - 100% Outfit Optimized via next/font/google */
+    --font-heading: var(--font-outfit), 'Outfit', sans-serif;
+    --font-sans: var(--font-outfit), 'Outfit', sans-serif;
+    --font-serif: var(--font-outfit), 'Outfit', sans-serif;
+    --font-editorial: var(--font-outfit), 'Outfit', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    color: var(--lovixa-text);
+    background-color: var(--lovixa-background);
+    overflow-x: hidden;
+  }
+
+  /* Prevent background scrolling when modal or drawer is open */
+  html.modal-open,
+  body.modal-open {
+    overflow: hidden !important;
+    height: 100% !important;
+    overscroll-behavior: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-heading,
+  .font-serif,
+  .font-editorial {
+    font-family: var(--font-sans) !important;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Scrollbar for Luxury Experience */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FBF6F8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8C4D4;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B2D5C;
+}
+
+/* Luxury Cosmetic Motion Keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-reverse {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+}
+
+@keyframes pulse-soft {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes glow-breathe {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.08);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-float-slow {
+  animation: float-slow 4.5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 5s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 6s ease-in-out infinite;
+}
+
+/* Scroll Reveal Utility Classes */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Luxury card hover glow effect */
+.luxury-hover-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-hover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -15px rgba(107, 45, 92, 0.12), 0 0 0 1px rgba(107, 45, 92, 0.25);
+}
+
+/* Shimmer overlay effect on banner buttons */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.75s ease;
+}
+
+.shimmer-btn:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}

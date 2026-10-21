@@ -1,0 +1,10 @@
+---
+description: Ensure atomic stock operations and prevent overselling during checkout spikes
+globs: src/collections/ProductVariants.ts, src/app/api/**
+---
+
+# Inventory Concurrency & Stock Rules
+
+1. **Atomic Decrement**: Stock updates during order fulfillment must use atomic operations (e.g. `$inc: { inventory: -qty }` in Mongo or `UPDATE product_variants SET inventory = inventory - qty WHERE id = ? AND inventory >= qty` in Postgres).
+2. **Backorder Flag**: If `allowBackorder: false`, stock MUST NOT drop below 0.
+3. **Restock on Order Cancellation**: When an order is cancelled or refunded, inventory must be incremented back.

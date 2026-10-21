@@ -1,0 +1,20 @@
+---
+description: Secure payment webhook verification, HMAC signature validation, and event handling
+globs: src/app/api/webhooks/**, src/lib/payments/**
+---
+
+# Payment Webhook Security Rules
+
+## 1. Mandatory Raw Body Verification
+- All webhook requests (Stripe, Razorpay, etc.) MUST verify the incoming cryptographical signature against the raw, unparsed request payload.
+- Stripe requires `stripe.webhooks.constructEvent(rawBody, signature, secret)`.
+- Razorpay requires `crypto.createHmac('sha256', secret).update(rawBody).digest('hex') === signature`.
+- **NEVER** pass parsed JSON to the signature verification function.
+
+## 2. Fast 200 OK Response
+- Respond with HTTP 200 immediately after signature verification and queuing/processing.
+- Never let long-running external tasks (like slow PDF generation) block the webhook response, which triggers provider retry storms.
+
+## 3. Idempotent Event Log
+- Store processed webhook event IDs (`evt_xxx` or `pay_xxx`) in the database.
+- If an event ID was already processed, immediately return `200 OK` and skip duplicate processing.

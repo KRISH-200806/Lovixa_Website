@@ -1,0 +1,32 @@
+---
+description: Core Web Vitals discipline — caching, images, fonts, client-component scope, query depth. Full reference in 18-performance.md
+globs: src/app/**/*.{js,jsx,ts,tsx},src/components/**/*.{js,jsx,ts,tsx},src/lib/cms/**/*.ts
+alwaysApply: false
+---
+
+# Performance — Always Check
+
+Full reference: `starter-kit/18-performance.md`. Target: LCP < 2.5s, INP < 200ms, CLS < 0.1, TTFB < 0.8s.
+
+## Rules
+
+- **Every new CMS read is `unstable_cache` + tagged** (`src/lib/cms/cache-tags.ts`, `revalidateNextCache.ts` pattern) — never call `payload.find`/`findGlobal` directly inside a page or component. This is the #1 TTFB regression risk.
+- **`depth: 0`** on Payload queries unless a relation genuinely needs inline population.
+- **`next/image`** for all content images, `priority` only on the LCP image, always set `sizes`.
+- **No new font without checking `18-performance.md`** — self-hosted (`next/font`) only, never a CDN `<link>`. Every added font is an LCP/CLS risk.
+- **`'use client'`** scoped to the smallest interactive island — never promote a whole page to client for one widget.
+- **Animation**: `transform`/`opacity` only for continuous/frequent animation — see `animation-standards.mdc`. Never animate `width`/`height`/`top`/`left`/`margin` on a loop.
+- **Third-party scripts**: `next/script` with explicit `strategy`, never a raw `<script>` tag.
+- **Heavy/rarely-used client code**: `next/dynamic` with `ssr: false` where appropriate.
+
+## Review gate
+
+- [ ] No uncached Payload call added
+- [ ] `depth: 0` unless relation genuinely needed
+- [ ] LCP image has `priority`, others lazy
+- [ ] No new external font link
+- [ ] `'use client'` boundary is minimal
+- [ ] `pnpm run analyze` checked if a new client-side dependency was added
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

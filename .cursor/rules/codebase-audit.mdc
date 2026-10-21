@@ -1,0 +1,78 @@
+---
+description: Comprehensive 8-Pillar Enterprise Market Standards Audit Rule for Next.js 15, Payload CMS 3.x, OWASP security, WCAG accessibility, Core Web Vitals, and AEO.
+alwaysApply: true
+globs: src/**/*.{ts,tsx,js,jsx,css,json}
+---
+
+# 🏆 8-Pillar Enterprise Market Standards Audit Rule
+
+Use this rule whenever auditing, reviewing, or verifying codebase compliance against industry enterprise standards mid-project.
+
+---
+
+## The 8 Enterprise Pillars & Rules
+
+### Pillar 1: Security, Secrets & Hardening (OWASP / SOC2)
+* [ ] **Secret Isolation**: Server secrets (`PAYLOAD_SECRET`, `DATABASE_URL`, `S3_SECRET`, `REVALIDATE_SECRET`, `SETUP_SECRET`) NEVER imported in client components (`'use client'`).
+* [ ] **Immutable Audit Trail**: Tamper-proof activity tracking via `src/collections/AuditLogs.ts`.
+* [ ] **Security Headers & CSP**: `next.config.mjs` configures HSTS, X-Content-Type-Options, X-Frame-Options, CSP.
+* [ ] **Input Sanitization**: Form handlers and API endpoints validate schemas strictly with Zod.
+* [ ] **Rate Limiting / Anti-Spam**: Cloudflare Turnstile / honeypot / rate limits on public submission endpoints.
+
+### Pillar 2: Next.js 15 & React 19 Architecture
+* [ ] **Server Components Default**: Zero `'use client'` on route page roots (`src/app/**/page.tsx`). Interactivity isolated in leaf components.
+* [ ] **Error Boundaries**: `error.tsx` in routes and `global-error.tsx` at the app root.
+* [ ] **Suspense & Loading**: `loading.tsx` and `not-found.tsx` present.
+* [ ] **Script Discipline**: No raw `<script>` tags for external trackers; use `next/script` with `strategy="afterInteractive"`.
+* [ ] **Cache Tagging**: ISR caching wired with `revalidateTag` / `revalidatePath`.
+
+### Pillar 3: Payload CMS 3.x & Database Architecture
+* [ ] **ID Integrity**: Collections wire `stripSystemFieldsBeforeOperation` + `stripSystemFieldsHook`. Globals wire `stripIdBeforeOperationHook` + `stripIdHook`.
+* [ ] **Postgres Identifier Limit**: Slugs, block names, and array names ≤ 63 characters.
+* [ ] **Section Source Map**: Section-based schemas wire junction hooks (`createSync...`, `createCaptureRaw...`, `createReadMapped...`) and frontend renders via `applySectionSourceMap()`.
+* [ ] **Hook Loop Protection**: Mutation hooks check context (`preventHookLoop` / `skipSectionSourceMapSync`).
+* [ ] **Draft / Publish Access**: Draft content strictly inaccessible to unauthenticated public visitors.
+* [ ] **Disaster Recovery**: Automated database backup and restore tools active.
+
+### Pillar 4: Design System, Tokens & Mobile UX Discipline
+* [ ] **Token-Driven Colors**: 100% colors consume CSS custom variables / design tokens (`hsl(var(--...))`). Zero unmanaged hex codes (`#fff`, `bg-[#123]`) in JSX.
+* [ ] **Theme Management**: Admin-managed colors synchronized via `ThemeSettings.ts`.
+* [ ] **Zero Horizontal Scroll**: `overflow-x: clip`/`hidden` active on root styles; no fixed-pixel width overflowing mobile viewports.
+* [ ] **iOS Safari Auto-Zoom Prevention**: Form inputs (`input`, `select`, `textarea`) enforce min `16px` (`text-base`) on mobile to stop iOS auto-zooming.
+* [ ] **Responsive Breakpoints**: Mobile-first design system (`sm`, `md`, `lg`, `xl`, `2xl`).
+* [ ] **Touch Targets**: Minimum 44x44px for interactive buttons and links.
+
+### Pillar 5: Animation & Motion Standards
+* [ ] **Modern Package**: Strict use of `motion` (NOT legacy `framer-motion`).
+* [ ] **GPU Transforms Only**: Animations restricted to `transform` (`x`, `y`, `scale`, `rotate`) and `opacity`.
+* [ ] **Reduced Motion**: Respects `prefers-reduced-motion`.
+
+### Pillar 6: Accessibility (WCAG 2.1 AA)
+* [ ] **Image Alt Text**: All images have descriptive `alt` tags or use `<SafeImage>`.
+* [ ] **Heading Hierarchy**: Single `<h1>` per route with sequential `<h2>`/`<h3>` hierarchy.
+* [ ] **Form Labels**: Inputs have explicit `<label>` or `aria-label`.
+
+### Pillar 7: Performance & Core Web Vitals (LCP, INP, CLS)
+* [ ] **SafeImage Fallback**: Media rendered with `<SafeImage>` (dimensions + placeholder fallback).
+* [ ] **Zero-CLS Local Fonts**: `next/font` local font optimization active.
+* [ ] **Upload Compression**: Server-side image optimization (Sharp) before upload persistence.
+
+### Pillar 8: Modern SEO, GEO & AEO (AI Search Agent Readiness)
+* [ ] **Dynamic Metadata**: `generateMetadata()` with title, description, OpenGraph, and Canonical URL.
+* [ ] **Dynamic Sitemaps & Robots**: `sitemap.ts` and `robots.ts` active.
+* [ ] **AEO Discovery**: `llms.txt` active for AI search agents (ChatGPT, Perplexity, Claude).
+* [ ] **JSON-LD Structured Data**: Schema.org metadata (`Organization`, `WebSite`, `Breadcrumbs`) injected.
+* [ ] **Keyword Plan Pipeline**: Automated semantic link injection via `keyword-plan.json`.
+
+---
+
+## Automated Execution
+
+To run the full 8-pillar audit:
+```bash
+pnpm run audit:rules
+```
+Or with Node directly:
+```bash
+node scripts/audit-codebase.mjs
+```

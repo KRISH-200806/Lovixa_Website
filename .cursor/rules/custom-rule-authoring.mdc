@@ -1,0 +1,48 @@
+---
+description: Automated plain-English user rule translator. Automatically invoked whenever a user says "I want X", "I don't want Y", "Never use Z", or "Always enforce W".
+alwaysApply: true
+---
+
+# Plain-English Custom Rule Authoring Guide
+
+Whenever the user states a custom rule, preference, constraint, or requirement in plain English (e.g., *"I don't want any jQuery"*, *"Never use localStorage"*, *"Always require phone number in forms"*), the AI Agent MUST automatically perform the following 3 steps:
+
+---
+
+## 1. Create AI Rule File
+Create a new rule file in `.cursor/rules/custom-<topic>.mdc` and `.agents/rules/custom-<topic>.md`:
+
+```yaml
+---
+description: <Short explanation of user preference>
+alwaysApply: true
+globs: src/**/*.{ts,tsx}
+---
+
+# <Rule Title>
+- User Requirement: <Exact quote from user>
+- Strictly forbidden / required patterns.
+```
+
+---
+
+## 2. Register into `custom-rules.json`
+Append the rule into `custom-rules.json` so `pnpm run audit:rules` and Git pre-commit hooks automatically check it:
+
+```json
+{
+  "name": "no-jquery",
+  "type": "forbidden",
+  "pattern": "(\\$|jQuery)\\(",
+  "scope": "src",
+  "description": "No jQuery usage (user preference)",
+  "message": "Direct jQuery call detected. Use standard React state/DOM.",
+  "severity": "critical"
+}
+```
+
+---
+
+## 3. Confirm to User
+Confirm in concise terms:
+> *"✔ Custom rule recorded from plain English. Enforced across AI generation, `pnpm run audit:rules`, and Git pre-commit."*

@@ -1,0 +1,34 @@
+---
+title: Postgres Identifier Length Guardrail
+description: Keep Payload table/enum/index/constraint names within PostgreSQL limits
+tags: [payload, postgres, dbname, migrations, schema]
+priority: high
+---
+
+# Postgres Identifier Length Guardrail
+
+PostgreSQL identifier limit is **63 characters**. Payload composes table/enum/index names from block + field paths, so long slugs/field names can break migration generation.
+
+## Rules
+
+1. **Always check identifier length risk when adding blocks/arrays/select fields**, especially under shared blocks used by many collections/globals.
+2. If names may get long, **set `dbName` early** on:
+   - block config (`Block`)
+   - nested array fields
+   - select/radio fields that generate enum types
+3. Prefer short, readable `dbName` patterns (snake_case, abbreviations), e.g.:
+   - block: `car_tstm`
+   - array: `car_tstm_i`
+   - enum field: `car_tstm_i_t`
+4. For any new schema work, run type/migration generation and fix identifier-length errors before finalizing.
+
+## Practical Guidance
+
+- Shared blocks reused across many globals/collections are the highest risk.
+- `slug` can stay descriptive for editors; `dbName` is for database-safe naming.
+- Never ignore errors like:
+  - `Exceeded max identifier length for table or enum name of 63 characters`
+
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

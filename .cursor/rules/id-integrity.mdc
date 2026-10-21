@@ -1,0 +1,41 @@
+# ID Integrity and Payload Save Safety
+
+This project has had repeated `The following field is invalid: id` and DB `id` conflicts.  
+Treat this as a **critical stability rule** for all current and future schema work.
+
+## Mandatory rules
+
+1. **Never add a root field named `id`** in any collection or global.
+   - Payload already manages document IDs.
+   - Root custom `id` fields can collide with Payload validation and uniqueness behavior.
+
+2. **Always attach sanitizer hooks** to every collection and global config.
+   - Collections:
+     - `beforeOperation: [stripSystemFieldsBeforeOperation]`
+     - `beforeValidate: [stripSystemFieldsHook]`
+   - Globals:
+     - `beforeOperation: [stripIdBeforeOperationHook]`
+     - `beforeValidate: [stripIdHook]`
+
+3. **When creating a new collection/global**, wiring the above hooks is required in the same change.
+
+4. **Do not remove or bypass these hooks** unless explicitly requested by the project owner.
+
+5. **If adding nested arrays/blocks with `id` keys**, keep IDs nested only (never root), and let sanitizer hooks normalize/regenerate as needed.
+
+## Required review checklist for every schema PR
+
+- [ ] No root `name: 'id'` was introduced in collections/globals
+- [ ] New collections include collection sanitizer hooks
+- [ ] New globals include global sanitizer hooks
+- [ ] `npm run generate:types` has been run after schema changes
+- [ ] `npx tsc --noEmit` passes
+
+## Quick references in this repo
+
+- Collection sanitizer: `src/hooks/stripSystemFields.ts`
+- Global sanitizer: `src/hooks/stripId.ts`
+
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

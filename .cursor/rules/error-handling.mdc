@@ -1,0 +1,38 @@
+---
+description: SafeImage for all CMS media (never a broken-image icon), required error/not-found/global-error boundaries per route tree, degrade-don't-crash on optional CMS augmentation. Full reference in 25-error-handling-and-asset-fallback.md
+globs: src/app/**/*.{js,jsx,ts,tsx},src/components/**/*.{js,jsx,ts,tsx},src/lib/cms/**/*.ts
+alwaysApply: false
+---
+
+# Error Handling & Asset Fallback — Always Check
+
+Full reference: `starter-kit/25-error-handling-and-asset-fallback.md`.
+
+## CMS media — never a raw `next/image`
+
+- Any image sourced from a Payload media doc/field renders through `<SafeImage media={...} alt={...} />` (`@/components/ui`, `src/components/ui/SafeImage.tsx`) — **not** a bare `next/image` `<Image>`. A deleted S3 object, bad key, or unset field must render `public/media-placeholder.svg`, never a broken-image icon.
+- `SafeImage` takes the same media/doc shapes as `getMediaUrl()` (string ID, populated doc, raw URL) — don't call `getMediaUrl()` yourself at the call site, pass the raw field through.
+- Non-CMS static assets (icons, logos in `public/`) don't need this — only content that can be edited/deleted in the admin.
+
+## Route error boundaries — all three, every route tree
+
+Every `(frontend)` segment that can fail relies on the boundaries at its root:
+
+- `error.tsx` — catches errors thrown inside the route segment/its children.
+- `not-found.tsx` — rendered by `notFound()` for missing/unpublished docs (see `19-draft-publish-workflow.md`).
+- `global-error.tsx` — catches errors thrown by the root layout itself (e.g. a CMS fetch inside `layout.tsx`). **Different from `error.tsx`** — it must render its own `<html>/<body>` and can't assume `styles.css`/theme tokens loaded, so keep it inline-styled and dependency-free.
+
+Don't delete or bypass any of the three when adding a new top-level route group — copy the existing pattern.
+
+## Degrade, don't crash, on optional augmentation
+
+A CMS query that fetches a doc's *required* content (the doc itself, a page's existence) is allowed to throw — that's what `error.tsx`/`notFound()` are for. A query that fetches *optional* augmentation on top of an already-successful doc (e.g. section-source-map hydration) must not take down the whole page for a partial failure — wrap it, log it, degrade to an empty/default value. See `applySectionSourceMap()` in `src/lib/sectionSourceMap.ts` for the existing pattern to match.
+
+## Review gate
+
+- New CMS image usage goes through `SafeImage`, not raw `next/image`
+- New route group has `error.tsx` + `not-found.tsx`; root layout changes are covered by the existing `global-error.tsx`
+- Optional/non-critical CMS calls degrade gracefully; only the doc-defining fetch is allowed to bubble to `error.tsx`
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

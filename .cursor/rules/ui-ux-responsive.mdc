@@ -1,0 +1,46 @@
+---
+description: Inspect existing design tokens/components before UI work, stay in-scope, mobile-first responsive, accessible — deep patterns in agent-skills/ui-ux-responsive/
+globs: src/app/(frontend)/**/*.{js,jsx,ts,tsx},src/components/**/*.{js,jsx,ts,tsx}
+alwaysApply: false
+---
+
+# UI/UX + Responsive — Always Check
+
+Full reference: `.agents/skills/ui-ux-responsive/`.
+
+## Before touching UI
+
+1. Read `tailwind.config.js` + `09-theme-and-design-system.md` for actual tokens.
+2. Check `src/components/ui/index.ts` for an existing primitive before creating one.
+3. Match the request's actual scope — a mobile-only ask stays mobile-only; "improve this page" means improve within the existing design language, not redesign it.
+
+## Tokens, never magic numbers
+
+Use `text-h1..h5`/`text-body-*` via `Heading`/`Text`, `rounded-radius-*`, `shadow-elev-*`/`shadow-brand-glow`, `brand-*`/`neutral-*`/`semantic-*`/`accent-*` colors. No `rounded-[13px]`, `text-[19px]`, `mt-[37px]`, arbitrary hex, unless a genuinely one-off case — and prefer the closest existing token first.
+
+## Responsive
+
+Mobile-first (`base` classes = smallest viewport, layer `md:`/`lg:`/`xl:` up). Breakpoints are Tailwind defaults (`sm/md/lg/xl/2xl` — no custom `screens` in this config). Mentally validate at 320/375/425/768/1024/1440/1920px: no horizontal overflow, no clipping, no broken grids. Mobile may need a different layout, not a shrunk desktop one (e.g. sidebar → drawer, not squeezed sidebar).
+
+## Components and states
+
+Reuse `Button`/`Card`/`Badge`/`Container`/`Section`/`Heading`/`Text`/`Eyebrow` from `@/components/ui` — extend via props before duplicating. One dominant primary action per view. Cover hover/focus/active/disabled/loading states on interactive elements. Data-driven views need loading/empty/error states, not silent blanks.
+
+## Accessibility
+
+Semantic HTML over clickable `<div>`s. Visible focus states (never remove without replacement). Labels on form fields, not placeholder-only. `next/image` with real `alt`.
+
+## Next.js + animation
+
+Server Components by default, `'use client'` only on the smallest interactive island. Animation tier: Tailwind transitions → Motion (primary) → GSAP (explicit-only) — see `cursor-rules/animation-standards.mdc`.
+
+## Review gate
+
+- Existing tokens/components reused, not reinvented
+- Change scoped to what was asked
+- No horizontal overflow at small widths
+- Interactive states + accessibility covered
+- Looks designed as part of this product, not generic AI UI
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

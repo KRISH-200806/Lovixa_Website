@@ -1,0 +1,53 @@
+---
+description: Animation library tier — Motion primary, Tailwind/CSS transitions secondary, GSAP only when explicitly required
+globs: src/components/**/*.{js,jsx,ts,tsx},src/app/**/*.{js,jsx,ts,tsx}
+alwaysApply: false
+---
+
+# Animation Library Tiers
+
+Every animation need picks **one** tier, in order. Never reach for a lower tier by default — deep dive: `.agents/skills/animation-standards/`.
+
+## Tier 1 — Tailwind / CSS transitions (default for simple state changes)
+
+Use for: hover/focus/active states, color/opacity/transform on toggle, simple show/hide, single-property changes.
+
+```jsx
+<button className="transition-colors duration-200 ease-out hover:bg-brand-500 motion-reduce:transition-none">
+```
+
+No JS animation library needed. Prefer `motion-safe:`/`motion-reduce:` Tailwind variants over manual `prefers-reduced-motion` media queries.
+
+## Tier 2 — Motion (`motion` package) — primary for anything JS-driven
+
+Use for: enter/exit animations, scroll-triggered reveals, orchestrated/staggered multi-element sequences, drag, layout animations, gesture-driven UI.
+
+```jsx
+'use client'
+import { motion } from 'motion/react'
+
+<motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} />
+```
+
+- Import from `motion/react`, **not** `framer-motion` (renamed package — do not add `framer-motion` as a dependency).
+- Requires `'use client'` — never in a Server Component.
+- Respect `useReducedMotion()` for anything non-trivial.
+
+## Tier 3 — GSAP — only when explicitly required
+
+Use **only** when the task explicitly asks for GSAP, or the need genuinely exceeds Motion's model: SVG path morphing/drawing, `ScrollTrigger` pin/scrub sequences, complex multi-target timelines outside the React tree, canvas/WebGL-driven sequencing.
+
+- Do not introduce GSAP for anything Tier 1/2 can do.
+- Scope with `useGSAP()` from `@gsap/react` (auto-cleanup) — never a bare `useEffect` with manual `gsap.context()` bookkeeping.
+- Register plugins (`ScrollTrigger`, etc.) once, guarded, not per-component.
+- Prefer dynamic import (`next/dynamic`, `ssr: false`, or inline `import()`) to keep GSAP out of the initial bundle for pages that don't use it.
+
+## Review gate
+
+- No `framer-motion` in `package.json` — must be `motion`.
+- No GSAP import unless the task explicitly required it or Tier 1/2 genuinely can't do it — flag if unclear instead of guessing.
+- Client-only animation code carries `'use client'`.
+- Reduced-motion handled for any animation beyond a simple hover transition.
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

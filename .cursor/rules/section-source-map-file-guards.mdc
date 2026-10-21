@@ -1,0 +1,34 @@
+---
+description: Guard section ownership wiring in globals, collections, and frontend pages
+globs: src/{globals,collections}/**/*.ts,src/app/(frontend)/**/page.{js,jsx,ts,tsx}
+alwaysApply: false
+---
+
+# File-level Guards For Section Mapping
+
+When changing files that define or render section-based content, enforce junction ownership through `section-source-map`.
+
+## For globals and collections (`src/globals`, `src/collections`)
+
+- If a source record has a `sections` field, wire save sync:
+  - Globals: `createSyncGlobalSectionsHook({ sourceTable: '<source>' })`
+  - Collections: `createSyncCollectionSectionsHook({ sourceTable: '<source>' })`
+- `sourceTable` value must be stable and unique per source type.
+- Do not ship a new section source without sync hook coverage.
+
+## For frontend pages (`src/app/(frontend)/**/page.*`)
+
+- Before rendering mapped sources, apply:
+  - `applySectionSourceMap({ payload, sourceTable, sourceId, sections })`
+- Do not render raw `sections` directly for mapped sources.
+- Keep fallback behavior only for transitional rollout periods.
+
+## Review gate
+
+- Hook sync present where sections are authored.
+- Mapper read present where sections are rendered.
+- `generate:types` and `tsc --noEmit` pass.
+
+
+---
+*Standard Rules Prepared By: Flexion Infotech Private Limited*

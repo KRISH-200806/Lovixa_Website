@@ -1,0 +1,53 @@
+---
+name: ai-workflow
+description: Standard operating procedure for AI coding assistants working in this repository — context ingestion, architectural alignment, self-auditing, and verification.
+---
+
+# 🤖 AI Agent Workflow & Operating Procedure
+
+When developing features, refactoring, or debugging code in this repository, follow this 5-stage operating procedure:
+
+---
+
+## Stage 1: Ingest Context
+1. Check if `AI-CONTEXT.md` exists at the root of the project.
+2. If absent or outdated, run:
+   ```bash
+   pnpm run ai:context
+   ```
+3. Read `AI-CONTEXT.md` to identify registered collections, globals, frontend sections, and declared custom rules.
+
+---
+
+## Stage 2: Align with the 9-Pillar Boundaries
+Review the requirements against the core repository rules:
+- **Server vs Client**: Keep server components on the server.
+- **Theme Tokens**: Use HSL token utility classes, not arbitrary hex codes.
+- **Payload 3 Rules**: Keep identifier lengths $\le 63$ chars; include ID-stripping hooks.
+- **Next.js 15 Async**: Always `await params` and `await searchParams`.
+
+---
+
+## Stage 3: Implement Cleanly
+- Write minimal, modular TypeScript.
+- Follow existing patterns in `src/collections/`, `src/globals/`, and `src/components/`.
+- Handle error boundaries and loading states gracefully.
+
+---
+
+## Stage 4: Self-Audit & Self-Heal
+Execute the deterministic rule validator:
+```bash
+pnpm run audit:rules
+```
+- If any warnings or errors are raised, fix them immediately.
+- If schema changes were made, regenerate types:
+  ```bash
+  pnpm run generate:types
+  ```
+
+---
+
+## Stage 5: Verify & Ship
+- Run `pnpm run doctor` to verify environment variable integrity and database reachability.
+- Stage changes with a clear conventional commit message (`feat: ...`, `fix: ...`, `refactor: ...`).

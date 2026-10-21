@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 240 64" role="img" aria-label="Placeholder logo — replace in admin">
+  <rect x="1" y="1" width="238" height="62" rx="10" fill="none" stroke="#999999" stroke-width="2" stroke-dasharray="6 5"/>
+  <rect x="14" y="14" width="36" height="36" rx="8" fill="#FB5600"/>
+  <text x="32" y="39" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">Y</text>
+  <text x="62" y="38" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#111111">Your Logo</text>
+</svg>
