@@ -641,11 +641,20 @@ export interface InventoryTransaction {
 export interface Page {
   id: string;
   title: string;
+  /**
+   * Unique URL path (e.g. about, contact, terms-conditions, privacy-policy, shipping-policy, return-refund-policy)
+   */
   slug: string;
   isPublished?: boolean | null;
   badge?: string | null;
+  highlightTitle?: string | null;
   subtitle?: string | null;
   headerImage?: (string | null) | Media;
+  headerImageUrl?: string | null;
+  /**
+   * Displayed at the top of policy pages.
+   */
+  lastUpdated?: string | null;
   content?: {
     root: {
       type: string;
@@ -661,6 +670,58 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Add numbered sections for terms, privacy, shipping, or returns policies.
+   */
+  sections?:
+    | {
+        heading: string;
+        content: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutStory?: {
+    editorialPurposeBadge?: string | null;
+    editorialHeading?: string | null;
+    editorialText?: string | null;
+    storyBadge?: string | null;
+    storyHeading?: string | null;
+    storyParagraph1?: string | null;
+    storyParagraph2?: string | null;
+    storyImage?: (string | null) | Media;
+    storyImageUrl?: string | null;
+    brandPillars?:
+      | {
+          iconType?: ('leaf' | 'shield' | 'sparkles' | 'heart') | null;
+          title: string;
+          desc: string;
+          id?: string | null;
+        }[]
+      | null;
+    commitments?:
+      | {
+          title: string;
+          desc: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  contactInfo?: {
+    phone?: string | null;
+    supportHours?: string | null;
+    email?: string | null;
+    emailNote?: string | null;
+    address?: string | null;
+    whatsappNumber?: string | null;
+    introSubtitle?: string | null;
+    socialLinks?:
+      | {
+          platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin';
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -1391,9 +1452,65 @@ export interface PagesSelect<T extends boolean = true> {
   slug?: T;
   isPublished?: T;
   badge?: T;
+  highlightTitle?: T;
   subtitle?: T;
   headerImage?: T;
+  headerImageUrl?: T;
+  lastUpdated?: T;
   content?: T;
+  sections?:
+    | T
+    | {
+        heading?: T;
+        content?: T;
+        id?: T;
+      };
+  aboutStory?:
+    | T
+    | {
+        editorialPurposeBadge?: T;
+        editorialHeading?: T;
+        editorialText?: T;
+        storyBadge?: T;
+        storyHeading?: T;
+        storyParagraph1?: T;
+        storyParagraph2?: T;
+        storyImage?: T;
+        storyImageUrl?: T;
+        brandPillars?:
+          | T
+          | {
+              iconType?: T;
+              title?: T;
+              desc?: T;
+              id?: T;
+            };
+        commitments?:
+          | T
+          | {
+              title?: T;
+              desc?: T;
+              id?: T;
+            };
+      };
+  contactInfo?:
+    | T
+    | {
+        phone?: T;
+        supportHours?: T;
+        email?: T;
+        emailNote?: T;
+        address?: T;
+        whatsappNumber?: T;
+        introSubtitle?: T;
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              id?: T;
+            };
+      };
   seo?:
     | T
     | {
@@ -1818,6 +1935,15 @@ export interface StoreSetting {
     bankDetails?: string | null;
     privacyNotice?: string | null;
   };
+  /**
+   * Customer helpline, support email, address, and working hours displayed across the footer and store.
+   */
+  contact?: {
+    phone?: string | null;
+    supportHours?: string | null;
+    email?: string | null;
+    address?: string | null;
+  };
   gateways?: {
     enableWhatsApp?: boolean | null;
     enableStripe?: boolean | null;
@@ -2183,6 +2309,14 @@ export interface StoreSettingsSelect<T extends boolean = true> {
         upiId?: T;
         bankDetails?: T;
         privacyNotice?: T;
+      };
+  contact?:
+    | T
+    | {
+        phone?: T;
+        supportHours?: T;
+        email?: T;
+        address?: T;
       };
   gateways?:
     | T

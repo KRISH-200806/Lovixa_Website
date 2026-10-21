@@ -1,4 +1,4 @@
-import ReturnRefundPolicyPage, { metadata } from '../return-refund-policy/page'
+import ReturnRefundPolicyPage, { generateMetadata } from '../return-refund-policy/page'
 
-export { metadata }
+export { generateMetadata }
 export default ReturnRefundPolicyPage

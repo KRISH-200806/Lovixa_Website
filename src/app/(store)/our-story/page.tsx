@@ -1,4 +1,4 @@
-import AboutPage, { metadata } from '../about/page'
+import AboutPage, { generateMetadata } from '../about/page'
 
-export { metadata }
+export { generateMetadata }
 export default AboutPage

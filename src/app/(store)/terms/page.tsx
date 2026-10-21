@@ -1,4 +1,4 @@
-import TermsConditionsPage, { metadata } from '../terms-conditions/page'
+import TermsConditionsPage, { generateMetadata } from '../terms-conditions/page'
 
-export { metadata }
+export { generateMetadata }
 export default TermsConditionsPage
