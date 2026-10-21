@@ -48,9 +48,23 @@ async function syncAdmin() {
         password,
         name,
         role: 'admin',
+        loginAttempts: 0,
+        lockUntil: null as any,
       },
     })
-    console.log(`✓ Updated admin credentials for ${email}`)
+    // Direct database level unlock if payload stripped lock fields
+    try {
+      const db = (payload.db as any).connection || (payload.db as any).drizzle
+      if (db?.collection) {
+        await db.collection('users').updateOne(
+          { _id: (userDoc as any)._id || userDoc.id },
+          { $set: { loginAttempts: 0, lockUntil: null } }
+        )
+      }
+    } catch (e) {
+      // Ignore fallback
+    }
+    console.log(`✓ Updated admin credentials and unlocked account for ${email}`)
   } else if (admins.docs.length > 0) {
     // If there is an existing admin with old email (e.g., admin@lovixa.com), update it to the new email
     const firstAdmin = admins.docs[0]
@@ -78,7 +92,24 @@ async function syncAdmin() {
         role: 'admin',
       },
     })
-    console.log(`✓ Created new admin user: ${email}`)
+  }
+
+
+
+  // Verify login works
+  try {
+    const loginTest = await payload.login({
+      collection: 'users',
+      data: {
+        email,
+        password,
+      },
+    })
+    if (loginTest?.token) {
+      console.log(`🎉 TEST LOGIN SUCCESSFUL! Token generated for ${email} (Role: ${loginTest.user?.role})`)
+    }
+  } catch (loginErr: any) {
+    console.error('❌ Test login failed:', loginErr.message || loginErr)
   }
 
   console.log('✅ Admin credentials successfully synchronized with .env!')
