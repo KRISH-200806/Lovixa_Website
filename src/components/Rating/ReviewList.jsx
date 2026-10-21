@@ -98,7 +98,7 @@ const ReviewList = ({
         
         <div className="sort-options flex">
           <select 
-            className="border border-stone-200 rounded-xl px-3 py-1.5 text-xs text-text-main bg-pure focus:outline-none focus:border-brand"
+            className="border border-stone-200 rounded-full px-4 py-1.5 text-xs text-text-main bg-pure focus:outline-none focus:border-brand cursor-pointer"
             value={sortOption}
             onChange={(e) => handleSortChange(e.target.value)}
           >
@@ -136,7 +136,7 @@ const ReviewList = ({
               <div className="col-span-full flex justify-center mt-6">
                 <button
                   onClick={handleShowMore}
-                  className="px-6 py-2.5 bg-brand text-white text-xs font-bold rounded-xl hover:bg-brand/90 transition-all shadow-button active:scale-95"
+                  className="px-6 py-2.5 bg-brand text-white text-xs font-bold rounded-full hover:bg-brand/90 transition-all shadow-button active:scale-95"
                 >
                   Show More Reviews
                 </button>

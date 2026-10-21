@@ -96,7 +96,7 @@ const ContactUs = () => {
                   href="https://facebook.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-xl transition duration-300"
+                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-full transition duration-300"
                 >
                   <Facebook size={18} />
                 </a>
@@ -104,7 +104,7 @@ const ContactUs = () => {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-xl transition duration-300"
+                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-full transition duration-300"
                 >
                   <Instagram size={18} />
                 </a>
@@ -112,7 +112,7 @@ const ContactUs = () => {
                   href="https://youtube.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-xl transition duration-300"
+                  className="bg-white/10 hover:bg-brand text-white p-2.5 rounded-full transition duration-300"
                 >
                   <Youtube size={18} />
                 </a>
@@ -182,7 +182,7 @@ const ContactUs = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-brand text-white py-3.5 rounded-xl hover:bg-brand/90 font-bold text-xs tracking-wider transition duration-300 flex items-center justify-center space-x-2 shadow-button disabled:opacity-60 active:scale-98"
+                className="w-full bg-brand text-white py-3.5 rounded-full hover:bg-brand/90 font-bold text-xs tracking-wider transition duration-300 flex items-center justify-center space-x-2 shadow-button disabled:opacity-60 active:scale-98 cursor-pointer"
               >
                 {submitting ? (
                   <>

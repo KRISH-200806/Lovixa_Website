@@ -48,7 +48,7 @@ export function VariantSelector({
               key={v.id}
               onClick={() => onSelectVariant(v)}
               disabled={isOutOfStock}
-              className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+              className={`px-4 py-2.5 rounded-full border text-left transition-all cursor-pointer ${
                 isSelected
                   ? 'border-[#6B2D5C] bg-[#6B2D5C] text-white shadow-sm'
                   : isOutOfStock
@@ -57,7 +57,7 @@ export function VariantSelector({
               }`}
             >
               <div className="text-xs font-bold truncate">{v.title}</div>
-              <div className={`text-xs mt-1 ${isSelected ? 'text-white/90' : 'text-stone-500'}`}>
+              <div className={`text-[11px] mt-0.5 ${isSelected ? 'text-white/90' : 'text-stone-500'}`}>
                 ${v.price.toFixed(2)}
               </div>
             </button>

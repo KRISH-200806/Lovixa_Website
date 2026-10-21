@@ -28,7 +28,7 @@ export function CurrencySwitcher({ className = '' }: { className?: string }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 text-xs font-semibold text-[#2B1822] hover:text-[#6B2D5C] bg-[#FBF6F8] hover:bg-[#E8C4D4]/30 border border-[#E8C4D4] rounded-lg transition-all cursor-pointer whitespace-nowrap shrink-0 font-sans"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#2B1822] hover:text-[#6B2D5C] bg-[#FBF6F8] hover:bg-[#E8C4D4]/30 border border-[#E8C4D4] rounded-full transition-all cursor-pointer whitespace-nowrap shrink-0 font-sans"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >

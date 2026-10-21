@@ -36,9 +36,30 @@ a {
 input, select, textarea {
   font-size: 16px;
 }
-@media (min-width: 768px) {
-  input, select, textarea {
-    font-size: inherit;
-  }
+/* Universal Button Pill Radius Enforcement across entire LOVIXA Store */
+.rounded-button,
+.rounded-radius-pill,
+button.rounded-button,
+a.rounded-button,
+button.rounded-radius-pill,
+a.rounded-radius-pill,
+button[type="submit"],
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-ghost,
+a.btn,
+a.btn-primary,
+a.btn-secondary,
+a.btn-outline,
+a.btn-ghost,
+button.shadow-button,
+button.shadow-brand,
+button.bg-brand,
+button.bg-primary,
+button.bg-\[\#6B2D5C\] {
+  border-radius: 9999px !important;
 }
+
 

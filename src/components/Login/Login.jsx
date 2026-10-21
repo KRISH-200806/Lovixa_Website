@@ -494,7 +494,7 @@ const Login = () => {
           background: #1B5E20;
           color: white;
           border: none;
-          border-radius: 12px;
+          border-radius: 9999px;
           font-size: 1rem;
           font-weight: 700;
           letter-spacing: 0.02em;

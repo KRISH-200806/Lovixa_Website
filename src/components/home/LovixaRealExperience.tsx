@@ -161,7 +161,7 @@ export function LovixaRealExperience({ data }: Props) {
               return (
                 <div
                   key={reel.id}
-                  className="w-[230px] sm:w-[250px] shrink-0 bg-white border border-[#E8C4D4]/60 rounded-lg overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                  className="w-[230px] sm:w-[250px] shrink-0 bg-white border border-[#E8C4D4]/60 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
                 >
                   {/* Portrait Video Thumbnail */}
                   <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-100">
@@ -222,7 +222,7 @@ export function LovixaRealExperience({ data }: Props) {
                           <span className="text-[10px] text-stone-400 line-through">
                             {formatPrice(reel.compareAtPrice)}
                           </span>
-                          <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1 rounded">
+                          <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
                             {reel.discount}
                           </span>
                         </div>
@@ -232,7 +232,7 @@ export function LovixaRealExperience({ data }: Props) {
                     {/* Rich Plum ADD TO CART Button */}
                     <button
                       onClick={() => handleAddToCart(reel)}
-                      className={`w-full py-2 px-3 text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                      className={`w-full py-2.5 px-3 text-[11px] font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 shadow-xs ${
                         isAdded
                           ? 'bg-emerald-700 text-white'
                           : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98'
@@ -259,7 +259,7 @@ export function LovixaRealExperience({ data }: Props) {
         <div className="text-center mt-10">
           <Link
             href="/products"
-            className="inline-block px-10 py-3 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-xs"
+            className="inline-block px-10 py-3.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold tracking-widest uppercase rounded-full transition-all duration-200 shadow-sm"
           >
             VIEW ALL
           </Link>

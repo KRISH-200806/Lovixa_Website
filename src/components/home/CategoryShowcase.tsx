@@ -39,7 +39,7 @@ export function CategoryShowcase({ categories }: { categories?: StorefrontCatego
 
           <Link
             href="/products"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B2D5C] hover:text-[#562349] group self-start sm:self-auto cursor-pointer py-1 border-b border-[#6B2D5C]/30 hover:border-[#6B2D5C] transition-all font-sans"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#6B2D5C] text-[#6B2D5C] hover:text-white border border-[#E8C4D4] hover:border-[#6B2D5C] text-xs font-bold transition-all font-sans shadow-2xs group self-start sm:self-auto cursor-pointer"
           >
             <span>View all formulations</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

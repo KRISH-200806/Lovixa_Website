@@ -155,7 +155,7 @@ export function ReviewList({
 
         <button
           onClick={handleOpenReview}
-          className="btn-primary !py-2.5 !px-5"
+          className="btn-primary !py-2.5 !px-5 rounded-full"
         >
           <MessageSquare className="w-4 h-4 text-[#E8C4D4]" />
           <span>Write a Review</span>

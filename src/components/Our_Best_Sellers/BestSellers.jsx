@@ -280,7 +280,7 @@ const BestSellers = () => {
                         <button
                           onClick={(e) => handleAddToCart(e, product)}
                           disabled={!product.in_stock || addingId === product.id}
-                          className={`p-2.5 rounded-xl transition-all shadow-button active:scale-95 ${
+                          className={`p-2.5 rounded-full transition-all shadow-button active:scale-95 ${
                             !product.in_stock
                               ? "bg-stone-200 text-text-secondary cursor-not-allowed"
                               : addingId === product.id

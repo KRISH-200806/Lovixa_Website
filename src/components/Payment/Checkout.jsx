@@ -278,13 +278,13 @@ const Checkout = () => {
             <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/"
-                className="px-6 py-3 bg-brand text-white rounded-xl text-xs font-bold hover:bg-brand-hover transition shadow-button"
+                className="px-6 py-3 bg-brand text-white rounded-full text-xs font-bold hover:bg-brand-hover transition shadow-button"
               >
                 Back to Home
               </Link>
               <Link
                 to="/viewall/all-products"
-                className="px-6 py-3 bg-lightBg text-brand border border-emerald-200 rounded-xl text-xs font-bold hover:bg-emerald-100 transition"
+                className="px-6 py-3 bg-lightBg text-brand border border-emerald-200 rounded-full text-xs font-bold hover:bg-emerald-100 transition"
               >
                 Continue Shopping
               </Link>
@@ -314,9 +314,9 @@ const Checkout = () => {
                 </div>
                 <button
                   onClick={handleOpenNewAddress}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-brand hover:text-brand-hover transition"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-brand/40 bg-brand/5 hover:bg-brand text-brand hover:text-white text-xs font-bold transition-all shadow-2xs cursor-pointer"
                 >
-                  <Plus size={14} /> Add New
+                  <Plus size={13} /> <span>Add New</span>
                 </button>
               </div>
 
@@ -331,7 +331,7 @@ const Checkout = () => {
                   <p className="text-xs text-text-secondary">No saved addresses found.</p>
                   <button
                     onClick={handleOpenNewAddress}
-                    className="px-4 py-2 bg-brand text-white text-xs font-bold rounded-xl hover:bg-brand/90 transition shadow-button"
+                    className="px-6 py-2.5 bg-brand text-white text-xs font-bold rounded-full hover:bg-brand/90 transition shadow-button cursor-pointer"
                   >
                     Add Delivery Address
                   </button>
@@ -431,12 +431,12 @@ const Checkout = () => {
                     value={couponInput}
                     onChange={(e) => setCouponInput(e.target.value)}
                     placeholder="e.g. WELCOME10"
-                    className="flex-1 px-4 py-2.5 text-xs rounded-xl border border-stone-200 bg-stone-50/50 focus:bg-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand uppercase tracking-wider"
+                    className="flex-1 px-4 py-2.5 text-xs rounded-full border border-stone-200 bg-stone-50/50 focus:bg-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand uppercase tracking-wider"
                   />
                   <button
                     type="submit"
                     disabled={couponValidating || !couponInput.trim()}
-                    className="px-5 py-2.5 bg-brand hover:bg-brand/90 text-white text-xs font-bold rounded-xl transition shadow-button disabled:opacity-50"
+                    className="px-6 py-2.5 bg-brand hover:bg-brand/90 text-white text-xs font-bold rounded-full transition shadow-button disabled:opacity-50 cursor-pointer"
                   >
                     {couponValidating ? "Checking..." : "Apply"}
                   </button>

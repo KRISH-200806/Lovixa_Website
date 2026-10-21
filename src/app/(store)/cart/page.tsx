@@ -104,7 +104,7 @@ export default function CartPage() {
           <div className="flex justify-end pb-4 pt-6">
             <button
               onClick={clearCart}
-              className="text-xs text-stone-500 hover:text-rose-600 transition-colors flex items-center gap-1 font-sans cursor-pointer"
+              className="text-xs text-stone-500 hover:text-rose-600 transition-colors flex items-center gap-1 font-sans cursor-pointer px-3 py-1 rounded-full hover:bg-rose-50"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Empty Bag ({items.length})</span>

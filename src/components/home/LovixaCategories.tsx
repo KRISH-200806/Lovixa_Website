@@ -64,7 +64,7 @@ export function LovixaCategories({ data }: Props) {
             <Link
               key={idx}
               href={cat.href}
-              className="bg-[#FBF6F8] border border-[#E8C4D4]/60 rounded-lg p-5 flex flex-col justify-between group hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+              className="bg-[#FBF6F8] border border-[#E8C4D4]/60 rounded-2xl p-5 flex flex-col justify-between group hover:shadow-lg transition-all duration-300 relative overflow-hidden"
             >
               {/* Category Header */}
               <div className="text-center mb-4">
@@ -80,7 +80,7 @@ export function LovixaCategories({ data }: Props) {
               </div>
 
               {/* Pedestal Photo */}
-              <div className="relative aspect-[4/5] w-full rounded overflow-hidden bg-stone-50">
+              <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-stone-50">
                 <Image
                   src={cat.image}
                   alt={cat.title}
@@ -90,9 +90,9 @@ export function LovixaCategories({ data }: Props) {
                 />
               </div>
 
-              {/* Explore Link */}
+              {/* Explore Link Pill Button */}
               <div className="pt-3 text-center">
-                <span className="text-xs font-bold text-[#2B1822] group-hover:text-[#6B2D5C] transition-colors inline-flex items-center gap-1 uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#E8C4D4] group-hover:bg-[#6B2D5C] group-hover:text-white group-hover:border-[#6B2D5C] text-xs font-bold text-[#2B1822] transition-all uppercase tracking-wider shadow-2xs">
                   <span>Explore Range</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>

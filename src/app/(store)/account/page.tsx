@@ -274,13 +274,13 @@ export default function CustomerAccountPage() {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={() => openAuthModal('login')}
-              className="w-full sm:w-auto px-6 py-3 bg-[#6B2D5C] text-white rounded-xl text-xs font-bold hover:bg-[#562349] transition shadow-md cursor-pointer"
+              className="w-full sm:w-auto px-7 py-3 bg-[#6B2D5C] text-white rounded-full text-xs font-bold hover:bg-[#562349] transition shadow-md cursor-pointer"
             >
               Sign In to Account
             </button>
             <button
               onClick={() => openAuthModal('register')}
-              className="w-full sm:w-auto px-6 py-3 bg-white border border-[#E8C4D4]/70 text-[#2B1822] rounded-xl text-xs font-bold hover:bg-[#FBF6F8] transition cursor-pointer"
+              className="w-full sm:w-auto px-7 py-3 bg-white border border-[#E8C4D4]/70 text-[#2B1822] rounded-full text-xs font-bold hover:bg-[#FBF6F8] transition cursor-pointer"
             >
               Create New Account
             </button>
@@ -320,7 +320,7 @@ export default function CustomerAccountPage() {
 
           <button
             onClick={() => setActiveTab('orders')}
-            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'orders'
                 ? 'bg-[#6B2D5C] text-white shadow-sm'
                 : 'text-[#2B1822]/70 hover:bg-[#FBF6F8] hover:text-[#2B1822]'
@@ -343,7 +343,7 @@ export default function CustomerAccountPage() {
 
           <button
             onClick={() => setActiveTab('addresses')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'addresses'
                 ? 'bg-[#6B2D5C] text-white shadow-sm'
                 : 'text-[#2B1822]/70 hover:bg-[#FBF6F8] hover:text-[#2B1822]'
@@ -355,7 +355,7 @@ export default function CustomerAccountPage() {
 
           <button
             onClick={() => setActiveTab('wishlist')}
-            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'wishlist'
                 ? 'bg-[#6B2D5C] text-white shadow-sm'
                 : 'text-[#2B1822]/70 hover:bg-[#FBF6F8] hover:text-[#2B1822]'
@@ -379,7 +379,7 @@ export default function CustomerAccountPage() {
           <div className="pt-4 border-t border-[#E8C4D4]/40">
             <button
               onClick={() => logout()}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-semibold text-rose-600 hover:bg-rose-50 transition cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
               <span>Sign Out</span>
@@ -422,7 +422,7 @@ export default function CustomerAccountPage() {
                   <div className="pt-2">
                     <Link
                       href="/products"
-                      className="inline-block px-5 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold rounded-xl hover:bg-[#562349] transition-all shadow-sm"
+                      className="inline-block px-6 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold rounded-full hover:bg-[#562349] transition-all shadow-sm"
                     >
                       Browse Products
                     </Link>
@@ -463,7 +463,7 @@ export default function CustomerAccountPage() {
 
                             <button
                               onClick={() => setSelectedInvoice(order)}
-                              className="px-4 py-2 text-xs font-semibold bg-[#6B2D5C] hover:bg-[#562349] text-white rounded-xl transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
+                              className="px-5 py-2 text-xs font-semibold bg-[#6B2D5C] hover:bg-[#562349] text-white rounded-full transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
                             >
                               <span>View Receipt</span>
                               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -675,7 +675,7 @@ export default function CustomerAccountPage() {
                   <div className="pt-2">
                     <Link
                       href="/products"
-                      className="inline-block px-5 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold rounded-xl hover:bg-[#562349] transition-all shadow-sm"
+                      className="inline-block px-6 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold rounded-full hover:bg-[#562349] transition-all shadow-sm"
                     >
                       Explore Catalog
                     </Link>
@@ -736,7 +736,7 @@ export default function CustomerAccountPage() {
                           })
                           openCart()
                         }}
-                        className="mt-3 w-full py-2 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        className="mt-3 w-full py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold rounded-full flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <ShoppingBag className="w-3.5 h-3.5" />
                         <span>Move to Cart</span>
@@ -943,7 +943,7 @@ export default function CustomerAccountPage() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-5 py-2.5 bg-white border border-[#E8C4D4]/60 hover:bg-[#FBF6F8] text-[#2B1822] text-xs font-semibold rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-white border border-[#E8C4D4]/60 hover:bg-[#FBF6F8] text-[#2B1822] text-xs font-semibold rounded-full flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Printer className="w-4 h-4 text-[#6B2D5C]" />
                 <span>Print Invoice</span>
@@ -951,7 +951,7 @@ export default function CustomerAccountPage() {
               <button
                 type="button"
                 onClick={() => setSelectedInvoice(null)}
-                className="px-5 py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold rounded-full transition-colors cursor-pointer"
               >
                 Close
               </button>

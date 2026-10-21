@@ -79,12 +79,12 @@ export function LovixaNewsletter() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="w-full pl-4 pr-32 py-3 rounded-xl bg-[#FBF6F8] border border-[#E8C4D4]/70 text-xs sm:text-sm text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none focus:bg-white focus:border-[#6B2D5C] focus:ring-1 focus:ring-[#6B2D5C] transition-all font-sans"
+                  className="w-full pl-5 pr-32 py-3 rounded-full bg-[#FBF6F8] border border-[#E8C4D4]/70 text-xs sm:text-sm text-[#2B1822] placeholder:text-[#2B1822]/40 focus:outline-none focus:bg-white focus:border-[#6B2D5C] focus:ring-1 focus:ring-[#6B2D5C] transition-all font-sans"
                 />
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="absolute right-1 px-5 py-2 rounded-lg bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold tracking-wider uppercase transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="absolute right-1 px-5 py-2 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-semibold tracking-wider uppercase transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {status === 'loading' ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />

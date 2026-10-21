@@ -103,7 +103,7 @@ function Header() {
         <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 text-text-main hover:text-brand rounded-lg transition-colors"
+            className="lg:hidden p-2 text-text-main hover:text-brand rounded-full transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle Menu"
           >
@@ -354,7 +354,7 @@ function Header() {
                 <Link
                   to="/checkout"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full py-2.5 bg-brand text-white rounded-lg text-center text-xs font-semibold block hover:bg-brand-hover shadow-brand/20 transition-all duration-300"
+                  className="w-full py-2.5 bg-brand text-white rounded-full text-center text-xs font-semibold block hover:bg-brand-hover shadow-brand/20 transition-all duration-300"
                 >
                   My Orders & Addresses
                 </Link>

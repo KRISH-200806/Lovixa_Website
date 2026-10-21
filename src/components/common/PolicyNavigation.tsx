@@ -31,7 +31,7 @@ export function PolicyNavigation() {
               href={item.href}
               prefetch={true}
               scroll={true}
-              className={`flex items-center gap-2 p-3 rounded-xl border text-xs font-semibold transition-all duration-150 ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-xs font-semibold transition-all duration-150 ${
                 isActive
                   ? 'bg-[#6B2D5C] text-white border-[#6B2D5C] shadow-xs'
                   : 'bg-white text-[#2B1822] border-[#E8C4D4]/70 hover:border-[#6B2D5C] hover:text-[#6B2D5C] hover:bg-[#FBF6F8]'

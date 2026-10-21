@@ -314,7 +314,7 @@ function ProductPage() {
                     <button
                       key={v.id}
                       onClick={() => setSelectedVariant(v)}
-                      className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                      className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all ${
                         selectedVariant?.id === v.id
                           ? "border-brand bg-brand/10 text-brand shadow-xs scale-102"
                           : "border-border bg-white text-text-main hover:border-brand/40"
@@ -331,7 +331,7 @@ function ProductPage() {
             <div className="space-y-4 pt-2">
               <div className="flex items-center gap-4">
                 {/* Quantity Control */}
-                <div className="flex items-center border border-border rounded-xl bg-white overflow-hidden shadow-xs">
+                <div className="flex items-center border border-border rounded-full bg-white overflow-hidden shadow-xs px-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={quantity <= 1}

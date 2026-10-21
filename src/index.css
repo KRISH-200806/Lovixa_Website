@@ -117,6 +117,7 @@ body {
   .btn-lovixa-primary {
     background-color: #1B5E20;
     color: #FFFFFF;
+    border-radius: 9999px !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-lovixa-primary:hover {
@@ -131,10 +132,39 @@ body {
     background-color: #E8F5E9;
     color: #1B5E20;
     border: 1px solid #C8E6C9;
+    border-radius: 9999px !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-lovixa-secondary:hover {
     background-color: #C8E6C9;
+  }
+
+  /* Universal Button Pill Radius Enforcement across entire LOVIXA Store */
+  .rounded-button,
+  .rounded-radius-pill,
+  button.rounded-button,
+  a.rounded-button,
+  button.rounded-radius-pill,
+  a.rounded-radius-pill,
+  button[type="submit"],
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-lovixa-primary,
+  .btn-lovixa-secondary,
+  a.btn,
+  a.btn-primary,
+  a.btn-secondary,
+  a.btn-outline,
+  a.btn-ghost,
+  button.shadow-button,
+  button.shadow-brand,
+  button.bg-brand,
+  button.bg-primary,
+  button.bg-\[\#6B2D5C\] {
+    border-radius: 9999px !important;
   }
   .card-lovixa {
     background-color: #FFFFFF;

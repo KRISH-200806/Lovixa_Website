@@ -564,7 +564,7 @@ export function ProductsCatalog({
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-stone-50 rounded-lg border border-[#E8C4D4]/60 p-8 space-y-3">
+            <div className="text-center py-20 bg-stone-50 rounded-2xl border border-[#E8C4D4]/60 p-8 space-y-3">
               <h3 className="font-sans text-base font-bold text-[#2B1822]">
                 No hair care products match selected filters
               </h3>
@@ -573,7 +573,7 @@ export function ProductsCatalog({
               </p>
               <button
                 onClick={resetAllFilters}
-                className="px-5 py-2 bg-[#6B2D5C] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#562349] transition cursor-pointer"
+                className="px-6 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#562349] rounded-full transition shadow-xs cursor-pointer"
               >
                 Clear all filters
               </button>
@@ -611,7 +611,7 @@ export function ProductsCatalog({
                   placeholder="Search products..."
                   value={filters.searchQuery}
                   onChange={(e) => setFilters((prev) => ({ ...prev, searchQuery: e.target.value }))}
-                  className="w-full px-3 py-1.5 text-xs border border-[#E8C4D4]/80 rounded focus:outline-none focus:border-[#6B2D5C]"
+                  className="w-full px-4 py-2 text-xs border border-[#E8C4D4]/80 rounded-full focus:outline-none focus:border-[#6B2D5C]"
                 />
               </div>
 

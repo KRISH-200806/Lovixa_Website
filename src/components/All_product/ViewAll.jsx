@@ -229,12 +229,12 @@ const ViewAll = () => {
             <div className="flex items-center gap-3 self-end md:self-auto">
               <button
                 onClick={() => setMobileFilterOpen(true)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-2 bg-lightBg hover:bg-brand/10 text-brand rounded-lg text-xs font-semibold transition-colors border border-brand/20 shadow-2xs"
+                className="lg:hidden flex items-center gap-1.5 px-3 py-2 bg-lightBg hover:bg-brand/10 text-brand rounded-full text-xs font-semibold transition-colors border border-brand/20 shadow-2xs"
               >
                 <Filter size={14} /> Filter
               </button>
 
-              <div className="flex items-center border border-border rounded-lg overflow-hidden bg-white shadow-2xs">
+              <div className="flex items-center border border-border rounded-full p-0.5 overflow-hidden bg-white shadow-2xs">
                 <button
                   onClick={() => setGridView(true)}
                   className={`p-2 transition-colors ${gridView ? "bg-brand text-white" : "text-text-secondary hover:text-text-main"}`}
@@ -259,7 +259,7 @@ const ViewAll = () => {
                     setOrdering(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="bg-white border border-border text-text-main text-xs font-medium rounded-lg px-3 py-2 focus:outline-none focus:border-brand shadow-2xs"
+                  className="bg-white border border-border text-text-main text-xs font-medium rounded-full px-4 py-2 focus:outline-none focus:border-brand shadow-2xs"
                 >
                   <option value="-created_at">Newest First</option>
                   <option value="price">Price: Low to High</option>
@@ -299,7 +299,7 @@ const ViewAll = () => {
                   <li>
                     <button
                       onClick={() => handleCategorySelect(null)}
-                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${
+                      className={`w-full text-left px-3 py-1.5 rounded-full text-xs transition-colors flex items-center justify-between ${
                         selectedCategory === null
                           ? "bg-brand/10 text-brand font-bold"
                           : "text-text-secondary hover:bg-warm hover:text-text-main"
@@ -313,7 +313,7 @@ const ViewAll = () => {
                     <li key={cat.id}>
                       <button
                         onClick={() => handleCategorySelect(cat)}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center justify-between ${
+                        className={`w-full text-left px-3 py-1.5 rounded-full text-xs transition-colors flex items-center justify-between ${
                           selectedCategory === cat.id
                             ? "bg-brand/10 text-brand font-bold"
                             : "text-text-secondary hover:bg-warm hover:text-text-main"
@@ -529,7 +529,7 @@ const ViewAll = () => {
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="px-3.5 py-1.5 border border-border rounded-lg text-xs font-medium text-text-main hover:bg-warm disabled:opacity-40 transition-colors bg-white"
+                  className="px-4 py-1.5 border border-border rounded-full text-xs font-medium text-text-main hover:bg-warm disabled:opacity-40 transition-colors bg-white cursor-pointer"
                 >
                   Previous
                 </button>
@@ -537,7 +537,7 @@ const ViewAll = () => {
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                    className={`w-8 h-8 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       currentPage === i + 1
                         ? "bg-brand text-white shadow-brand/30"
                         : "bg-white border border-border text-text-main hover:bg-warm"
@@ -549,7 +549,7 @@ const ViewAll = () => {
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="px-3.5 py-1.5 border border-border rounded-lg text-xs font-medium text-text-main hover:bg-warm disabled:opacity-40 transition-colors bg-white"
+                  className="px-4 py-1.5 border border-border rounded-full text-xs font-medium text-text-main hover:bg-warm disabled:opacity-40 transition-colors bg-white cursor-pointer"
                 >
                   Next
                 </button>
@@ -592,7 +592,7 @@ const ViewAll = () => {
                     <li>
                       <button
                         onClick={() => handleCategorySelect(null)}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex items-center justify-between ${
+                        className={`w-full text-left px-3.5 py-2 rounded-full text-xs transition-colors flex items-center justify-between ${
                           selectedCategory === null ? "bg-lightBg text-brand font-bold" : "text-text-secondary hover:bg-lightBg/50"
                         }`}
                       >
@@ -604,7 +604,7 @@ const ViewAll = () => {
                       <li key={cat.id}>
                         <button
                           onClick={() => handleCategorySelect(cat)}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex items-center justify-between ${
+                          className={`w-full text-left px-3.5 py-2 rounded-full text-xs transition-colors flex items-center justify-between ${
                             selectedCategory === cat.id ? "bg-lightBg text-brand font-bold" : "text-text-secondary hover:bg-lightBg/50"
                           }`}
                         >

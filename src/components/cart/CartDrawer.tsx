@@ -189,7 +189,7 @@ export function CartDrawer() {
                         </h4>
                         <button
                           onClick={() => removeItem(item.productId, item.variantId)}
-                          className="text-stone-400 hover:text-rose-600 transition-colors p-1 rounded-md hover:bg-rose-50 cursor-pointer shrink-0"
+                          className="text-stone-400 hover:text-rose-600 transition-colors p-1 rounded-full hover:bg-rose-50 cursor-pointer shrink-0"
                           aria-label={`Remove ${item.title}`}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -252,7 +252,7 @@ export function CartDrawer() {
               {/* Promo Code Input */}
               <div>
                 {coupon ? (
-                  <div className="flex items-center justify-between px-3 py-1.5 bg-white border border-[#6B2D5C]/30 rounded-xl text-xs text-[#6B2D5C]">
+                  <div className="flex items-center justify-between px-4 py-2 bg-white border border-[#6B2D5C]/30 rounded-full text-xs text-[#6B2D5C]">
                     <span className="font-semibold truncate">
                       Applied: {coupon.code}{' '}
                       ({coupon.discountType === 'percentage'

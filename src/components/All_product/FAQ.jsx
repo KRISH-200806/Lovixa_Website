@@ -66,7 +66,7 @@ function FAQ() {
             </p>
             <Link
               to="/contact-us"
-              className="w-full bg-brand hover:bg-brand/90 text-white py-3 rounded-xl font-bold text-xs text-center transition duration-300 shadow-button"
+              className="w-full bg-brand hover:bg-brand/90 text-white py-3 rounded-full font-bold text-xs text-center transition duration-300 shadow-button"
             >
               Contact Support
             </Link>

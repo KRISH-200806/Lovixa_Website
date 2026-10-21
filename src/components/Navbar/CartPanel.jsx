@@ -106,7 +106,7 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
                   onClose();
                   navigate("/viewall/all-products");
                 }}
-                className="px-6 py-3 bg-brand hover:bg-brand/90 text-white text-xs font-bold rounded-xl transition-all shadow-button active:scale-95 uppercase tracking-wider"
+                className="px-6 py-3 bg-brand hover:bg-brand/90 text-white text-xs font-bold rounded-full transition-all shadow-button active:scale-95 uppercase tracking-wider"
               >
                 Start Shopping
               </button>
@@ -154,11 +154,11 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
 
                     {/* Quantity Selector & Trash */}
                     <div className="flex items-center justify-between mt-2">
-                      <div className="flex items-center border border-stone-200 rounded-xl overflow-hidden bg-white">
+                      <div className="flex items-center border border-stone-200 rounded-full px-1 overflow-hidden bg-white">
                         <button
                           onClick={() => handleUpdateQty(item.id, item.quantity - 1)}
                           disabled={isItemBusy || isSyncing || item.quantity <= 1}
-                          className="w-7 h-7 flex items-center justify-center text-text-secondary hover:bg-emerald-50 disabled:opacity-30 transition-colors"
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-text-secondary hover:bg-emerald-50 disabled:opacity-30 transition-colors"
                           aria-label="Decrease"
                         >
                           <Minus size={12} />
@@ -169,7 +169,7 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
                         <button
                           onClick={() => handleUpdateQty(item.id, item.quantity + 1)}
                           disabled={isItemBusy || isSyncing}
-                          className="w-7 h-7 flex items-center justify-center text-text-secondary hover:bg-emerald-50 disabled:opacity-30 transition-colors"
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-text-secondary hover:bg-emerald-50 disabled:opacity-30 transition-colors"
                           aria-label="Increase"
                         >
                           <Plus size={12} />
@@ -179,7 +179,7 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
                       <button
                         onClick={() => handleRemove(item.id)}
                         disabled={isItemBusy || isSyncing}
-                        className="text-rose-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                        className="text-rose-400 hover:text-rose-600 p-1.5 rounded-full hover:bg-rose-50 transition-colors"
                         aria-label="Remove item"
                       >
                         <Trash2 size={14} />
@@ -212,7 +212,7 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
 
             <button
               onClick={handleProceedToCheckout}
-              className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-button active:scale-98 uppercase tracking-wider"
+              className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-full text-xs font-bold transition flex items-center justify-center gap-2 shadow-button active:scale-98 uppercase tracking-wider"
             >
               <span>Proceed to Checkout</span>
               <ArrowRight size={14} />

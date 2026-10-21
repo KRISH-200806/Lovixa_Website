@@ -165,7 +165,7 @@ const AboutUs = () => {
           </p>
           <Link
             to="/viewall/all-products"
-            className="inline-block bg-pure text-brand font-bold px-8 py-3.5 rounded-xl hover:bg-stone-100 transition shadow-lg text-xs tracking-wider uppercase"
+            className="inline-block bg-pure text-brand font-bold px-8 py-3.5 rounded-full hover:bg-stone-100 transition shadow-lg text-xs tracking-wider uppercase"
           >
             Explore Catalog
           </Link>

@@ -141,7 +141,7 @@ const Main = () => {
 
             <div className="flex items-center">
                 <span className="text-gray-700 mr-3">View:</span>
-                <div className="flex border rounded-md overflow-hidden">
+                <div className="flex border rounded-full overflow-hidden">
                     <button
                         className={`p-2 ${gridView ? 'bg-slate-100 text-slate-500' : 'bg-white text-gray-500'} transition duration-300`}
                         onClick={() => setGridView(true)}

@@ -165,12 +165,12 @@ const Footer = () => {
               type="email"
               value={newsletterEmail}
               onChange={(e) => setNewsletterEmail(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-emerald-200 bg-white text-text-main outline-none placeholder:text-gray-400 text-xs focus:border-brand focus:ring-2 focus:ring-brand/20 shadow-2xs"
+              className="w-full px-5 py-2.5 rounded-full border border-emerald-200 bg-white text-text-main outline-none placeholder:text-gray-400 text-xs focus:border-brand focus:ring-2 focus:ring-brand/20 shadow-2xs"
               placeholder="Enter your email address"
             />
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-2.5 bg-brand hover:bg-brand-hover text-white rounded-xl text-xs font-bold transition duration-300 shadow-brand/20 whitespace-nowrap active:scale-95"
+              className="w-full sm:w-auto px-7 py-2.5 bg-brand hover:bg-brand-hover text-white rounded-full text-xs font-bold transition duration-300 shadow-brand/20 whitespace-nowrap active:scale-95 cursor-pointer"
             >
               Subscribe
             </button>

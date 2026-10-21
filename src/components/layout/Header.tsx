@@ -296,7 +296,7 @@ export function Header({
                     setMobileMenuOpen(false)
                     openAuthModal('login')
                   }}
-                  className="w-full py-2.5 text-center text-sm font-semibold rounded-xl bg-[#6B2D5C] hover:bg-[#562349] text-white"
+                  className="w-full py-3 text-center text-sm font-semibold rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white shadow-xs cursor-pointer"
                 >
                   Sign In / Register
                 </button>

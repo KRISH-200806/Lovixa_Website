@@ -92,7 +92,7 @@ export default function UserDropdown() {
                 <Link
                   to="/checkout"
                   onClick={closeDropdown}
-                  className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-text-main rounded-lg hover:bg-warm hover:text-brand transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-text-main rounded-full hover:bg-warm hover:text-brand transition-colors"
                 >
                   <svg className="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -105,7 +105,7 @@ export default function UserDropdown() {
               <div className="border-t border-border pt-1">
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-3 py-2 w-full text-left text-xs font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 w-full text-left text-xs font-medium text-red-600 rounded-full hover:bg-red-50 transition-colors"
                 >
                   <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -119,7 +119,7 @@ export default function UserDropdown() {
               <Link
                 to="/login"
                 onClick={closeDropdown}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-text-main rounded-lg hover:bg-brand hover:text-white transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-text-main rounded-full hover:bg-brand hover:text-white transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />

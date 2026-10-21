@@ -143,21 +143,21 @@ const ExistingReviews = () => {
     
     return (
       <button 
-        className="flex items-center my-1 w-full hover:bg-gray-50 transition p-1 rounded"
+        className="flex items-center my-1.5 w-full hover:bg-stone-100 transition p-1.5 px-3 rounded-full text-left cursor-pointer"
         onClick={() => setFilterRating(starCount === filterRating ? 0 : starCount)}
       >
         <div className="flex mr-2">
           {renderStars(starCount)}
         </div>
-        <div className="relative h-6 bg-stone-200 rounded-sm flex-grow overflow-hidden">
+        <div className="relative h-3 bg-stone-200 rounded-full flex-grow overflow-hidden">
           <div 
-            className={`absolute h-full transition-all duration-1000 ease-out ${
+            className={`absolute h-full rounded-full transition-all duration-1000 ease-out ${
               filterRating === starCount ? 'bg-brand' : 'bg-sage'
             }`}
             style={{ width: `${percentage}%` }}
           ></div>
         </div>
-        <div className="ml-2 text-sm text-text-secondary min-w-8 text-center">({count})</div>
+        <div className="ml-2 text-xs font-semibold text-text-secondary min-w-8 text-center">({count})</div>
       </button>
     );
   };
@@ -318,17 +318,17 @@ const ExistingReviews = () => {
           
           {/* Pagination */}
           {filteredReviews.length > 0 && (
-            <div className="flex justify-center mt-8">
-              <button className="px-4 py-2 border rounded-l bg-gray-50 text-gray-600 hover:bg-gray-100"> 
+            <div className="flex items-center justify-center gap-1.5 mt-8">
+              <button className="px-4 py-2 border rounded-full bg-gray-50 text-xs font-semibold text-gray-600 hover:bg-gray-100 transition cursor-pointer"> 
                 Previous
               </button>
-              <button className="px-4 py-2 border-t border-b bg-amber-500 text-white">
+              <button className="w-9 h-9 border rounded-full bg-amber-500 text-white text-xs font-bold transition shadow-xs cursor-pointer flex items-center justify-center">
                 1
               </button>
-              <button className="px-4 py-2 border-t border-b border-r bg-gray-50 text-gray-600 hover:bg-gray-100">
+              <button className="w-9 h-9 border border-gray-200 rounded-full bg-gray-50 text-xs font-semibold text-gray-600 hover:bg-gray-100 transition cursor-pointer flex items-center justify-center">
                 2
               </button>
-              <button className="px-4 py-2 border-t border-b border-r rounded-r bg-gray-50 text-gray-600 hover:bg-gray-100">
+              <button className="px-4 py-2 border rounded-full bg-gray-50 text-xs font-semibold text-gray-600 hover:bg-gray-100 transition cursor-pointer">
                 Next
               </button>
             </div>

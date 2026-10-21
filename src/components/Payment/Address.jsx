@@ -227,7 +227,7 @@ const Address = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-xl text-xs font-bold transition shadow-button disabled:opacity-60"
+              className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-full text-xs font-bold transition shadow-button disabled:opacity-60"
             >
               {isSubmitting ? "Saving..." : "Save & Proceed to Checkout"}
             </button>

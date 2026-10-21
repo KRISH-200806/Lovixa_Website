@@ -57,7 +57,7 @@ const ReviewContainer = ({ productId }) => {
           <button
             key={rating}
             onClick={() => handleFilterChange(filterRating === rating ? 0 : rating)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
               filterRating === rating
                 ? 'bg-brand text-white shadow-button'
                 : 'bg-warm hover:bg-stone-200/70 text-text-main border border-stone-200'

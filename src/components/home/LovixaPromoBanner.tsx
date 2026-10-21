@@ -95,7 +95,7 @@ export function LovixaPromoBanner({ data }: Props) {
 
                 {/* Offer Badge on Top Left */}
                 <div className="absolute top-3 left-3 z-10">
-                  <span className="bg-[#6B2D5C] text-white text-[10px] font-black px-2.5 py-1 tracking-wider uppercase shadow-xs">
+                  <span className="bg-[#6B2D5C] text-white text-[10px] font-black px-3 py-1 tracking-wider uppercase rounded-full shadow-xs">
                     {badge}
                   </span>
                 </div>
@@ -143,7 +143,7 @@ export function LovixaPromoBanner({ data }: Props) {
                       {formatPrice(comparePrice)}
                     </span>
                   )}
-                  <span className="text-xs font-bold text-[#6B2D5C] bg-[#E8C4D4]/40 border border-[#E8C4D4]/60 px-2 py-0.5 rounded">
+                  <span className="text-xs font-bold text-[#6B2D5C] bg-[#E8C4D4]/40 border border-[#E8C4D4]/60 px-2.5 py-0.5 rounded-full">
                     {discountTag}
                   </span>
                 </div>

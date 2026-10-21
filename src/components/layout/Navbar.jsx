@@ -29,7 +29,7 @@ export default function Navbar({ data }) {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-foreground hover:bg-brand-50 rounded-radius-md"
+            className="p-2 text-foreground hover:bg-brand-50 rounded-full"
             aria-label="Toggle navigation menu"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

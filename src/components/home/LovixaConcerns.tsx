@@ -411,7 +411,7 @@ export function LovixaConcerns({ data }: Props) {
                     <span className="text-[11px] text-[#2B1822]/40 line-through">
                       {formatPrice(selectedConcern.compareAtPrice)}
                     </span>
-                    <span className="text-[10px] font-bold text-[#6B2D5C] bg-[#E8C4D4]/40 px-1.5 py-0.5 rounded">
+                    <span className="text-[10px] font-bold text-[#6B2D5C] bg-[#E8C4D4]/40 px-2 py-0.5 rounded-full">
                       SAVE 15%
                     </span>
                   </div>
