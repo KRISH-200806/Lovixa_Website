@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Container, SafeImage } from '@/components/ui'
 import { useCart } from '@/context/CartContext'
-import AnnouncementBar from '@/components/layout/AnnouncementBar'
+import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
 
 export default function Navbar({ data }) {
   const siteName = data?.siteName && data.siteName !== 'Your Site Name' ? data.siteName : 'LOVIXA'

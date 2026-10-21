@@ -60,3 +60,6 @@ export function AnnouncementBar() {
     </aside>
   )
 }
+
+export default AnnouncementBar
+
