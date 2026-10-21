@@ -216,7 +216,7 @@ export function CartDrawer() {
 
                     {/* Quantity controls */}
                     <div className="flex items-center justify-between mt-2 pt-1">
-                      <div className="flex items-center border border-[#E8C4D4]/80 rounded-lg bg-white shadow-2xs">
+                      <div className="flex items-center border border-[#E8C4D4]/80 rounded-full bg-white shadow-2xs px-1">
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity - 1, item.variantId)}
                           className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-[#2B1822]/60 hover:text-[#6B2D5C] transition cursor-pointer"
@@ -276,12 +276,12 @@ export function CartDrawer() {
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
-                      className="text-xs px-3 py-2 bg-white border border-[#E8C4D4]/70 text-[#2B1822] rounded-xl flex-1 focus:outline-none focus:border-[#6B2D5C] uppercase font-sans placeholder:normal-case placeholder:text-[#2B1822]/40"
+                      className="text-xs px-4 py-2 bg-white border border-[#E8C4D4]/70 text-[#2B1822] rounded-full flex-1 focus:outline-none focus:border-[#6B2D5C] uppercase font-sans placeholder:normal-case placeholder:text-[#2B1822]/40"
                     />
                     <button
                       onClick={handleApplyPromo}
                       disabled={isValidating || !promoInput.trim()}
-                      className="px-3.5 py-2 bg-[#6B2D5C] text-white text-xs font-bold rounded-xl hover:bg-[#562349] transition-colors disabled:opacity-50 flex items-center gap-1 cursor-pointer shrink-0"
+                      className="px-4 py-2 bg-[#6B2D5C] text-white text-xs font-bold rounded-full hover:bg-[#562349] transition-colors disabled:opacity-50 flex items-center gap-1 cursor-pointer shrink-0 uppercase tracking-wider"
                     >
                       {isValidating && <Loader2 className="w-3 h-3 animate-spin" />}
                       <span>Apply</span>

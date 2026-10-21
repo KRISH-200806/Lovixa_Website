@@ -252,7 +252,7 @@ const NewPassword = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-brand text-white py-2.5 rounded-xl hover:bg-brand/90 transition font-semibold text-sm flex items-center justify-center shadow-button disabled:opacity-60"
+                className="w-full bg-brand text-white py-3.5 px-6 rounded-full hover:bg-brand/90 transition font-semibold text-sm flex items-center justify-center shadow-button disabled:opacity-60 cursor-pointer"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

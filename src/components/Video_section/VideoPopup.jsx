@@ -105,7 +105,7 @@ const VideoPopup = ({ product, onClose }) => {
           
           <div className="flex space-x-2">
             <button 
-              className="flex-1 bg-brand hover:bg-brand-hover text-white py-3 px-4 rounded-xl font-bold text-xs transition-all shadow-brand/30 hover:scale-105 active:scale-95"
+              className="flex-1 bg-brand hover:bg-brand-hover text-white py-3.5 px-6 rounded-full font-bold text-xs transition-all shadow-brand/30 hover:scale-102 active:scale-95 cursor-pointer"
               onClick={async () => {
                 const res = await addToCart({
                   id: product.id,

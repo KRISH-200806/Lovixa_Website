@@ -378,7 +378,7 @@ const Checkout = () => {
                               e.stopPropagation();
                               handleOpenEditAddress(addr);
                             }}
-                            className="p-1.5 text-text-secondary hover:text-brand transition rounded-md"
+                            className="p-1.5 text-text-secondary hover:text-brand transition rounded-full"
                           >
                             <Edit2 size={14} />
                           </button>
@@ -387,7 +387,7 @@ const Checkout = () => {
                               e.stopPropagation();
                               handleDeleteAddress(addr.id);
                             }}
-                            className="p-1.5 text-rose-400 hover:text-rose-600 transition rounded-md"
+                            className="p-1.5 text-rose-400 hover:text-rose-600 transition rounded-full"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -500,7 +500,7 @@ const Checkout = () => {
               <button
                 onClick={handlePlaceOrder}
                 disabled={isPlacingOrder || cartItems.length === 0 || !selectedAddressId}
-                className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-button active:scale-98 disabled:opacity-50"
+                className="w-full py-3.5 bg-brand hover:bg-brand/90 text-white rounded-full text-xs font-bold transition flex items-center justify-center gap-2 shadow-button active:scale-98 disabled:opacity-50 cursor-pointer uppercase tracking-wider"
               >
                 {isPlacingOrder ? "Placing Order..." : "Confirm & Place Order"}
                 <ArrowRight size={14} />
@@ -617,13 +617,13 @@ const Checkout = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddressModal(false)}
-                  className="px-4 py-2 border border-stone-200 text-text-secondary rounded-xl font-bold hover:bg-stone-50"
+                  className="px-5 py-2.5 border border-stone-200 text-text-secondary rounded-full font-bold hover:bg-stone-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-brand text-white rounded-xl font-bold hover:bg-brand/90 transition shadow-button"
+                  className="px-6 py-2.5 bg-brand text-white rounded-full font-bold hover:bg-brand/90 transition shadow-button cursor-pointer"
                 >
                   Save Address
                 </button>

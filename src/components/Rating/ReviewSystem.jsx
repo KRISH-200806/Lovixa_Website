@@ -182,7 +182,7 @@ const ReviewSystem = ({ id }) => {
 
         <button
           onClick={handleOpenReviewForm}
-          className="bg-brand hover:bg-brand/90 text-white py-2.5 px-6 rounded-xl font-bold text-xs transition shadow-button active:scale-95"
+          className="bg-brand hover:bg-brand/90 text-white py-2.5 px-6 rounded-full font-bold text-xs transition shadow-button active:scale-95"
         >
           Write a Review
         </button>

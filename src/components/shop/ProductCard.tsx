@@ -108,7 +108,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={handleAddToCart}
             disabled={isAdding}
-            className="w-full py-2.5 px-4 bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold rounded-radius-pill backdrop-blur-md border border-brand-500 transition-all shadow-elev-2 flex items-center justify-center gap-2"
+            className="w-full py-2.5 px-4 bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold rounded-full backdrop-blur-md border border-brand-500 transition-all shadow-elev-2 flex items-center justify-center gap-2 cursor-pointer"
           >
             {isAdding ? (
               <span className="text-neutral-0 font-bold">Added to Bag ✓</span>
@@ -197,7 +197,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             type="button"
             onClick={handleAddToCart}
-            className="md:hidden px-3.5 py-1.5 rounded-radius-pill bg-brand-500 text-neutral-0 text-body-xs font-semibold hover:bg-brand-600 transition-colors shadow-elev-1"
+            className="md:hidden px-3.5 py-1.5 rounded-full bg-brand-500 text-neutral-0 text-body-xs font-semibold hover:bg-brand-600 transition-colors shadow-elev-1 cursor-pointer"
           >
             {isAdding ? '✓' : 'Add'}
           </button>

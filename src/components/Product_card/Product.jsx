@@ -108,7 +108,7 @@ const Product = () => {
                   <div className="flex items-center gap-3">
                     <button
                       disabled={addingId === item.id}
-                      className="bg-brand hover:bg-brand-hover text-white py-3 px-6 rounded-button font-bold text-xs transition-all duration-300 shadow-brand/40 hover:shadow-brand/60 hover:scale-105 active:scale-95 disabled:opacity-70 flex items-center gap-2"
+                      className="bg-brand hover:bg-brand-hover text-white py-3 px-6 rounded-full font-bold text-xs transition-all duration-300 shadow-brand/40 hover:shadow-brand/60 hover:scale-105 active:scale-95 disabled:opacity-70 flex items-center gap-2"
                       onClick={() => handleAddToCart(item)}
                     >
                       <span>{addingId === item.id ? "Adding..." : `Shop Now — ₹${item.price}`}</span>

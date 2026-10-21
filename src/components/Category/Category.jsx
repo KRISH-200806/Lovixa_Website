@@ -141,7 +141,7 @@ function Category() {
             <p className="text-text-secondary mb-4">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-5 py-2 bg-brand text-white rounded-button text-sm font-semibold hover:bg-brand-hover transition-colors"
+              className="px-6 py-2.5 bg-brand text-white rounded-full text-sm font-semibold hover:bg-brand-hover transition-colors"
             >
               Retry
             </button>
@@ -205,7 +205,7 @@ function Category() {
                         {category.description || "Discover premium skincare, fragrances & beauty care tailored for you."}
                       </p>
 
-                      <div className="inline-flex items-center text-xs font-semibold text-white bg-brand px-4 py-2.5 rounded-button group-hover:bg-brand-hover transition-all duration-300 shadow-brand/40 group-hover:scale-105 active:scale-95">
+                      <div className="inline-flex items-center text-xs font-semibold text-white bg-brand px-5 py-2.5 rounded-full group-hover:bg-brand-hover transition-all duration-300 shadow-brand/40 group-hover:scale-105 active:scale-95">
                         <span>Explore Collection</span>
                         <ChevronRight size={14} className="ml-1 transform group-hover:translate-x-1 transition-transform" />
                       </div>

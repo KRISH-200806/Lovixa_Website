@@ -115,13 +115,13 @@ export default function CosmeticHero() {
                         image: hairShampoo.image,
                       })
                     }
-                    className="px-4 py-2.5 rounded-radius-pill bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold whitespace-nowrap shadow-elev-2 hover:shadow-brand-glow transition-all active:scale-95"
+                    className="px-5 py-2.5 rounded-full bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold whitespace-nowrap shadow-elev-2 hover:shadow-brand-glow transition-all active:scale-95 cursor-pointer"
                   >
                     Add to Cart +
                   </button>
                   <a
                     href="#shop-products"
-                    className="hidden md:inline-flex px-3.5 py-2.5 rounded-radius-pill bg-brand-50 hover:bg-brand-100 text-brand-900 text-body-xs font-medium border border-brand-200 transition-colors"
+                    className="hidden md:inline-flex px-4 py-2.5 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-900 text-body-xs font-medium border border-brand-200 transition-colors"
                   >
                     View All
                   </a>
@@ -188,13 +188,13 @@ export default function CosmeticHero() {
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <a
                   href="#shop-products"
-                  className="px-8 py-4 rounded-radius-pill bg-brand-500 hover:bg-brand-600 text-neutral-0 font-semibold text-body-md tracking-wide shadow-elev-2 hover:shadow-brand-glow transition-all"
+                  className="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-600 text-neutral-0 font-semibold text-body-md tracking-wide shadow-elev-2 hover:shadow-brand-glow transition-all"
                 >
                   Shop Best Sellers →
                 </a>
                 <a
                   href="#categories"
-                  className="px-8 py-4 rounded-radius-pill bg-brand-50 hover:bg-brand-100 text-brand-900 font-semibold text-body-md border border-brand-200 transition-colors"
+                  className="px-8 py-4 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-900 font-semibold text-body-md border border-brand-200 transition-colors"
                 >
                   Explore Categories
                 </a>
@@ -270,7 +270,7 @@ export default function CosmeticHero() {
                           selectedShade: lipstickProduct.shades ? lipstickProduct.shades[0] : undefined,
                         })
                       }
-                      className="px-4 py-2 rounded-radius-pill bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold whitespace-nowrap shadow-elev-1 transition-all"
+                      className="px-5 py-2 rounded-full bg-brand-500 hover:bg-brand-600 text-neutral-0 text-body-xs font-semibold whitespace-nowrap shadow-elev-1 transition-all cursor-pointer"
                     >
                       Add +
                     </button>

@@ -76,7 +76,7 @@ const ProductCard = ({ product, index, gridView, onAddToCart }) => {
                 {/* Add to cart button */}
                 <button
                     onClick={() => onAddToCart(product)}
-                    className="mt-auto w-full bg-brand hover:bg-brand-hover text-white py-2.5 px-4 rounded-button transition-all duration-300 text-xs font-bold flex items-center justify-center overflow-hidden shadow-brand/20 hover:scale-102 active:scale-98"
+                    className="mt-auto w-full bg-brand hover:bg-brand-hover text-white py-2.5 px-4 rounded-full transition-all duration-300 text-xs font-bold flex items-center justify-center overflow-hidden shadow-brand/20 hover:scale-102 active:scale-98"
                 >
                     <span className="flex items-center gap-1.5">
                         <ShoppingCart size={14} />

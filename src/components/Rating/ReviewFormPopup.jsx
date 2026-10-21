@@ -457,14 +457,14 @@ const ReviewFormPopup = ({ isOpen, onClose, id }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 text-gray-600 hover:text-gray-800 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+              className="px-5 py-2.5 text-gray-600 hover:text-gray-800 font-medium rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
               disabled={isSubmitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 bg-brand text-white font-medium rounded-lg hover:bg-brand/90 transition-colors flex items-center justify-center min-w-32 shadow-button"
+              className="px-6 py-2.5 bg-brand text-white font-medium rounded-full hover:bg-brand/90 transition-colors flex items-center justify-center min-w-32 shadow-button"
               disabled={isSubmitting || !comment.trim() || commentLength > MAX_COMMENT_LENGTH || rating === 0}
             >
               {isSubmitting ? (

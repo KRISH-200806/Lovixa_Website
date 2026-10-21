@@ -71,9 +71,9 @@ export function ProductCard(props: ProductCardProps) {
   }
 
   return (
-    <div className="group bg-white flex flex-col justify-between transition-all duration-300">
-      {/* Square Thumbnail Container (The Wellness Shop Style) */}
-      <div className="relative aspect-square w-full bg-[#FBF6F8] overflow-hidden mb-3">
+    <div className="group bg-white flex flex-col justify-between rounded-2xl border border-[#E8C4D4]/60 p-2 sm:p-2.5 hover:shadow-md hover:border-[#6B2D5C]/40 transition-all duration-300 overflow-hidden">
+      {/* Thumbnail Container */}
+      <div className="relative aspect-square w-full bg-[#FBF6F8] rounded-xl overflow-hidden mb-3">
         <Link href={`/products/${slug}`} className="block w-full h-full relative">
           {image ? (
             <Image
@@ -92,7 +92,7 @@ export function ProductCard(props: ProductCardProps) {
 
         {/* Top-Left Rich Plum Promo Tag Badge */}
         <div className="absolute top-2 left-2 z-10 pointer-events-none">
-          <span className="bg-[#6B2D5C] text-white text-[9px] sm:text-[10px] font-black px-2 py-0.5 tracking-wider uppercase shadow-xs">
+          <span className="bg-[#6B2D5C] text-white text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 tracking-wider uppercase shadow-xs rounded-full">
             {badge || 'B1G1 + FREE GIFT'}
           </span>
         </div>
@@ -121,7 +121,7 @@ export function ProductCard(props: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <div className="px-2 pt-1 pb-4 flex-1 flex flex-col justify-between gap-3.5">
+      <div className="px-2 pt-1 pb-3 flex-1 flex flex-col justify-between gap-3.5">
         <div className="space-y-2">
           <Link
             href={`/products/${slug}`}
@@ -156,24 +156,26 @@ export function ProductCard(props: ProductCardProps) {
         </div>
       </div>
 
-      {/* Full-width Rich Plum ADD TO CART Button */}
-      <button
-        onClick={handleQuickAdd}
-        className={`w-full py-3 px-4 font-sans text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
-          justAdded
-            ? 'bg-emerald-700 text-white'
-            : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98'
-        }`}
-      >
-        {justAdded ? (
-          <>
-            <Check className="w-3.5 h-3.5" />
-            <span>ADDED TO CART</span>
-          </>
-        ) : (
-          <span>ADD TO CART</span>
-        )}
-      </button>
+      {/* Full-width Rich Plum ADD TO CART Pill Button */}
+      <div className="px-1 pb-1 pt-0.5">
+        <button
+          onClick={handleQuickAdd}
+          className={`w-full py-2.5 sm:py-3 px-4 rounded-full font-sans text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
+            justAdded
+              ? 'bg-emerald-700 text-white'
+              : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98 shadow-sm'
+          }`}
+        >
+          {justAdded ? (
+            <>
+              <Check className="w-3.5 h-3.5" />
+              <span>ADDED TO CART</span>
+            </>
+          ) : (
+            <span>ADD TO CART</span>
+          )}
+        </button>
+      </div>
     </div>
   )
 }

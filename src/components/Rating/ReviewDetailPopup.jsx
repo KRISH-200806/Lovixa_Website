@@ -814,7 +814,7 @@ const ReviewDetailPopup = ({
                     <button
                       onClick={handleEditClick}
                       disabled={loading}
-                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      className="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                       aria-label="Edit review"
                     >
                       Edit
@@ -822,7 +822,7 @@ const ReviewDetailPopup = ({
                     <button
                       onClick={handleDeleteClick}
                       disabled={loading}
-                      className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      className="px-5 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                       aria-label="Delete review"
                     >
                       Delete
@@ -836,7 +836,7 @@ const ReviewDetailPopup = ({
                     <button
                       onClick={handleHelpfulClick}
                       disabled={loading}
-                      className={`px-3 py-1 rounded-md transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed ${
+                      className={`px-4 py-1.5 rounded-full transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed ${
                         isHelpful
                           ? "bg-green-200 text-green-800 hover:bg-green-300"
                           : "bg-green-100 text-green-700 hover:bg-green-200"
@@ -848,7 +848,7 @@ const ReviewDetailPopup = ({
                     <button
                       onClick={handleReportClick}
                       disabled={loading}
-                      className="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-1.5 bg-red-100 text-red-700 rounded-full hover:bg-red-200 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-label="Report review"
                     >
                       🚩 Report

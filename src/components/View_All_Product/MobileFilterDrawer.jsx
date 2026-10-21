@@ -48,7 +48,7 @@ const MobileFilterDrawer = ({ isOpen, onClose, sortBy, setSortBy, priceRange, se
 
                 <div className="mt-6 sticky bottom-0 bg-white pt-4 pb-4">
                     <button
-                        className="w-full py-3 bg-gradient-to-r from-slate-500 to-slate-600 text-white rounded-md font-medium hover:from-slate-600 hover:to-slate-700 transition duration-300 shadow-md"
+                        className="w-full py-3 bg-gradient-to-r from-slate-500 to-slate-600 text-white rounded-full font-medium hover:from-slate-600 hover:to-slate-700 transition duration-300 shadow-md cursor-pointer"
                         onClick={onClose}
                     >
                         Show Results

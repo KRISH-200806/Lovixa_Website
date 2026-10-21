@@ -753,14 +753,14 @@ const EditReviewFormPopup = ({ isOpen, onClose, id, reviewData, PHOTO_URL = 'htt
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 text-gray-600 hover:text-gray-800 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors focus:ring-2 focus:ring-gray-300"
+                className="px-5 py-2.5 text-gray-600 hover:text-gray-800 font-medium rounded-full border border-gray-300 hover:bg-gray-50 transition-colors focus:ring-2 focus:ring-gray-300"
                 disabled={isSubmitting}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-brand text-white font-medium rounded-lg hover:bg-brand/90 transition-colors flex items-center justify-center min-w-32 focus:ring-2 shadow-button"
+                className="px-6 py-2.5 bg-brand text-white font-medium rounded-full hover:bg-brand/90 transition-colors flex items-center justify-center min-w-32 focus:ring-2 shadow-button"
                 disabled={isSubmitting || !isFormValid}
               >
                 {isSubmitting ? (

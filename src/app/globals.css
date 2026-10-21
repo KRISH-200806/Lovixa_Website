@@ -166,6 +166,16 @@
   .ui-badge {
     @apply inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#6B2D5C] bg-[#E8C4D4]/30 px-3 py-1 rounded-full border border-[#E8C4D4]/60 font-sans;
   }
+
+  /* 14. Universal Button Pill Radius Enforcement */
+  .rounded-button,
+  .rounded-radius-pill,
+  button.rounded-button,
+  a.rounded-button,
+  button.rounded-radius-pill,
+  a.rounded-radius-pill {
+    border-radius: 9999px !important;
+  }
 }
 
 /* Custom Scrollbar for Luxury Experience */

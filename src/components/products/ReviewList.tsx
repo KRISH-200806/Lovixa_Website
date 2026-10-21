@@ -192,7 +192,7 @@ export function ReviewList({
                     setTitle('')
                     setComment('')
                   }}
-                  className="px-5 py-2 bg-[#6B2D5C] text-white text-xs rounded-lg font-semibold uppercase tracking-wider hover:bg-[#562349] transition-colors cursor-pointer font-sans"
+                  className="px-6 py-2.5 bg-[#6B2D5C] text-white text-xs rounded-full font-semibold uppercase tracking-wider hover:bg-[#562349] transition-colors cursor-pointer font-sans"
                 >
                   Done
                 </button>
@@ -285,14 +285,14 @@ export function ReviewList({
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 border border-[#E8C4D4]/70 text-[#2B1822] rounded-lg hover:bg-[#E8C4D4]/20 font-semibold uppercase tracking-wider text-xs transition-colors cursor-pointer font-sans"
+                    className="px-5 py-2.5 border border-[#E8C4D4]/70 text-[#2B1822] rounded-full hover:bg-[#E8C4D4]/20 font-semibold uppercase tracking-wider text-xs transition-colors cursor-pointer font-sans"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-5 py-2 bg-[#6B2D5C] text-white rounded-lg hover:bg-[#562349] font-semibold uppercase tracking-wider text-xs transition-colors disabled:opacity-50 flex items-center gap-2 cursor-pointer font-sans"
+                    className="px-6 py-2.5 bg-[#6B2D5C] text-white rounded-full hover:bg-[#562349] font-semibold uppercase tracking-wider text-xs transition-colors disabled:opacity-50 flex items-center gap-2 cursor-pointer font-sans shadow-xs"
                   >
                     {isSubmitting ? (
                       <>

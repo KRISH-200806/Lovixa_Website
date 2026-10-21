@@ -8,7 +8,7 @@ const ReviewFilter = ({ ratingCounts, totalReviews, filterRating, onSetFilter, o
     
     return (
       <button 
-        className="flex items-center my-1.5 w-full hover:bg-stone-100 transition p-1.5 rounded-xl text-left"
+        className="flex items-center my-1.5 w-full hover:bg-stone-100 transition p-1.5 px-3 rounded-full text-left cursor-pointer"
         onClick={() => onSetFilter(starCount)}
       >
         <div className="flex mr-3">

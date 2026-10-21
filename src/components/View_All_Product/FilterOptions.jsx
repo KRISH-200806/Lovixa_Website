@@ -272,7 +272,7 @@ const FilterOptions = ({
       {/* Clear All button - Fancy hover effect */}
       <button 
         onClick={clearAllFilters}
-        className="w-full py-2 text-slate-500 border border-slate-400 rounded-md hover:bg-slate-50 transition duration-300 text-sm font-medium group relative overflow-hidden"
+        className="w-full py-2.5 text-slate-500 border border-slate-400 rounded-full hover:bg-slate-50 transition duration-300 text-sm font-medium group relative overflow-hidden cursor-pointer"
       >
         <span className="relative z-10 group-hover:text-white transition duration-500">Clear All Filters</span>
         <span className="absolute inset-0 bg-slate-500 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></span>

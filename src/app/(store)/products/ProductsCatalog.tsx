@@ -245,7 +245,7 @@ export function ProductsCatalog({
                 placeholder="Search shampoo, oil..."
                 value={filters.searchQuery}
                 onChange={(e) => setFilters((prev) => ({ ...prev, searchQuery: e.target.value }))}
-                className="w-full pl-8 pr-7 py-1.5 text-xs border border-[#E8C4D4]/80 rounded focus:outline-none focus:border-[#6B2D5C] text-[#2B1822] placeholder:text-stone-400"
+                className="w-full pl-8 pr-7 py-2 text-xs border border-[#E8C4D4]/80 rounded-full focus:outline-none focus:border-[#6B2D5C] text-[#2B1822] placeholder:text-stone-400 bg-white"
               />
               {filters.searchQuery && (
                 <button
@@ -479,7 +479,7 @@ export function ProductsCatalog({
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setMobileFilterOpen(true)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 border border-[#E8C4D4]/80 rounded text-xs font-bold uppercase tracking-wider text-[#2B1822]"
+                className="lg:hidden flex items-center gap-1.5 px-4 py-1.5 border border-[#E8C4D4]/80 rounded-full text-xs font-bold uppercase tracking-wider text-[#2B1822] hover:bg-[#FBF6F8]"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Filters</span>
@@ -492,7 +492,7 @@ export function ProductsCatalog({
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="border border-[#E8C4D4]/80 rounded px-2.5 py-1.5 text-xs font-medium text-[#2B1822] focus:outline-none focus:border-[#6B2D5C] cursor-pointer bg-white"
+                  className="border border-[#E8C4D4]/80 rounded-full px-3.5 py-1.5 text-xs font-medium text-[#2B1822] focus:outline-none focus:border-[#6B2D5C] cursor-pointer bg-white"
                 >
                   <option value="featured">Featured</option>
                   <option value="best-selling">Best Selling</option>
@@ -510,7 +510,7 @@ export function ProductsCatalog({
             <div className="hidden sm:flex items-center gap-1.5 text-stone-400">
               <button
                 onClick={() => setGridCols(2)}
-                className={`p-1.5 rounded transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
+                className={`p-1.5 rounded-full transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
                   gridCols === 2 ? 'text-[#6B2D5C] bg-[#E8C4D4]/30' : 'hover:text-[#2B1822]'
                 }`}
                 title="2 Columns"
@@ -520,7 +520,7 @@ export function ProductsCatalog({
               </button>
               <button
                 onClick={() => setGridCols(3)}
-                className={`p-1.5 rounded transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
+                className={`p-1.5 rounded-full transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
                   gridCols === 3 ? 'text-[#6B2D5C] bg-[#E8C4D4]/30' : 'hover:text-[#2B1822]'
                 }`}
                 title="3 Columns"
@@ -530,7 +530,7 @@ export function ProductsCatalog({
               </button>
               <button
                 onClick={() => setGridCols(4)}
-                className={`p-1.5 rounded transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
+                className={`p-1.5 rounded-full transition cursor-pointer flex items-center gap-0.5 text-xs font-bold ${
                   gridCols === 4 ? 'text-[#6B2D5C] bg-[#E8C4D4]/30' : 'hover:text-[#2B1822]'
                 }`}
                 title="4 Columns"
@@ -672,13 +672,13 @@ export function ProductsCatalog({
             <div className="pt-4 border-t border-[#E8C4D4]/60 flex gap-2">
               <button
                 onClick={resetAllFilters}
-                className="w-1/2 py-2 border border-stone-300 text-xs font-bold uppercase text-stone-700 cursor-pointer"
+                className="w-1/2 py-2.5 border border-stone-300 rounded-full text-xs font-bold uppercase text-stone-700 cursor-pointer hover:bg-stone-50 transition-colors"
               >
                 Reset
               </button>
               <button
                 onClick={() => setMobileFilterOpen(false)}
-                className="w-1/2 py-2 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold uppercase tracking-wider cursor-pointer"
+                className="w-1/2 py-2.5 bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs font-bold uppercase tracking-wider cursor-pointer rounded-full transition-colors"
               >
                 Apply ({filteredProducts.length})
               </button>

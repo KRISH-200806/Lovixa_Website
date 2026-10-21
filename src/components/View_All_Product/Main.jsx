@@ -110,7 +110,7 @@ const Main = () => {
     const renderMobileFilterToggle = () => (
         <div className="lg:hidden sticky top-0 z-10 bg-gray-50 pb-4">
             <button
-                className="w-full flex items-center justify-between bg-white p-3 border rounded-md shadow-sm hover:shadow-md transition duration-300"
+                className="w-full flex items-center justify-between bg-white px-5 py-3 border rounded-full shadow-sm hover:shadow-md transition duration-300 cursor-pointer"
                 onClick={() => setFiltersOpen(!filtersOpen)}
             >
                 <span className="flex items-center font-medium">
@@ -123,13 +123,13 @@ const Main = () => {
     );
 
     const renderSortingControls = () => (
-        <div className="hidden md:flex justify-between items-center mb-6 bg-white p-4 border rounded-lg shadow-sm">
+        <div className="hidden md:flex justify-between items-center mb-6 bg-white p-4 border rounded-2xl shadow-sm">
             <div>
-                <label className="text-gray-700 mr-2">Sort by:</label>
+                <label className="text-gray-700 mr-2 text-xs font-bold uppercase">Sort by:</label>
                 <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="border rounded-md p-1.5 text-gray-600 focus:outline-none focus:ring-1 focus:ring-slate-500 bg-gray-50"
+                    className="border rounded-full px-4 py-1.5 text-xs text-gray-600 focus:outline-none focus:ring-1 focus:ring-slate-500 bg-gray-50 cursor-pointer"
                 >
                     <option value="featured">Featured</option>
                     <option value="price-low">Price: Low to High</option>

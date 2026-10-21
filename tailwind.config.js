@@ -91,6 +91,9 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        button: '9999px',
+        pill: '9999px',
+        'radius-pill': '9999px',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Outfit', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],

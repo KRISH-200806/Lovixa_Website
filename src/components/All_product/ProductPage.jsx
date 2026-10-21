@@ -162,7 +162,7 @@ function ProductPage() {
           </p>
           <Link
             to="/viewall/all-products"
-            className="inline-block px-6 py-2.5 bg-brand text-white rounded-button text-sm font-semibold hover:bg-brand-hover shadow-brand/20 transition-all"
+            className="inline-block px-7 py-3 bg-brand text-white rounded-full text-sm font-semibold hover:bg-brand-hover shadow-brand/20 transition-all"
           >
             Browse Collections
           </Link>
@@ -354,7 +354,7 @@ function ProductPage() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!product.in_stock || isAdding}
-                  className={`flex-1 h-11 rounded-button text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-brand/30 hover:shadow-brand/50 ${
+                  className={`flex-1 h-11 rounded-full text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-brand/30 hover:shadow-brand/50 ${
                     !product.in_stock
                       ? "bg-warm-300 text-text-secondary cursor-not-allowed"
                       : isAdding

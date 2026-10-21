@@ -188,7 +188,7 @@ const ExistingReviews = () => {
         
         <button 
           onClick={handleOpenReviewForm}
-          className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-6 rounded-lg font-medium transition shadow-sm"
+          className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-6 rounded-full font-medium transition shadow-sm"
         >
           Write a Review
         </button>

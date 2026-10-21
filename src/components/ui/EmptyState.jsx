@@ -32,7 +32,7 @@ const EmptyState = ({
         buttonLink ? (
           <Link
             to={buttonLink}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand hover:bg-brand/90 text-white rounded-xl text-xs font-bold transition shadow-button active:scale-95 uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand hover:bg-brand/90 text-white rounded-full text-xs font-bold transition shadow-button active:scale-95 uppercase tracking-wider"
           >
             <Sparkles size={14} />
             <span>{buttonText}</span>
@@ -40,7 +40,7 @@ const EmptyState = ({
         ) : (
           <button
             onClick={onButtonClick}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand hover:bg-brand/90 text-white rounded-xl text-xs font-bold transition shadow-button active:scale-95 uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand hover:bg-brand/90 text-white rounded-full text-xs font-bold transition shadow-button active:scale-95 uppercase tracking-wider cursor-pointer"
           >
             <Sparkles size={14} />
             <span>{buttonText}</span>

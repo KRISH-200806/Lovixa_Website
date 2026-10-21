@@ -37,11 +37,11 @@ export default function NewsletterSection() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address..."
-              className="flex-1 px-5 py-3.5 rounded-radius-pill bg-background border border-brand-200 text-foreground text-body-sm placeholder:text-neutral-400 focus:outline-none focus:border-brand-500 transition-colors shadow-elev-1"
+              className="flex-1 px-5 py-3.5 rounded-full bg-background border border-brand-200 text-foreground text-body-sm placeholder:text-neutral-400 focus:outline-none focus:border-brand-500 transition-colors shadow-elev-1"
             />
             <button
               type="submit"
-              className="px-8 py-3.5 rounded-radius-pill bg-brand-500 hover:bg-brand-600 text-neutral-0 font-semibold text-body-sm tracking-wide shadow-elev-2 hover:shadow-brand-glow transition-all whitespace-nowrap"
+              className="px-8 py-3.5 rounded-full bg-brand-500 hover:bg-brand-600 text-neutral-0 font-semibold text-body-sm tracking-wide shadow-elev-2 hover:shadow-brand-glow transition-all whitespace-nowrap cursor-pointer"
             >
               Claim 15% OFF
             </button>

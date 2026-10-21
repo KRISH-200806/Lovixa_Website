@@ -14,10 +14,10 @@ const Pagination = ({ reviewsPerPage, totalReviews, currentPage, paginate }) => 
         <button
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
+          className={`px-4 py-2 rounded-full text-xs font-semibold border ${
             currentPage === 1
               ? 'bg-warm text-stone-300 border-stone-200 cursor-not-allowed'
-              : 'bg-pure text-text-main border-stone-200 hover:bg-stone-50'
+              : 'bg-pure text-text-main border-stone-200 hover:bg-stone-50 cursor-pointer'
           }`}
         >
           Previous
@@ -28,7 +28,7 @@ const Pagination = ({ reviewsPerPage, totalReviews, currentPage, paginate }) => 
           <button
             key={number}
             onClick={() => paginate(number)}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border ${
+            className={`w-9 h-9 rounded-full text-xs font-semibold border flex items-center justify-center cursor-pointer ${
               currentPage === number
                 ? 'bg-brand border-brand text-white shadow-button'
                 : 'bg-pure border-stone-200 text-text-main hover:bg-stone-50'
@@ -42,10 +42,10 @@ const Pagination = ({ reviewsPerPage, totalReviews, currentPage, paginate }) => 
         <button
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === pageNumbers.length}
-          className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
+          className={`px-4 py-2 rounded-full text-xs font-semibold border ${
             currentPage === pageNumbers.length
               ? 'bg-warm text-stone-300 border-stone-200 cursor-not-allowed'
-              : 'bg-pure text-text-main border-stone-200 hover:bg-stone-50'
+              : 'bg-pure text-text-main border-stone-200 hover:bg-stone-50 cursor-pointer'
           }`}
         >
           Next
