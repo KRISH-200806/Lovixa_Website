@@ -17,7 +17,6 @@ jspm_packages/
 .env
 .env*.local
 .env/
-pnpm-workspace.yaml
 backups/
 *.log
 .DS_Store
