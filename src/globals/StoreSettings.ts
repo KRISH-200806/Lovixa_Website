@@ -110,9 +110,9 @@ export const StoreSettings: GlobalConfig = {
       type: 'group',
       fields: [
         { name: 'enabled', type: 'checkbox', defaultValue: true },
-        { name: 'ratePercentage', type: 'number', defaultValue: 8.25 },
-        { name: 'pricesIncludeTax', type: 'checkbox', defaultValue: false },
-        { name: 'taxLabel', type: 'text', defaultValue: 'Sales Tax' },
+        { name: 'ratePercentage', type: 'number', defaultValue: 18 },
+        { name: 'pricesIncludeTax', type: 'checkbox', defaultValue: true },
+        { name: 'taxLabel', type: 'text', defaultValue: 'GST' },
       ],
     },
     {

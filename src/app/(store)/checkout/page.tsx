@@ -17,6 +17,7 @@ import {
   ArrowLeft,
   ChevronDown,
   Info,
+  Tag,
 } from 'lucide-react'
 import {
   INDIAN_STATES,
@@ -55,6 +56,8 @@ export default function CheckoutPage() {
     getTaxAmount,
     taxConfig,
     coupon,
+    applyCoupon,
+    removeCoupon,
     clearCart,
   } = useCartStore()
 
@@ -113,6 +116,50 @@ export default function CheckoutPage() {
       } catch (e) {}
     }
   }, [fullName, mobileNumber, emailAddress])
+
+  // Promo / Coupon Handling on Checkout
+  const [promoInput, setPromoInput] = useState('')
+  const [promoError, setPromoError] = useState('')
+  const [isValidatingPromo, setIsValidatingPromo] = useState(false)
+
+  const handleApplyPromo = async () => {
+    if (!promoInput.trim()) return
+    setIsValidatingPromo(true)
+    setPromoError('')
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: promoInput.trim(),
+          subtotal,
+          phone: mobileNumber.trim(),
+          email: emailAddress.trim(),
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok || !data.valid) {
+        setPromoError(data.error || 'Invalid coupon code')
+        return
+      }
+
+      applyCoupon({
+        code: data.code,
+        discountType: data.discountType,
+        discountValue: data.discountValue,
+        minOrderAmount: data.minOrderAmount,
+        maxDiscountAmount: data.maxDiscountAmount,
+      })
+      setPromoInput('')
+    } catch {
+      setPromoError('Failed to validate coupon code')
+    } finally {
+      setIsValidatingPromo(false)
+    }
+  }
 
   const subtotal = getSubtotal()
   const discount = getDiscountAmount()
@@ -833,6 +880,78 @@ export default function CheckoutPage() {
                     </span>
                   </div>
                 ))}
+              </div>
+
+              {/* Promo / Coupon Box */}
+              <div className="border-t border-[#E8C4D4]/70 pt-4 font-sans space-y-2">
+                <span className="text-xs font-bold text-[#2B1822] uppercase tracking-wider flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-[#6B2D5C]" />
+                  <span>Have a Coupon Code?</span>
+                </span>
+
+                {coupon ? (
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/80 border border-emerald-300 text-xs">
+                      <div className="flex items-center gap-2 text-emerald-800 font-semibold truncate">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span className="truncate">
+                          <strong>{coupon.code}</strong> (
+                          {coupon.discountType === 'percentage'
+                            ? `${coupon.discountValue}% off`
+                            : coupon.discountType === 'fixed_amount'
+                            ? `-₹${coupon.discountValue}`
+                            : 'Free Shipping'}
+                          )
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeCoupon}
+                        className="text-xs text-rose-600 hover:text-rose-800 font-bold underline cursor-pointer ml-2 shrink-0"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    {coupon.minOrderAmount && subtotal < coupon.minOrderAmount && (
+                      <p className="text-[11px] text-amber-700 font-medium px-1 font-sans">
+                        ⚠️ Add ₹{coupon.minOrderAmount - subtotal} more to activate {coupon.code}.
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Enter code (e.g. WELCOME10)"
+                        value={promoInput}
+                        onChange={(e) => {
+                          setPromoInput(e.target.value)
+                          if (promoError) setPromoError('')
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            handleApplyPromo()
+                          }
+                        }}
+                        className="text-xs px-3.5 py-2.5 bg-white border border-[#E8C4D4]/70 text-[#2B1822] rounded-full flex-1 focus:outline-none focus:border-[#6B2D5C] uppercase font-sans placeholder:normal-case placeholder:text-[#2B1822]/40"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleApplyPromo}
+                        disabled={isValidatingPromo || !promoInput.trim()}
+                        className="px-4 py-2.5 bg-[#6B2D5C] text-white text-xs font-bold rounded-full hover:bg-[#562349] transition-colors disabled:opacity-50 flex items-center gap-1 cursor-pointer shrink-0 uppercase tracking-wider"
+                      >
+                        {isValidatingPromo && <Loader2 className="w-3 h-3 animate-spin" />}
+                        <span>Apply</span>
+                      </button>
+                    </div>
+                    {promoError && (
+                      <p className="text-[11px] text-rose-600 mt-1 font-medium font-sans">{promoError}</p>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Calculations Breakdown */}

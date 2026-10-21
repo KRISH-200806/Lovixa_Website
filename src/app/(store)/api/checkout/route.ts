@@ -285,6 +285,12 @@ export async function POST(req: Request) {
               { status: 400 }
             )
           }
+          if (matchedCouponDoc.minOrderAmount && finalSubtotal < matchedCouponDoc.minOrderAmount) {
+            return NextResponse.json(
+              { error: `Minimum order amount of ₹${matchedCouponDoc.minOrderAmount} is required for coupon ${matchedCouponDoc.code}.` },
+              { status: 400 }
+            )
+          }
           const perUserLimit = matchedCouponDoc.perUserLimit || 1
           const usedByList = matchedCouponDoc.usedBy || []
           const userRedemptions = usedByList.filter((entry: any) => {

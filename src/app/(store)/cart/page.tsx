@@ -260,17 +260,31 @@ export default function CartPage() {
                     Promotional Code
                   </label>
                   {coupon ? (
-                    <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-emerald-300 text-xs">
-                      <div className="flex items-center gap-2 text-emerald-800 font-semibold font-sans">
-                        <Tag className="w-3.5 h-3.5" />
-                        <span>Code applied: <strong>{coupon.code}</strong></span>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-emerald-300 text-xs">
+                        <div className="flex items-center gap-2 text-emerald-800 font-semibold font-sans">
+                          <Tag className="w-3.5 h-3.5" />
+                          <span>
+                            Code applied: <strong>{coupon.code}</strong>{' '}
+                            ({coupon.discountType === 'percentage'
+                              ? `${coupon.discountValue}% off`
+                              : coupon.discountType === 'fixed_amount'
+                              ? `-₹${coupon.discountValue}`
+                              : 'Free Shipping'})
+                          </span>
+                        </div>
+                        <button
+                          onClick={removeCoupon}
+                          className="text-xs text-rose-600 hover:text-rose-800 font-bold underline cursor-pointer font-sans"
+                        >
+                          Remove
+                        </button>
                       </div>
-                      <button
-                        onClick={removeCoupon}
-                        className="text-xs text-rose-600 hover:text-rose-800 font-bold underline cursor-pointer font-sans"
-                      >
-                        Remove
-                      </button>
+                      {coupon.minOrderAmount && subtotal < coupon.minOrderAmount && (
+                        <p className="text-[11px] text-amber-700 font-medium px-2 font-sans">
+                          ⚠️ Add ₹{coupon.minOrderAmount - subtotal} more to activate {coupon.code}.
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <form onSubmit={handleApplyPromo} className="flex gap-2">

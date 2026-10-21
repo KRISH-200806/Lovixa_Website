@@ -150,6 +150,17 @@ function SuccessContent() {
             </div>
 
             <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
+              <span className="text-stone-500">Total Payable</span>
+              <span className="font-bold text-[#6B2D5C] text-sm">
+                {orderSnapshot?.currencySymbol || '₹'}
+                {Number(orderSnapshot?.grandTotal ?? liveOrder?.grandTotal ?? 0).toLocaleString('en-IN', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            <div className="flex justify-between items-center text-xs pb-2.5 border-b border-[#E8C4D4]/50">
               <span className="text-stone-500">Payment Status</span>
               <span className={`inline-flex items-center gap-1 font-bold text-xs px-2.5 py-0.5 rounded-full ${isPaid
                   ? 'bg-emerald-100 text-emerald-800'

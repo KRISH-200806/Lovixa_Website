@@ -158,12 +158,19 @@ export const useCartStore = create<CartStore>()(
         if (!coupon) return 0
         const subtotal = getSubtotal()
 
+        // If subtotal is below coupon minimum order requirement
+        if (coupon.minOrderAmount && subtotal < coupon.minOrderAmount) {
+          return 0
+        }
+
         if (coupon.discountType === 'percentage') {
           const calculated = (subtotal * coupon.discountValue) / 100
+          let discount = calculated
           if (coupon.maxDiscountAmount && coupon.maxDiscountAmount > 0) {
-            return Math.min(calculated, coupon.maxDiscountAmount)
+            discount = Math.min(calculated, coupon.maxDiscountAmount)
           }
-          return Math.min(calculated, subtotal)
+          discount = Math.min(discount, subtotal)
+          return Math.round(discount * 100) / 100
         }
 
         if (coupon.discountType === 'fixed_amount') {
@@ -177,17 +184,27 @@ export const useCartStore = create<CartStore>()(
         const { coupon, getSubtotal, shippingConfig = DEFAULT_SHIPPING_CONFIG } = get()
         const subtotal = getSubtotal()
         if (subtotal === 0) return 0
-        if (coupon?.discountType === 'free_shipping') return 0
+
+        // Free shipping coupon check
+        if (coupon?.discountType === 'free_shipping') {
+          if (!coupon.minOrderAmount || subtotal >= coupon.minOrderAmount) {
+            return 0
+          }
+        }
 
         const cfg = shippingConfig || DEFAULT_SHIPPING_CONFIG
         const isFreeEnabled = cfg.freeShippingEnabled !== false
-        const threshold = typeof cfg.freeShippingThreshold === 'number' ? cfg.freeShippingThreshold : 100
+        const threshold = typeof cfg.freeShippingThreshold === 'number'
+          ? cfg.freeShippingThreshold
+          : (DEFAULT_SHIPPING_CONFIG.freeShippingThreshold || 999)
 
         if (isFreeEnabled && subtotal >= threshold) {
           return 0
         }
 
-        return typeof cfg.flatRate === 'number' ? cfg.flatRate : 9.99
+        return typeof cfg.flatRate === 'number'
+          ? cfg.flatRate
+          : (DEFAULT_SHIPPING_CONFIG.flatRate || 99)
       },
 
       getTaxAmount: () => {
@@ -200,10 +217,10 @@ export const useCartStore = create<CartStore>()(
         // If prices include tax (e.g. GST in India):
         if (cfg.pricesIncludeTax) {
           // Included tax portion = amount - (amount / (1 + rate))
-          return taxableAmount - taxableAmount / (1 + taxRate)
+          return Math.round((taxableAmount - taxableAmount / (1 + taxRate)) * 100) / 100
         }
 
-        return taxableAmount * taxRate
+        return Math.round((taxableAmount * taxRate) * 100) / 100
       },
 
       getGrandTotal: () => {
@@ -212,7 +229,7 @@ export const useCartStore = create<CartStore>()(
         // Only add tax on top if prices DO NOT already include tax!
         const taxOnTop = cfg.enabled !== false && !cfg.pricesIncludeTax ? getTaxAmount() : 0
         const total = getSubtotal() - getDiscountAmount() + getShippingFee() + taxOnTop
-        return Math.max(0, Math.round(total))
+        return Math.max(0, Math.round(total * 100) / 100)
       },
 
       getTotalItems: () => {
