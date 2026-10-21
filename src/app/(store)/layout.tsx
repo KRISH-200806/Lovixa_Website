@@ -19,10 +19,23 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://lovixacosmetic.com'),
-  title: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Everyday Hair Care Essentials',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lovixacosmetic.com'),
+  title: {
+    default: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
+    template: '%s | LOVIXA COSMETIC',
+  },
   description:
-    "Discover LOVIXA's hair care essentials, created to bring simplicity, nourishment and a touch of luxury to your everyday routine. Shampoo & Hair Oil.",
+    'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+  keywords: [
+    'LOVIXA',
+    'LOVIXA COSMETIC',
+    'botanical shampoo',
+    'nourishing hair oil',
+    'hair care combo',
+    'rosemary scalp care',
+    'paraben free hair care',
+    'sulfate free shampoo',
+  ],
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -34,26 +47,30 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'LOVIXA COSMETIC | Everyday Hair Care Essentials',
-    description: 'Embrace Your Natural Beauty with LOVIXA Botanical & Ayurvedic Hair Care.',
-    url: 'https://lovixacosmetic.com',
+    title: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
+    description:
+      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+    url: 'https://www.lovixacosmetic.com',
     siteName: 'LOVIXA COSMETIC',
-    images: [
-      {
-        url: 'https://lovixacosmetic.com/images/lovixa-logo.png',
-        width: 600,
-        height: 164,
-        alt: 'LOVIXA COSMETIC Logo',
-      },
-    ],
     locale: 'en_IN',
     type: 'website',
+    images: [
+      {
+        url: 'https://www.lovixacosmetic.com/images/lovixa-og.jpg',
+        secureUrl: 'https://www.lovixacosmetic.com/images/lovixa-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'LOVIXA COSMETIC Botanical Hair Care Essentials',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LOVIXA COSMETIC',
-    description: 'Everyday Hair Care Essentials - Shampoo & Hair Oil',
-    images: ['https://lovixacosmetic.com/images/lovixa-logo.png'],
+    title: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
+    description:
+      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Free Pan-India Delivery.',
+    images: ['https://www.lovixacosmetic.com/images/lovixa-og.jpg'],
   },
 }
 

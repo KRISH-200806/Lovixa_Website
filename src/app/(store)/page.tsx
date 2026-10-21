@@ -24,28 +24,48 @@ export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getStorefrontSEOSettings()
+  const siteTitle = seo.siteTitle && !seo.siteTitle.includes('Coming Soon')
+    ? seo.siteTitle
+    : 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care'
+  const siteDescription =
+    seo.defaultMetaDescription && !seo.defaultMetaDescription.includes('launching soon')
+      ? seo.defaultMetaDescription
+      : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.'
+  const canonicalUrl = seo.canonicalBaseUrl || 'https://www.lovixacosmetic.com'
+  const ogImageUrl = `${canonicalUrl.replace(/\/$/, '')}/images/lovixa-og.jpg`
 
   return {
-    title: seo.siteTitle,
-    description: seo.defaultMetaDescription,
-    keywords: seo.keywords,
+    title: siteTitle,
+    description: siteDescription,
+    keywords:
+      seo.keywords ||
+      'LOVIXA, LOVIXA cosmetic, botanical shampoo, nourishing hair oil, rosemary hair care, ayurvedic hair oil, sulfate free clarifying shampoo, anti-frizz hair ritual',
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
-      title: seo.siteTitle,
-      description: seo.defaultMetaDescription,
-      url: seo.canonicalBaseUrl,
+      title: siteTitle,
+      description: siteDescription,
+      url: canonicalUrl,
       siteName: 'LOVIXA COSMETIC',
       type: 'website',
+      locale: 'en_IN',
       images: [
         {
-          url: '/images/lovixa-hero-banner-products.jpg',
+          url: ogImageUrl,
+          secureUrl: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: 'LOVIXA COSMETIC Botanical Hair Care',
+          alt: 'LOVIXA COSMETIC Botanical Hair Care Essentials',
+          type: 'image/jpeg',
         },
       ],
     },
-    alternates: {
-      canonical: seo.canonicalBaseUrl,
+    twitter: {
+      card: 'summary_large_image',
+      title: siteTitle,
+      description: siteDescription,
+      images: [ogImageUrl],
     },
     verification: {
       google: seo.googleVerification,

@@ -14,7 +14,7 @@ export const SEOSettings: GlobalConfig = {
       name: 'siteTitle',
       type: 'text',
       required: true,
-      defaultValue: 'LOVIXA COSMETIC | Pure Botanical Hair Wellness',
+      defaultValue: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
       label: 'Default Site Title',
     },
     {
@@ -27,14 +27,14 @@ export const SEOSettings: GlobalConfig = {
       name: 'defaultMetaDescription',
       type: 'textarea',
       required: true,
-      defaultValue: 'Discover LOVIXA Ayurvedic Shampoo (500ml) & Nourishing Cold-Pressed Hair Oil (50ml). Thoughtfully crafted, nature-inspired hair wellness rituals for strong, radiant hair.',
+      defaultValue: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
       label: 'Default Meta Description',
     },
     {
       name: 'keywords',
       type: 'textarea',
       label: 'Core Focus Keywords (Comma separated)',
-      defaultValue: 'botanical shampoo, ayurvedic hair oil, sulfate free clarifying shampoo, hair fall control oil, anti-frizz hair ritual, rosemary scalp care, herbal hair cosmetics, LOVIXA cosmetic',
+      defaultValue: 'LOVIXA, LOVIXA cosmetic, botanical shampoo, nourishing hair oil, rosemary hair care, ayurvedic hair oil, sulfate free clarifying shampoo, anti-frizz hair ritual',
       admin: {
         description: 'Target SEO keywords for the Indian & international cosmetics audience',
       },
@@ -42,7 +42,7 @@ export const SEOSettings: GlobalConfig = {
     {
       name: 'canonicalBaseUrl',
       type: 'text',
-      defaultValue: 'https://lovixacosmetic.com',
+      defaultValue: 'https://www.lovixacosmetic.com',
       label: 'Production Canonical Base URL',
     },
     {

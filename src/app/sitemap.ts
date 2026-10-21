@@ -12,9 +12,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getStorefrontCategories(),
   ])
 
-  const rawUrl = seo.canonicalBaseUrl || process.env.NEXT_PUBLIC_SERVER_URL || 'https://lovixacosmetic.com'
+  const rawUrl = seo.canonicalBaseUrl || process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.lovixacosmetic.com'
   const baseUrl = (rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1'))
-    ? 'https://lovixacosmetic.com'
+    ? 'https://www.lovixacosmetic.com'
     : rawUrl
 
   // Core static storefront routes

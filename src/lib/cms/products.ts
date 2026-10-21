@@ -1107,12 +1107,19 @@ export const getStorefrontSEOSettings = cache(async function getStorefrontSEOSet
       })
 
       if (globalDoc) {
+        const cleanTitle = (globalDoc.siteTitle && !globalDoc.siteTitle.includes('Coming Soon'))
+          ? globalDoc.siteTitle
+          : 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care'
+        const cleanDesc = (globalDoc.defaultMetaDescription && !globalDoc.defaultMetaDescription.includes('launching soon'))
+          ? globalDoc.defaultMetaDescription
+          : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.'
+
         return {
-          siteTitle: globalDoc.siteTitle || 'LOVIXA COSMETIC | Pure Botanical Hair Wellness',
+          siteTitle: cleanTitle,
           titleSeparator: globalDoc.titleSeparator || '—',
-          defaultMetaDescription: globalDoc.defaultMetaDescription || 'Discover LOVIXA Ayurvedic Shampoo & Cold-Pressed Hair Oil.',
-          keywords: globalDoc.keywords || 'botanical shampoo, ayurvedic hair oil, sulfate free clarifying shampoo',
-          canonicalBaseUrl: globalDoc.canonicalBaseUrl || 'https://lovixacosmetic.com',
+          defaultMetaDescription: cleanDesc,
+          keywords: globalDoc.keywords || 'botanical shampoo, nourishing hair oil, sulfate free clarifying shampoo, LOVIXA cosmetic',
+          canonicalBaseUrl: globalDoc.canonicalBaseUrl || 'https://www.lovixacosmetic.com',
           googleVerification: globalDoc.googleVerification,
           bingVerification: globalDoc.bingVerification,
           organization: globalDoc.organization,
@@ -1123,11 +1130,11 @@ export const getStorefrontSEOSettings = cache(async function getStorefrontSEOSet
     }
 
     return {
-      siteTitle: 'LOVIXA COSMETIC | Pure Botanical Hair Wellness',
+      siteTitle: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
       titleSeparator: '—',
-      defaultMetaDescription: 'Discover LOVIXA Ayurvedic Shampoo (500ml) & Nourishing Cold-Pressed Hair Oil (50ml). Thoughtfully crafted, nature-inspired hair wellness rituals for strong, radiant hair.',
+      defaultMetaDescription: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
       keywords: 'botanical shampoo, ayurvedic hair oil, sulfate free clarifying shampoo, hair fall control oil, anti-frizz hair ritual, rosemary scalp care, herbal hair cosmetics, LOVIXA cosmetic',
-      canonicalBaseUrl: 'https://lovixacosmetic.com',
+      canonicalBaseUrl: 'https://www.lovixacosmetic.com',
       organization: {
         name: 'LOVIXA COSMETIC',
         legalName: 'LOVIXA COSMETIC',
