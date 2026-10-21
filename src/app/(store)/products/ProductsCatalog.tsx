@@ -559,6 +559,7 @@ export function ProductsCatalog({
                   reviewCount={p.reviewCount || 1240}
                   badge={p.badge || 'B1G1 + FREE GIFT'}
                   shortDescription={p.shortDescription}
+                  size={p.size}
                 />
               ))}
             </div>

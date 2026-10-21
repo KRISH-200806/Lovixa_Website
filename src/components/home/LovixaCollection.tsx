@@ -91,6 +91,7 @@ export function LovixaCollection({ products }: { products?: StorefrontProduct[] 
               badge={product.badge}
               brand={product.brand}
               shortDescription={product.shortDescription}
+              size={product.size}
             />
           ))}
         </div>

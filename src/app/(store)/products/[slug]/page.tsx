@@ -112,6 +112,12 @@ export default async function ProductDetailPage({ params }: Args) {
     { name: product.title, item: productUrl },
   ])
 
+  const allProducts = await getStorefrontProducts({ limit: 6 })
+  const companionProducts =
+    product.relatedProducts && product.relatedProducts.length > 0
+      ? product.relatedProducts
+      : allProducts.filter((p) => p.slug !== product.slug).slice(0, 2)
+
   return (
     <>
       {/* Schema.org Product & Breadcrumbs Structured Data */}
@@ -124,7 +130,7 @@ export default async function ProductDetailPage({ params }: Args) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
       />
 
-      <ProductDetailClient product={product} />
+      <ProductDetailClient product={product} companionProducts={companionProducts} />
     </>
   )
 }

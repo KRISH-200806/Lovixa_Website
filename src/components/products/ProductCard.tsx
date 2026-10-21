@@ -20,6 +20,7 @@ export interface ProductCardProps {
   reviewCount?: number
   badge?: string
   shortDescription?: string
+  size?: string
 }
 
 const SIZES: Record<string, string> = {
@@ -39,6 +40,7 @@ export function ProductCard(props: ProductCardProps) {
     rating = 5.0,
     reviewCount = 1240,
     badge = 'B1G1 + FREE GIFT',
+    size,
   } = props
 
   const { addItem, openCart } = useCartStore()
@@ -47,7 +49,7 @@ export function ProductCard(props: ProductCardProps) {
   const isWishlisted = isInWishlist(id)
   const [justAdded, setJustAdded] = useState(false)
 
-  const sizeLabel = SIZES[slug]
+  const sizeLabel = size || SIZES[slug]
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault()

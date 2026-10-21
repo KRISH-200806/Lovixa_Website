@@ -21,27 +21,31 @@ export const Products: CollectionConfig = {
           clearStorefrontCache()
         } catch {}
 
-        // If product has 1 variant and price changed, sync variant price
+        // Sync variant price with basePrice for single or default variants
         try {
-          if (Array.isArray(doc.variants) && doc.variants.length === 1 && typeof doc.basePrice === 'number') {
-            const variantId = typeof doc.variants[0] === 'object' ? doc.variants[0].id : doc.variants[0]
-            if (variantId) {
-              await req.payload.update({
-                collection: 'product-variants',
-                id: variantId,
-                data: {
-                  price: doc.basePrice,
-                  compareAtPrice: doc.compareAtPrice,
-                },
-              })
+          if (Array.isArray(doc.variants) && doc.variants.length > 0 && typeof doc.basePrice === 'number' && !doc.hasVariants) {
+            for (const v of doc.variants) {
+              const variantId = typeof v === 'object' && v !== null ? v.id : v
+              if (variantId) {
+                await req.payload.update({
+                  collection: 'product-variants',
+                  id: variantId,
+                  data: {
+                    price: doc.basePrice,
+                    compareAtPrice: doc.compareAtPrice,
+                  },
+                })
+              }
             }
           }
         } catch {}
 
         try {
           const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/', 'layout')
           revalidatePath('/')
           revalidatePath('/products')
+          revalidatePath('/collections')
           if (doc?.slug) revalidatePath(`/products/${doc.slug}`)
           if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
             revalidatePath(`/products/${previousDoc.slug}`)

@@ -2,23 +2,15 @@ import { cache } from 'react'
 import { getPayloadCached } from './get-payload-cached'
 import { getMediaUrl } from '@/utils/getMediaUrl'
 
-// High-speed In-Memory Cache for instantaneous cross-page navigation (TTL: 60s)
+// Instant Live Sync: Always fetch fresh data from Payload/MongoDB so admin changes reflect across all pages immediately
 const memoryCache = new Map<string, { data: any; expiry: number }>()
-const DEFAULT_CACHE_TTL = 60 * 1000
 
 export function clearStorefrontCache() {
   memoryCache.clear()
 }
 
-async function withCmsCache<T>(key: string, fetcher: () => Promise<T>, ttl = DEFAULT_CACHE_TTL): Promise<T> {
-  const cached = memoryCache.get(key)
-  const now = Date.now()
-  if (cached && cached.expiry > now) {
-    return cached.data as T
-  }
-  const data = await fetcher()
-  memoryCache.set(key, { data, expiry: now + ttl })
-  return data
+async function withCmsCache<T>(_key: string, fetcher: () => Promise<T>): Promise<T> {
+  return await fetcher()
 }
 
 export interface StorefrontProduct {
@@ -463,12 +455,20 @@ export const getStorefrontProductBySlug = cache(async function getStorefrontProd
         ? doc.variants
             .map((v: any) => {
               if (typeof v !== 'object' || v === null) return null
+              const isSingleVariant = !doc.hasVariants || doc.variants.length <= 1
+              const variantPrice = isSingleVariant
+                ? (typeof doc.basePrice === 'number' ? doc.basePrice : (typeof v.price === 'number' ? v.price : 0))
+                : (typeof v.price === 'number' ? v.price : doc.basePrice || 0)
+              const variantCompareAt = isSingleVariant
+                ? (typeof doc.compareAtPrice === 'number' ? doc.compareAtPrice : v.compareAtPrice)
+                : (typeof v.compareAtPrice === 'number' ? v.compareAtPrice : doc.compareAtPrice)
+
               return {
                 id: String(v.id),
                 sku: v.sku || String(v.id),
                 title: v.title || 'Standard',
-                price: typeof v.price === 'number' ? v.price : doc.basePrice || 0,
-                compareAtPrice: typeof v.compareAtPrice === 'number' ? v.compareAtPrice : undefined,
+                price: variantPrice,
+                compareAtPrice: variantCompareAt,
                 inventory: typeof v.inventory === 'number' ? v.inventory : 10,
                 options: Array.isArray(v.options) ? v.options : [],
               }

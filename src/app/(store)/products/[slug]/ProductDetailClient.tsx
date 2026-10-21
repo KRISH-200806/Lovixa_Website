@@ -126,8 +126,10 @@ const PRODUCT_KNOWLEDGE: Record<string, ProductKnowledge> = {
 
 export function ProductDetailClient({
   product,
+  companionProducts: companionProductsProp,
 }: {
   product: StorefrontProductDetail
+  companionProducts?: any[]
 }) {
   const [selectedVariant, setSelectedVariant] = useState<Variant | undefined>(
     product.variants && product.variants.length > 0 ? product.variants[0] : undefined
@@ -142,11 +144,35 @@ export function ProductDetailClient({
   const { toggleItem, isInWishlist } = useWishlistStore()
   const isWishlisted = isInWishlist(product.id)
 
-  const currentPrice = selectedVariant?.price ?? product.price
-  const currentCompareAt = selectedVariant?.compareAtPrice ?? product.compareAtPrice
-  const currentStock = selectedVariant?.inventory ?? product.stock ?? 50
+  const hasMultipleVariants = Array.isArray(product.variants) && product.variants.length > 1
+  const currentPrice = hasMultipleVariants && selectedVariant?.price != null ? selectedVariant.price : product.price
+  const currentCompareAt = hasMultipleVariants && selectedVariant?.compareAtPrice != null ? selectedVariant.compareAtPrice : product.compareAtPrice
+  const currentStock = hasMultipleVariants && selectedVariant?.inventory != null ? selectedVariant.inventory : (product.stock ?? 50)
 
   const knowledge = PRODUCT_KNOWLEDGE[product.slug] || PRODUCT_KNOWLEDGE['lovixa-shampoo']
+  const displaySize = product.size || knowledge.size
+  const displayActives =
+    Array.isArray(product.actives) && product.actives.length > 0
+      ? product.actives
+      : knowledge.actives
+  const displayRitualSteps =
+    Array.isArray(product.ritualSteps) && product.ritualSteps.length > 0
+      ? product.ritualSteps.map((st: any) =>
+          typeof st === 'string'
+            ? st
+            : st.instruction
+            ? st.title
+              ? `${st.title}: ${st.instruction}`
+              : st.instruction
+            : st.title || ''
+        )
+      : knowledge.ritualSteps
+  const displayCaution = product.caution || knowledge.caution
+  const displayBenefits =
+    Array.isArray(product.benefits) && product.benefits.length > 0
+      ? product.benefits.map((b: any) => (typeof b === 'string' ? b : b.claim))
+      : (knowledge.benefits || [])
+  const displayIngredients = product.ingredients
 
   const handleAddToCart = () => {
     addItem({
@@ -158,7 +184,7 @@ export function ProductDetailClient({
       compareAtPrice: currentCompareAt,
       image: product.images?.[0]?.url,
       quantity,
-      optionsSummary: selectedVariant?.title || knowledge.size,
+      optionsSummary: selectedVariant?.title || displaySize,
       maxStock: currentStock,
     })
     setIsAdded(true)
@@ -176,16 +202,17 @@ export function ProductDetailClient({
       compareAtPrice: currentCompareAt,
       image: product.images?.[0]?.url,
       quantity,
-      optionsSummary: selectedVariant?.title || knowledge.size,
+      optionsSummary: selectedVariant?.title || displaySize,
       maxStock: currentStock,
     })
     router.push('/checkout')
   }
 
   // Complementary real LOVIXA products
-  const complementaryProducts = COSMETIC_PRODUCTS.filter(
-    (p) => p.slug !== product.slug
-  ).slice(0, 2)
+  const complementaryProducts =
+    companionProductsProp && companionProductsProp.length > 0
+      ? companionProductsProp
+      : COSMETIC_PRODUCTS.filter((p) => p.slug !== product.slug).slice(0, 2)
 
   // Authentic customer reviews for LOVIXA products
   const defaultReviews: Review[] = [
@@ -250,7 +277,7 @@ export function ProductDetailClient({
                 LOVIXA COSMETIC
               </span>
               <span className="text-xs text-stone-500 font-semibold font-sans">
-                {knowledge.size}
+                {displaySize}
               </span>
             </div>
 
@@ -298,7 +325,7 @@ export function ProductDetailClient({
           )}
 
           {/* Variant Matrix if available */}
-          {product.variants && product.variants.length > 0 && (
+          {hasMultipleVariants && product.variants && product.variants.length > 1 && (
             <div className="pt-1">
               <VariantSelector
                 variants={product.variants}
@@ -489,81 +516,142 @@ export function ProductDetailClient({
           {/* Interactive Information Accordions */}
           <div className="space-y-2.5 pt-2">
             {/* Actives & Ingredients Tab */}
-            <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
-              <button
-                onClick={() => toggleAccordion('actives')}
-                className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
-              >
-                <span className="flex items-center gap-2.5">
-                  <Droplets className="w-4 h-4 text-[#6B2D5C] shrink-0" />
-                  Key Botanical Ingredients &amp; Formulation Highlights
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
-                    openAccordion === 'actives' ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-              {openAccordion === 'actives' && (
-                <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 space-y-2.5 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans">
-                  {knowledge.actives.map((act) => (
-                    <p key={act.name} className="leading-relaxed">
-                      <strong className="text-[#2B1822] font-bold">{act.name}:</strong> {act.desc}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
+            {displayActives && displayActives.length > 0 && (
+              <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <button
+                  onClick={() => toggleAccordion('actives')}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Droplets className="w-4 h-4 text-[#6B2D5C] shrink-0" />
+                    Key Botanical Ingredients &amp; Formulation Highlights
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
+                      openAccordion === 'actives' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openAccordion === 'actives' && (
+                  <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 space-y-2.5 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans">
+                    {displayActives.map((act: any, idx: number) => (
+                      <p key={act.name || idx} className="leading-relaxed">
+                        <strong className="text-[#2B1822] font-bold">{act.name}:</strong> {act.desc}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Benefits Tab */}
+            {displayBenefits && displayBenefits.length > 0 && (
+              <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <button
+                  onClick={() => toggleAccordion('benefits')}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Sparkles className="w-4 h-4 text-[#6B2D5C] shrink-0" />
+                    Key Benefits &amp; Verified Results
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
+                      openAccordion === 'benefits' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openAccordion === 'benefits' && (
+                  <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 space-y-2 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans">
+                    {displayBenefits.map((benefit: string, idx: number) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <span className="text-[#6B2D5C] font-bold">✓</span>
+                        <p className="leading-relaxed">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* How to Use Tab */}
-            <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
-              <button
-                onClick={() => toggleAccordion('ritual')}
-                className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
-              >
-                <span className="flex items-center gap-2.5">
-                  <Flower2 className="w-4 h-4 text-[#6B2D5C] shrink-0" />
-                  How to Use &amp; Self-Care Ritual
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
-                    openAccordion === 'ritual' ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-              {openAccordion === 'ritual' && (
-                <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 space-y-2 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans">
-                  {knowledge.ritualSteps.map((step, idx) => (
-                    <p key={idx} className="leading-relaxed">
-                      <strong className="text-[#2B1822] font-bold">Step {idx + 1}:</strong> {step}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
+            {displayRitualSteps && displayRitualSteps.length > 0 && (
+              <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <button
+                  onClick={() => toggleAccordion('ritual')}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Flower2 className="w-4 h-4 text-[#6B2D5C] shrink-0" />
+                    How to Use &amp; Self-Care Ritual
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
+                      openAccordion === 'ritual' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openAccordion === 'ritual' && (
+                  <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 space-y-2 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans">
+                    {displayRitualSteps.map((step: string, idx: number) => (
+                      <p key={idx} className="leading-relaxed">
+                        <strong className="text-[#2B1822] font-bold">Step {idx + 1}:</strong> {step}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Complete Ingredients Tab */}
+            {displayIngredients && (
+              <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <button
+                  onClick={() => toggleAccordion('ingredients')}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Leaf className="w-4 h-4 text-[#6B2D5C] shrink-0" />
+                    Complete Ingredients Declaration (INCI)
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
+                      openAccordion === 'ingredients' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openAccordion === 'ingredients' && (
+                  <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans leading-relaxed">
+                    <p>{displayIngredients}</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Caution & Safety Tab */}
-            <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
-              <button
-                onClick={() => toggleAccordion('safety')}
-                className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
-              >
-                <span className="flex items-center gap-2.5">
-                  <AlertTriangle className="w-4 h-4 text-[#6B2D5C] shrink-0" />
-                  Safety &amp; Caution Guidance
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
-                    openAccordion === 'safety' ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-              {openAccordion === 'safety' && (
-                <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans leading-relaxed">
-                  <p>{knowledge.caution}</p>
-                </div>
-              )}
-            </div>
+            {displayCaution && (
+              <div className="border border-[#E8C4D4]/70 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <button
+                  onClick={() => toggleAccordion('safety')}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left font-bold text-xs sm:text-sm text-[#2B1822] flex items-center justify-between hover:bg-[#FBF6F8] transition-colors cursor-pointer font-sans"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <AlertTriangle className="w-4 h-4 text-[#6B2D5C] shrink-0" />
+                    Safety &amp; Caution Guidance
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#6B2D5C] transition-transform duration-200 shrink-0 ${
+                      openAccordion === 'safety' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openAccordion === 'safety' && (
+                  <div className="px-4 sm:px-5 pb-4 pt-2 text-xs text-[#2B1822]/75 border-t border-[#E8C4D4]/40 bg-[#FBF6F8]/60 font-sans leading-relaxed">
+                    <p>{displayCaution}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
