@@ -2,10 +2,15 @@ import type { CollectionConfig } from 'payload'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {
+    singular: 'Store Page',
+    plural: 'Store Pages (Our Story, Contact & Policies)',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'isPublished', 'updatedAt'],
-    group: 'Content',
+    group: 'Website Content',
+    description: 'Manage Our Story, Contact Us, Terms & Conditions, Privacy Policy, Shipping Policy, and Return Policy',
   },
   access: {
     read: () => true,

@@ -635,6 +635,8 @@ export interface InventoryTransaction {
   createdAt: string;
 }
 /**
+ * Manage Our Story, Contact Us, Terms & Conditions, Privacy Policy, Shipping Policy, and Return Policy
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
