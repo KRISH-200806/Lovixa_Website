@@ -13,6 +13,7 @@
     "test": "tsx --test --test-concurrency=1 tests/*.test.ts",
     "doctor": "tsx scripts/doctor.ts",
     "seed:ecommerce": "tsx scripts/seed-ecommerce.ts",
+    "seed:catalog": "tsx scripts/seed-lovixa-catalog.ts",
     "sync:admin": "tsx scripts/sync-admin.ts",
     "payload:migrate": "payload migrate",
     "payload:migrate:create": "payload migrate:create",
