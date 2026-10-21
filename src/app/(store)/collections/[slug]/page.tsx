@@ -10,6 +10,8 @@ import { PageHeaderBanner } from '@/components/common/PageHeaderBanner'
 import { ProductsCatalog } from '@/app/(store)/products/ProductsCatalog'
 import { generateBreadcrumbJsonLd } from '@/lib/seo/schema'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
   const categories = await getStorefrontCategories()
   return categories.map((cat) => ({

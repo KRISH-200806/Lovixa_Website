@@ -5,6 +5,8 @@ import { COSMETIC_PRODUCTS } from '@/lib/constants/cosmetics-catalog'
 import { ProductsCatalog } from './ProductsCatalog'
 import { PageHeaderBanner } from '@/components/common/PageHeaderBanner'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Hair Care Collection — LOVIXA COSMETIC',
   description:

@@ -11,6 +11,8 @@ import {
   generateBreadcrumbJsonLd,
 } from '@/lib/seo/schema'
 
+export const dynamic = 'force-dynamic'
+
 type Args = {
   params: Promise<{
     slug: string
