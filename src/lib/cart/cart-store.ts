@@ -38,16 +38,16 @@ export interface TaxConfig {
 }
 
 const DEFAULT_SHIPPING_CONFIG: ShippingConfig = {
-  flatRate: Number(process.env.NEXT_PUBLIC_SHIPPING_FLAT_RATE) || 9.99,
-  freeShippingThreshold: Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD) || 100,
+  flatRate: Number(process.env.NEXT_PUBLIC_SHIPPING_FLAT_RATE) || 99,
+  freeShippingThreshold: Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD) || 999,
   freeShippingEnabled: true,
 }
 
 const DEFAULT_TAX_CONFIG: TaxConfig = {
   enabled: true,
-  ratePercentage: Number(process.env.NEXT_PUBLIC_DEFAULT_TAX_RATE) || 8.25,
-  pricesIncludeTax: false,
-  taxLabel: 'Estimated Tax',
+  ratePercentage: Number(process.env.NEXT_PUBLIC_DEFAULT_TAX_RATE) || 18,
+  pricesIncludeTax: true,
+  taxLabel: 'GST (Inclusive)',
 }
 
 export interface CartStore {
@@ -195,14 +195,24 @@ export const useCartStore = create<CartStore>()(
         const cfg = taxConfig || DEFAULT_TAX_CONFIG
         if (cfg.enabled === false) return 0
         const taxableAmount = Math.max(0, getSubtotal() - getDiscountAmount())
-        const taxRate = (typeof cfg.ratePercentage === 'number' ? cfg.ratePercentage : 8.25) / 100
+        const taxRate = (typeof cfg.ratePercentage === 'number' ? cfg.ratePercentage : 18) / 100
+
+        // If prices include tax (e.g. GST in India):
+        if (cfg.pricesIncludeTax) {
+          // Included tax portion = amount - (amount / (1 + rate))
+          return taxableAmount - taxableAmount / (1 + taxRate)
+        }
+
         return taxableAmount * taxRate
       },
 
       getGrandTotal: () => {
-        const { getSubtotal, getDiscountAmount, getShippingFee, getTaxAmount } = get()
-        const total = getSubtotal() - getDiscountAmount() + getShippingFee() + getTaxAmount()
-        return Math.max(0, total)
+        const { getSubtotal, getDiscountAmount, getShippingFee, getTaxAmount, taxConfig = DEFAULT_TAX_CONFIG } = get()
+        const cfg = taxConfig || DEFAULT_TAX_CONFIG
+        // Only add tax on top if prices DO NOT already include tax!
+        const taxOnTop = cfg.enabled !== false && !cfg.pricesIncludeTax ? getTaxAmount() : 0
+        const total = getSubtotal() - getDiscountAmount() + getShippingFee() + taxOnTop
+        return Math.max(0, Math.round(total))
       },
 
       getTotalItems: () => {
@@ -212,7 +222,16 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'flexion_cart_storage',
-      storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : ({} as any))),
+      storage: createJSONStorage(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          return window.localStorage
+        }
+        return {
+          getItem: () => null,
+          setItem: () => {},
+          removeItem: () => {},
+        }
+      }),
       partialize: (state) => ({
         items: state.items,
         coupon: state.coupon,

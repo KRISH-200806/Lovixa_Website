@@ -206,7 +206,7 @@ ${productBlocks.join('\n\n')}
 
 Subtotal: ${formatCurrency(order.subtotal, sym)}${discountBlock}
 Shipping: ${shippingDisplay}
-Grand Total: ${formatCurrency(order.grandTotal, sym)}
+Grand Total: ${formatCurrency(order.grandTotal, sym)} (Incl. of GST)
 
 Delivery Address:
 House / Building: ${order.shippingAddress.house}

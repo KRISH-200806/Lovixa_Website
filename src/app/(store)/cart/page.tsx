@@ -318,11 +318,13 @@ export default function CartPage() {
                   </div>
 
                   {taxConfig?.enabled !== false && (
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-xs text-stone-500">
                       <span>
-                        {taxConfig?.taxLabel || 'Estimated Tax'} ({taxConfig?.ratePercentage || 8.25}%)
+                        {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
                       </span>
-                      <span className="font-semibold text-[#2B1822]">{formatPrice(taxAmount)}</span>
+                      <span className="font-medium text-[#2B1822]">
+                        {taxConfig?.pricesIncludeTax ? `Included (${formatPrice(taxAmount)})` : formatPrice(taxAmount)}
+                      </span>
                     </div>
                   )}
 

@@ -309,10 +309,23 @@ export function CartDrawer() {
                     {shippingFee === 0 ? 'FREE' : formatPrice(shippingFee)}
                   </span>
                 </div>
+                {taxConfig?.enabled !== false && (
+                  <div className="flex justify-between text-[11px] text-stone-500">
+                    <span>
+                      {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
+                    </span>
+                    <span className="font-medium text-[#2B1822]">
+                      {taxConfig?.pricesIncludeTax ? `Included (${formatPrice(taxAmount)})` : formatPrice(taxAmount)}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm sm:text-base font-bold text-[#2B1822] pt-2 border-t border-[#E8C4D4]/50">
                   <span>Total</span>
-                  <span>{formatPrice(grandTotal)}</span>
+                  <span className="text-[#6B2D5C]">{formatPrice(grandTotal)}</span>
                 </div>
+                <p className="text-[10px] text-stone-400 text-right font-sans">
+                  Inclusive of all taxes (GST)
+                </p>
               </div>
 
               {/* Actions */}
