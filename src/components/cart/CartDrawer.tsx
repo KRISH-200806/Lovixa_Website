@@ -252,21 +252,28 @@ export function CartDrawer() {
               {/* Promo Code Input */}
               <div>
                 {coupon ? (
-                  <div className="flex items-center justify-between px-4 py-2 bg-white border border-[#6B2D5C]/30 rounded-full text-xs text-[#6B2D5C]">
-                    <span className="font-semibold truncate">
-                      Applied: {coupon.code}{' '}
-                      ({coupon.discountType === 'percentage'
-                        ? `-${coupon.discountValue}%`
-                        : coupon.discountType === 'fixed_amount'
-                        ? `-$${coupon.discountValue}`
-                        : 'Free Shipping'})
-                    </span>
-                    <button
-                      onClick={removeCoupon}
-                      className="text-[#6B2D5C] hover:underline font-bold ml-2 shrink-0 cursor-pointer"
-                    >
-                      Remove
-                    </button>
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between px-4 py-2 bg-white border border-[#6B2D5C]/30 rounded-full text-xs text-[#6B2D5C]">
+                      <span className="font-semibold truncate">
+                        Applied: {coupon.code}{' '}
+                        ({coupon.discountType === 'percentage'
+                          ? `-${coupon.discountValue}%`
+                          : coupon.discountType === 'fixed_amount'
+                          ? `-₹${coupon.discountValue}`
+                          : 'Free Shipping'})
+                      </span>
+                      <button
+                        onClick={removeCoupon}
+                        className="text-[#6B2D5C] hover:underline font-bold ml-2 shrink-0 cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    {coupon.minOrderAmount && subtotal < coupon.minOrderAmount && (
+                      <p className="text-[11px] text-amber-700 font-medium px-2 font-sans">
+                        ⚠️ Add ₹{coupon.minOrderAmount - subtotal} more to activate {coupon.code}.
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="flex gap-2">
