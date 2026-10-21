@@ -115,7 +115,10 @@ export const Media: CollectionConfig = {
       { name: 'card', width: 768, height: 768, position: 'centre' },
       { name: 'hero', width: 1920, height: 1080, position: 'centre' },
     ],
-    adminThumbnail: 'thumbnail',
+    adminThumbnail: ({ doc }) =>
+      (doc?.sizes as any)?.thumbnail?.url ||
+      (doc as any)?.url ||
+      ((doc as any)?.filename ? `/media/${(doc as any).filename}` : null),
     mimeTypes: [
       'image/jpeg',
       'image/jpg',
@@ -133,11 +136,32 @@ export const Media: CollectionConfig = {
         if (data?.filename && typeof data.filename === 'string') {
           data.filename = data.filename.replace(/\.\.+/g, '').replace(/[/\\]/g, '')
         }
-        // Normalize alt text
+        // Normalize or fallback alt text so uploads never fail
         if (data?.alt && typeof data.alt === 'string') {
           data.alt = data.alt.trim()
         }
+        if (!data?.alt) {
+          data.alt = data?.filename
+            ? data.filename.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
+            : 'LOVIXA Cosmetic Media'
+        }
         return data
+      },
+    ],
+    afterChange: [
+      async () => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+      },
+    ],
+    afterDelete: [
+      async () => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
       },
     ],
     beforeDelete: [

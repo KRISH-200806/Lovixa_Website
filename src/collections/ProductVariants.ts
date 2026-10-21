@@ -13,6 +13,36 @@ export const ProductVariants: CollectionConfig = {
     update: ({ req: { user } }) => Boolean(user && user.role !== 'customer'),
     delete: ({ req: { user } }) => Boolean(user && user.role === 'admin'),
   },
+  hooks: {
+    afterChange: [
+      async () => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+        try {
+          const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/')
+          revalidatePath('/products')
+          revalidateTag('products')
+        } catch {}
+      },
+    ],
+    afterDelete: [
+      async () => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+        try {
+          const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/')
+          revalidatePath('/products')
+          revalidateTag('products')
+        } catch {}
+      },
+    ],
+  },
   fields: [
     {
       name: 'sku',

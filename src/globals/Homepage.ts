@@ -9,6 +9,21 @@ export const Homepage: GlobalConfig = {
     read: () => true,
     update: ({ req: { user } }) => Boolean(user && user.role !== 'customer'),
   },
+  hooks: {
+    afterChange: [
+      async () => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+        try {
+          const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/')
+          revalidateTag('homepage')
+        } catch {}
+      },
+    ],
+  },
   fields: [
     // 1. HERO CAROUSEL
     {

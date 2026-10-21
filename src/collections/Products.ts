@@ -13,6 +13,59 @@ export const Products: CollectionConfig = {
     update: ({ req: { user } }) => Boolean(user && user.role !== 'customer'),
     delete: ({ req: { user } }) => Boolean(user && user.role === 'admin'),
   },
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc, req }) => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+
+        // If product has 1 variant and price changed, sync variant price
+        try {
+          if (Array.isArray(doc.variants) && doc.variants.length === 1 && typeof doc.basePrice === 'number') {
+            const variantId = typeof doc.variants[0] === 'object' ? doc.variants[0].id : doc.variants[0]
+            if (variantId) {
+              await req.payload.update({
+                collection: 'product-variants',
+                id: variantId,
+                data: {
+                  price: doc.basePrice,
+                  compareAtPrice: doc.compareAtPrice,
+                },
+              })
+            }
+          }
+        } catch {}
+
+        try {
+          const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/')
+          revalidatePath('/products')
+          if (doc?.slug) revalidatePath(`/products/${doc.slug}`)
+          if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+            revalidatePath(`/products/${previousDoc.slug}`)
+          }
+          revalidateTag('products')
+        } catch {}
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        try {
+          const { clearStorefrontCache } = await import('@/lib/cms/products')
+          clearStorefrontCache()
+        } catch {}
+        try {
+          const { revalidatePath, revalidateTag } = await import('next/cache')
+          revalidatePath('/')
+          revalidatePath('/products')
+          if (doc?.slug) revalidatePath(`/products/${doc.slug}`)
+          revalidateTag('products')
+        } catch {}
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',

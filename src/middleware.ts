@@ -20,8 +20,8 @@ const CANONICAL_HOST = (() => {
 
 // Paths that should never trigger a redirect-collection lookup — the lookup
 // itself calls /api/redirects, so excluding /api avoids a request loop, and
-// /admin/_next are never meaningfully "redirected" content.
-const SKIP_REDIRECT_LOOKUP = /^\/(api|admin|_next)(\/|$)/
+// /admin/_next/media are never meaningfully "redirected" content.
+const SKIP_REDIRECT_LOOKUP = /^\/(api|admin|_next|media)(\/|$)/
 
 /**
  * Looks up `/api/redirects?where[from][equals]=<pathname>` (the collection
