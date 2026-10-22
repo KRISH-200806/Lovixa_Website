@@ -21,6 +21,8 @@ export interface ProductCardProps {
   badge?: string
   shortDescription?: string
   size?: string
+  stock?: number | null
+  inStock?: boolean
 }
 
 const SIZES: Record<string, string> = {
@@ -41,6 +43,8 @@ export function ProductCard(props: ProductCardProps) {
     reviewCount = 1240,
     badge = 'B1G1 + FREE GIFT',
     size,
+    stock,
+    inStock,
   } = props
 
   const { addItem, openCart } = useCartStore()
@@ -49,11 +53,13 @@ export function ProductCard(props: ProductCardProps) {
   const isWishlisted = isInWishlist(id)
   const [justAdded, setJustAdded] = useState(false)
 
+  const isOutOfStock = stock !== undefined && stock !== null ? stock <= 0 : inStock === false
   const sizeLabel = size || SIZES[slug]
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (isOutOfStock) return
     addItem({
       productId: id,
       title,
@@ -62,7 +68,7 @@ export function ProductCard(props: ProductCardProps) {
       compareAtPrice,
       image,
       quantity: 1,
-      maxStock: 50,
+      maxStock: stock != null ? stock : 50,
       optionsSummary: sizeLabel,
     })
     setJustAdded(true)
@@ -160,13 +166,18 @@ export function ProductCard(props: ProductCardProps) {
       <div className="px-1 pb-1 pt-0.5">
         <button
           onClick={handleQuickAdd}
-          className={`w-full py-2.5 sm:py-3 px-4 rounded-full font-sans text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
-            justAdded
-              ? 'bg-emerald-700 text-white'
-              : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98 shadow-sm'
+          disabled={isOutOfStock}
+          className={`w-full py-2.5 sm:py-3 px-4 rounded-full font-sans text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs ${
+            isOutOfStock
+              ? 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
+              : justAdded
+              ? 'bg-emerald-700 text-white cursor-pointer'
+              : 'bg-[#6B2D5C] hover:bg-[#562349] text-white active:scale-98 shadow-sm cursor-pointer'
           }`}
         >
-          {justAdded ? (
+          {isOutOfStock ? (
+            <span>OUT OF STOCK</span>
+          ) : justAdded ? (
             <>
               <Check className="w-3.5 h-3.5" />
               <span>ADDED TO CART</span>

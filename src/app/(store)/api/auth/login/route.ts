@@ -2,9 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { cookies } from 'next/headers'
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 
 export async function POST(req: NextRequest) {
   try {
+    const clientIp = getClientIp(req)
+    if (!checkRateLimit(`login_${clientIp}`, { limit: 10, windowMs: 15 * 60 * 1000 })) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again in 15 minutes.' },
+        { status: 429 }
+      )
+    }
+
     const body = await req.json()
     const { email, password } = body
 

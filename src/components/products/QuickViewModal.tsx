@@ -53,7 +53,10 @@ export function QuickViewModal() {
       ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
       : null
 
+  const isOutOfStock = product.stock !== undefined && product.stock !== null ? product.stock <= 0 : false
+
   const handleAddToCart = () => {
+    if (isOutOfStock) return
     addItem({
       productId: product.id,
       title: product.title,
@@ -62,7 +65,7 @@ export function QuickViewModal() {
       compareAtPrice: product.compareAtPrice,
       image: product.image,
       quantity,
-      maxStock: product.stock || 50,
+      maxStock: product.stock != null ? product.stock : 50,
     })
     setIsAdded(true)
     setTimeout(() => {
@@ -206,13 +209,18 @@ export function QuickViewModal() {
                 {/* Add to Cart */}
                 <button
                   onClick={handleAddToCart}
-                  className={`flex-1 py-3 px-6 rounded-full font-sans font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
-                    isAdded
-                      ? 'bg-[#562349] text-white shadow-[#6B2D5C]/20'
-                      : 'bg-[#6B2D5C] hover:bg-[#562349] text-white shadow-[#6B2D5C]/20'
+                  disabled={isOutOfStock}
+                  className={`flex-1 py-3 px-6 rounded-full font-sans font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 ${
+                    isOutOfStock
+                      ? 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
+                      : isAdded
+                      ? 'bg-[#562349] text-white shadow-[#6B2D5C]/20 cursor-pointer'
+                      : 'bg-[#6B2D5C] hover:bg-[#562349] text-white shadow-[#6B2D5C]/20 cursor-pointer'
                   }`}
                 >
-                  {isAdded ? (
+                  {isOutOfStock ? (
+                    <span>Out of Stock</span>
+                  ) : isAdded ? (
                     <>
                       <CheckCircle2 className="w-4 h-4 text-white" />
                       <span>Added to Bag ✓</span>

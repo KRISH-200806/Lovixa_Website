@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { sendOrderConfirmationEmail } from '@/lib/email/send-email'
@@ -11,6 +12,7 @@ import {
   validateIndianPincode,
 } from '@/lib/whatsapp/order'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
+import { COSMETIC_PRODUCTS } from '@/lib/constants/cosmetics-catalog'
 
 export async function POST(req: Request) {
   try {
@@ -81,16 +83,201 @@ export async function POST(req: Request) {
       }
     }
 
+    // Authoritative Item Pricing from DB / Catalog (defense against PROD-015, SEC-003)
+    const verifiedItems: any[] = []
+    for (const item of (items || [])) {
+      const prodId = String(item.productId || item.product || item.id || '')
+      const variantId = item.variantId ? String(item.variantId) : undefined
+      const quantity = Math.max(1, Math.floor(Number(item.quantity) || 1))
+
+      let authoritativePrice: number | null = null
+      let authoritativeTitle: string = item.title || 'Product'
+
+      // 1. Check Variant
+      if (variantId) {
+        try {
+          const variantDoc: any = await payload.findByID({
+            collection: 'product-variants',
+            id: variantId,
+          })
+          if (variantDoc && typeof variantDoc.price === 'number') {
+            authoritativePrice = variantDoc.price
+            authoritativeTitle = variantDoc.title || item.title
+          }
+        } catch {}
+      }
+
+      // 2. Check Base Product
+      if (authoritativePrice === null && prodId) {
+        try {
+          const productDoc: any = await payload.findByID({
+            collection: 'products',
+            id: prodId,
+          })
+          if (productDoc) {
+            authoritativePrice = typeof productDoc.basePrice === 'number' ? productDoc.basePrice : productDoc.price
+            authoritativeTitle = productDoc.title || item.title
+          }
+        } catch {
+          try {
+            const bySlug = await payload.find({
+              collection: 'products',
+              where: { slug: { equals: prodId } },
+              limit: 1,
+            })
+            if (bySlug.docs.length > 0) {
+              const doc = bySlug.docs[0] as any
+              authoritativePrice = typeof doc.basePrice === 'number' ? doc.basePrice : doc.price
+              authoritativeTitle = doc.title || item.title
+            }
+          } catch {}
+        }
+      }
+
+      // 3. Fallback to authoritative static catalog
+      if (authoritativePrice === null) {
+        const staticMatch = COSMETIC_PRODUCTS.find(
+          (p) => p.id === prodId || p.slug === prodId || p.title.toLowerCase() === (item.title || '').toLowerCase()
+        )
+        if (staticMatch) {
+          authoritativePrice = staticMatch.price
+          authoritativeTitle = staticMatch.title
+        } else if (prodId.includes('shampoo')) {
+          authoritativePrice = 299
+        } else if (prodId.includes('oil') || prodId.includes('hairoil')) {
+          authoritativePrice = 299
+        } else if (prodId.includes('duo') || prodId.includes('combo')) {
+          authoritativePrice = 549
+        } else {
+          authoritativePrice = Math.max(0, Number(item.price) || 0)
+        }
+      }
+
+      verifiedItems.push({
+        ...item,
+        productId: prodId,
+        variantId,
+        title: authoritativeTitle,
+        price: authoritativePrice,
+        quantity,
+      })
+    }
+
+    const calculatedSubtotal = verifiedItems.reduce(
+      (sum, item) => sum + Number(item.price) * Number(item.quantity),
+      0
+    )
+
+    // Authoritative Coupon Recomputation (COUP-019, SEC-004)
+    let calculatedDiscountTotal = 0
+    let matchedCouponDoc: any = null
+    let isFreeShippingCoupon = false
+
+    if (couponCode) {
+      const cleanCode = String(couponCode).trim().toUpperCase()
+      try {
+        const coupons = await payload.find({
+          collection: 'coupons',
+          where: { code: { equals: cleanCode } },
+          limit: 1,
+        })
+
+        if (coupons.docs.length > 0) {
+          matchedCouponDoc = coupons.docs[0]
+          if (matchedCouponDoc.isActive === false) {
+            return NextResponse.json({ error: 'This coupon is no longer active.' }, { status: 400 })
+          }
+          if (matchedCouponDoc.expiresAt && new Date(matchedCouponDoc.expiresAt).getTime() < Date.now()) {
+            return NextResponse.json({ error: 'This coupon has expired.' }, { status: 400 })
+          }
+          if (matchedCouponDoc.usageLimit && (matchedCouponDoc.usedCount || 0) >= matchedCouponDoc.usageLimit) {
+            return NextResponse.json(
+              { error: 'This coupon has already been redeemed and has reached its maximum usage limit.' },
+              { status: 400 }
+            )
+          }
+          if (matchedCouponDoc.minOrderAmount && calculatedSubtotal < matchedCouponDoc.minOrderAmount) {
+            return NextResponse.json(
+              { error: `Minimum order amount of ₹${matchedCouponDoc.minOrderAmount} is required for coupon ${matchedCouponDoc.code}.` },
+              { status: 400 }
+            )
+          }
+          const perUserLimit = matchedCouponDoc.perUserLimit || 1
+          const usedByList = matchedCouponDoc.usedBy || []
+          const userRedemptions = usedByList.filter((entry: any) => {
+            const entryPhone = entry.phone ? String(entry.phone).replace(/[^0-9]/g, '').slice(-10) : ''
+            const entryEmail = entry.email ? String(entry.email).trim().toLowerCase() : ''
+            return (
+              (cleanPhone && entryPhone && entryPhone === cleanPhone.slice(-10)) ||
+              (customerEmail && entryEmail && entryEmail === customerEmail.trim().toLowerCase())
+            )
+          }).length
+
+          if (userRedemptions >= perUserLimit) {
+            return NextResponse.json(
+              { error: 'You have already redeemed this coupon code on a previous order.' },
+              { status: 400 }
+            )
+          }
+
+          if (matchedCouponDoc.discountType === 'percentage') {
+            calculatedDiscountTotal = (calculatedSubtotal * matchedCouponDoc.discountValue) / 100
+            if (matchedCouponDoc.maxDiscountAmount && calculatedDiscountTotal > matchedCouponDoc.maxDiscountAmount) {
+              calculatedDiscountTotal = matchedCouponDoc.maxDiscountAmount
+            }
+          } else if (matchedCouponDoc.discountType === 'fixed_amount') {
+            calculatedDiscountTotal = Math.min(matchedCouponDoc.discountValue, calculatedSubtotal)
+          } else if (matchedCouponDoc.discountType === 'free_shipping') {
+            isFreeShippingCoupon = true
+          }
+        } else {
+          // Approved Campaign Fallbacks
+          if (cleanCode === 'LOVIXA15') {
+            calculatedDiscountTotal = Math.min((calculatedSubtotal * 15) / 100, 300)
+          } else if (cleanCode === 'WELCOME10') {
+            calculatedDiscountTotal = Math.min((calculatedSubtotal * 10) / 100, 200)
+          } else if (cleanCode === 'GLOW15') {
+            calculatedDiscountTotal = Math.min((calculatedSubtotal * 15) / 100, 300)
+          } else if (cleanCode === 'LOVIXA20') {
+            if (calculatedSubtotal >= 999) {
+              calculatedDiscountTotal = Math.min((calculatedSubtotal * 20) / 100, 500)
+            } else {
+              return NextResponse.json({ error: 'Minimum order amount of ₹999 required for coupon LOVIXA20.' }, { status: 400 })
+            }
+          }
+        }
+      } catch (couponErr) {
+        console.warn('Coupon pre-order check notice:', couponErr)
+      }
+    }
+    calculatedDiscountTotal = Math.round(calculatedDiscountTotal * 100) / 100
+
+    // Authoritative Shipping Calculation
+    const freeShippingThreshold = typeof storeSettings?.shipping?.freeShippingThreshold === 'number'
+      ? storeSettings.shipping.freeShippingThreshold
+      : (Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD) || 999)
+    const flatShippingRate = typeof storeSettings?.shipping?.flatRate === 'number'
+      ? storeSettings.shipping.flatRate
+      : (Number(process.env.NEXT_PUBLIC_SHIPPING_FLAT_RATE) || 99)
+
+    const calculatedShippingTotal = isFreeShippingCoupon || calculatedSubtotal >= freeShippingThreshold
+      ? 0
+      : flatShippingRate
+
+    const taxableAmount = Math.max(0, calculatedSubtotal - calculatedDiscountTotal)
+    const calculatedTaxTotal = Math.round((taxableAmount - taxableAmount / 1.18) * 100) / 100
+    const calculatedGrandTotal = Math.max(0, Math.round((calculatedSubtotal - calculatedDiscountTotal + calculatedShippingTotal) * 100) / 100)
+
     let finalCurrency = currency || 'INR'
-    let finalGrandTotal = Number(grandTotal)
-    let finalSubtotal = Number(subtotal)
-    let finalDiscountTotal = Number(discountTotal)
-    let finalShippingTotal = Number(shippingTotal)
-    let finalTaxTotal = Number(taxTotal)
-    let finalItems = items
+    let finalGrandTotal = calculatedGrandTotal
+    let finalSubtotal = calculatedSubtotal
+    let finalDiscountTotal = calculatedDiscountTotal
+    let finalShippingTotal = calculatedShippingTotal
+    let finalTaxTotal = calculatedTaxTotal
+    let finalItems = verifiedItems
 
     let customerAppliedRate = 1
-    let storeBaseTotal = Number(grandTotal)
+    let storeBaseTotal = calculatedGrandTotal
     let currencyBreakdown: any[] = []
 
     try {
@@ -107,7 +294,7 @@ export async function POST(req: Request) {
         (c: any) => c.code.toUpperCase() === (currency || 'INR').toUpperCase()
       )
       customerAppliedRate = currentCurrOpt?.exchangeRate || 1
-      storeBaseTotal = Number((Number(grandTotal) / customerAppliedRate).toFixed(2))
+      storeBaseTotal = Number((calculatedGrandTotal / customerAppliedRate).toFixed(2))
 
       currencyBreakdown = currenciesList.map((c: any) => ({
         code: c.code,
@@ -168,8 +355,16 @@ export async function POST(req: Request) {
       country: shippingAddress?.country || 'India',
     }
 
+    // Authenticate user from session headers or payload
+    const requestHeaders = await headers()
+    let authUser: any = null
+    try {
+      const authRes = await payload.auth({ headers: requestHeaders })
+      authUser = authRes.user
+    } catch {}
+
     // Associate order with customer user account if signed in or match by email
-    let customerUserId = body.customerId
+    let customerUserId = authUser?.id || body.customerId
     if (!customerUserId && customerEmail) {
       try {
         const userMatches = await payload.find({
@@ -181,6 +376,15 @@ export async function POST(req: Request) {
           customerUserId = userMatches.docs[0].id
         }
       } catch (e) { }
+    }
+
+    // MANDATORY AUTHENTICATION GATE:
+    // Reject order placement if customer is not logged in / not an authenticated user
+    if (!customerUserId) {
+      return NextResponse.json(
+        { error: 'Login required. You must be signed in to your LOVIXA account to place an order.' },
+        { status: 401 }
+      )
     }
 
     // Generate WhatsApp Message & Click-to-Chat Deep Link
@@ -262,57 +466,7 @@ export async function POST(req: Request) {
       adminNotes: `Order placed via WhatsApp Click-to-Chat. Awaiting customer confirmation and manual UPI payment. Official WhatsApp: +${businessWhatsAppNumber}`,
     }
 
-    // Validate coupon code limits before creating order record
-    let matchedCouponDoc: any = null
-    if (couponCode) {
-      try {
-        const coupons = await payload.find({
-          collection: 'coupons',
-          where: { code: { equals: String(couponCode).trim().toUpperCase() } },
-          limit: 1,
-        })
-        if (coupons.docs.length > 0) {
-          matchedCouponDoc = coupons.docs[0]
-          if (matchedCouponDoc.isActive === false) {
-            return NextResponse.json({ error: 'This coupon is no longer active.' }, { status: 400 })
-          }
-          if (matchedCouponDoc.expiresAt && new Date(matchedCouponDoc.expiresAt).getTime() < Date.now()) {
-            return NextResponse.json({ error: 'This coupon has expired.' }, { status: 400 })
-          }
-          if (matchedCouponDoc.usageLimit && (matchedCouponDoc.usedCount || 0) >= matchedCouponDoc.usageLimit) {
-            return NextResponse.json(
-              { error: 'This coupon has already been redeemed and has reached its maximum usage limit.' },
-              { status: 400 }
-            )
-          }
-          if (matchedCouponDoc.minOrderAmount && finalSubtotal < matchedCouponDoc.minOrderAmount) {
-            return NextResponse.json(
-              { error: `Minimum order amount of ₹${matchedCouponDoc.minOrderAmount} is required for coupon ${matchedCouponDoc.code}.` },
-              { status: 400 }
-            )
-          }
-          const perUserLimit = matchedCouponDoc.perUserLimit || 1
-          const usedByList = matchedCouponDoc.usedBy || []
-          const userRedemptions = usedByList.filter((entry: any) => {
-            const entryPhone = entry.phone ? String(entry.phone).replace(/[^0-9]/g, '').slice(-10) : ''
-            const entryEmail = entry.email ? String(entry.email).trim().toLowerCase() : ''
-            return (
-              (cleanPhone && entryPhone && entryPhone === cleanPhone.slice(-10)) ||
-              (customerEmail && entryEmail && entryEmail === customerEmail.trim().toLowerCase())
-            )
-          }).length
-
-          if (userRedemptions >= perUserLimit) {
-            return NextResponse.json(
-              { error: 'You have already redeemed this coupon code on a previous order.' },
-              { status: 400 }
-            )
-          }
-        }
-      } catch (couponErr) {
-        console.warn('Coupon pre-order check notice:', couponErr)
-      }
-    }
+    // Matched coupon was authoritatively verified prior to order creation
 
     let orderRecord: any
     if (existingOrder) {

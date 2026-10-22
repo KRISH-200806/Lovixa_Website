@@ -9,6 +9,7 @@ export const Users: CollectionConfig = {
     group: 'Admin',
   },
   access: {
+    admin: ({ req: { user } }) => Boolean(user && (user.role === 'admin' || user.role === 'staff')),
     read: ({ req: { user } }) => {
       if (!user) return false
       if (user.role === 'admin' || user.role === 'staff') return true
