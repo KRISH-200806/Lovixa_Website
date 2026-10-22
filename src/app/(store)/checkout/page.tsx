@@ -46,7 +46,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const { formatPrice, currentCurrency } = useCurrency()
   const storeSettings = useStoreSettings()
-  const { user, openAuthModal } = useAuth()
+  const { user, openAuthModal, isLoading } = useAuth()
   const {
     items,
     getSubtotal,
@@ -116,6 +116,16 @@ export default function CheckoutPage() {
       } catch (e) {}
     }
   }, [fullName, mobileNumber, emailAddress])
+
+  // Auto-prompt login modal if unauthenticated customer arrives at checkout
+  useEffect(() => {
+    if (!isLoading && !user) {
+      const timer = setTimeout(() => {
+        openAuthModal('login')
+      }, 400)
+      return () => clearTimeout(timer)
+    }
+  }, [isLoading, user, openAuthModal])
 
   // Promo / Coupon Handling on Checkout
   const [promoInput, setPromoInput] = useState('')
@@ -233,6 +243,12 @@ export default function CheckoutPage() {
 
     if (items.length === 0) {
       setErrorMessage('Your shopping bag is empty. Please add items before checking out.')
+      return
+    }
+
+    if (!user) {
+      setErrorMessage('Account login is required to place an order. Please sign in or register to continue.')
+      openAuthModal('login')
       return
     }
 
@@ -445,24 +461,26 @@ export default function CheckoutPage() {
                 </div>
               </div>
             ) : (
-              <div className="p-4 bg-white border border-[#E8C4D4]/60 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-                <div className="flex items-start gap-2.5">
-                  <Info className="w-4 h-4 text-[#6B2D5C] shrink-0 mt-0.5" />
+              <div className="p-4 sm:p-5 bg-[#FBF6F8] border-2 border-[#6B2D5C]/30 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#6B2D5C] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                    <UserCheck className="w-5 h-5 text-[#E8C4D4]" />
+                  </div>
                   <div>
-                    <p className="text-xs font-bold text-[#2B1822] font-sans">
-                      Guest Checkout Active
+                    <p className="text-xs sm:text-sm font-bold text-[#2B1822] font-sans">
+                      Account Login Required
                     </p>
-                    <p className="text-[11px] text-stone-600 font-sans">
-                      No account required. Fill in your details below to place order via WhatsApp.
+                    <p className="text-[11px] sm:text-xs text-stone-600 font-sans mt-0.5">
+                      Please log in or register to complete your order and receive live order updates.
                     </p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => openAuthModal('login')}
-                  className="py-1.5 px-3.5 bg-[#FBF6F8] hover:bg-[#E8C4D4]/40 border border-[#E8C4D4] text-[#6B2D5C] rounded-full text-[11px] font-bold transition whitespace-nowrap cursor-pointer text-center font-sans uppercase tracking-wider self-start sm:self-auto"
+                  className="py-2.5 px-5 bg-[#6B2D5C] hover:bg-[#562349] text-white rounded-full text-xs font-bold transition shadow-sm cursor-pointer text-center font-sans uppercase tracking-wider self-stretch sm:self-auto shrink-0"
                 >
-                  Sign In (Optional)
+                  Sign In / Register
                 </button>
               </div>
             )}
@@ -771,28 +789,41 @@ export default function CheckoutPage() {
 
             {/* Primary WhatsApp CTA Button */}
             <div className="space-y-3 pt-2">
-              <button
-                type="submit"
-                disabled={isProcessing || items.length === 0}
-                className="w-full py-4 px-6 bg-[#6B2D5C] hover:bg-[#562349] active:scale-[0.99] text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 disabled:opacity-50 cursor-pointer font-sans group"
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Preparing Order Details...</span>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-6 h-6 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
-                      <WhatsAppIcon className="w-4 h-4 fill-current" />
-                    </div>
-                    <span>Place Order on WhatsApp • {formatPrice(grandTotal)}</span>
-                  </>
-                )}
-              </button>
+              {!user ? (
+                <button
+                  type="button"
+                  onClick={() => openAuthModal('login')}
+                  className="w-full py-4 px-6 bg-[#6B2D5C] hover:bg-[#562349] active:scale-[0.99] text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 cursor-pointer font-sans group"
+                >
+                  <UserCheck className="w-5 h-5 text-[#E8C4D4]" />
+                  <span>Login / Register to Place Order • {formatPrice(grandTotal)}</span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={isProcessing || items.length === 0}
+                  className="w-full py-4 px-6 bg-[#6B2D5C] hover:bg-[#562349] active:scale-[0.99] text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 disabled:opacity-50 cursor-pointer font-sans group"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Preparing Order Details...</span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-6 h-6 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
+                        <WhatsAppIcon className="w-4 h-4 fill-current" />
+                      </div>
+                      <span>Place Order on WhatsApp • {formatPrice(grandTotal)}</span>
+                    </>
+                  )}
+                </button>
+              )}
 
               <p className="text-center text-xs text-stone-500 font-sans leading-normal">
-                Review your order and send it to our WhatsApp team for confirmation.
+                {!user
+                  ? 'Sign in or create an account to proceed with your order.'
+                  : 'Review your order and send it to our WhatsApp team for confirmation.'}
               </p>
 
               {/* Privacy Notice (Phase 10) */}

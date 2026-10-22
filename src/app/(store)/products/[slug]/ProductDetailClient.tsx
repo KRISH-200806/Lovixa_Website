@@ -175,6 +175,7 @@ export function ProductDetailClient({
   const displayIngredients = product.ingredients
 
   const handleAddToCart = () => {
+    if (currentStock <= 0) return
     addItem({
       productId: product.id,
       variantId: selectedVariant?.id,
@@ -193,6 +194,7 @@ export function ProductDetailClient({
   }
 
   const handleBuyNow = () => {
+    if (currentStock <= 0) return
     addItem({
       productId: product.id,
       variantId: selectedVariant?.id,
@@ -312,10 +314,17 @@ export function ProductDetailClient({
                 Save {discountPercent}%
               </span>
             )}
-            <span className="w-full sm:w-auto sm:ml-auto text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-              In Stock &amp; Ready to Ship
-            </span>
+            {currentStock > 0 ? (
+              <span className="w-full sm:w-auto sm:ml-auto text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                In Stock &amp; Ready to Ship
+              </span>
+            ) : (
+              <span className="w-full sm:w-auto sm:ml-auto text-xs font-medium text-rose-800 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
+                Out of Stock
+              </span>
+            )}
           </div>
 
           {product.shortDescription && (
@@ -341,18 +350,20 @@ export function ProductDetailClient({
             <div className="sm:hidden space-y-2.5">
               <div className="flex items-center gap-2">
                 {/* Quantity selector */}
-                <div className="flex items-center border border-[#E8C4D4]/70 rounded-full px-4 py-2.5 bg-[#FBF6F8]">
+                <div className={`flex items-center border border-[#E8C4D4]/70 rounded-full px-4 py-2.5 bg-[#FBF6F8] ${currentStock <= 0 ? 'opacity-50 pointer-events-none' : ''}`}>
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-2 transition-colors cursor-pointer text-sm"
+                    disabled={currentStock <= 0 || quantity <= 1}
+                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-2 transition-colors cursor-pointer text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                     aria-label="Decrease quantity"
                   >
                     -
                   </button>
-                  <span className="px-3 text-xs font-bold text-[#2B1822]">{quantity}</span>
+                  <span className="px-3 text-xs font-bold text-[#2B1822]">{currentStock <= 0 ? 0 : quantity}</span>
                   <button
                     onClick={() => setQuantity(Math.min(currentStock, quantity + 1))}
-                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-2 transition-colors cursor-pointer text-sm"
+                    disabled={currentStock <= 0 || quantity >= currentStock}
+                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-2 transition-colors cursor-pointer text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                     aria-label="Increase quantity"
                   >
                     +
@@ -388,13 +399,17 @@ export function ProductDetailClient({
               <button
                 onClick={handleAddToCart}
                 disabled={currentStock <= 0}
-                className={`w-full py-4 px-6 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-full transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 font-sans ${
-                  isAdded
-                    ? 'bg-emerald-700 text-white'
-                    : 'bg-[#6B2D5C] hover:bg-[#562349] text-white'
+                className={`w-full py-4 px-6 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-full transition-all shadow-md flex items-center justify-center gap-2 font-sans ${
+                  currentStock <= 0
+                    ? 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
+                    : isAdded
+                    ? 'bg-emerald-700 text-white cursor-pointer'
+                    : 'bg-[#6B2D5C] hover:bg-[#562349] text-white cursor-pointer active:scale-98'
                 }`}
               >
-                {isAdded ? (
+                {currentStock <= 0 ? (
+                  <span>Out of Stock</span>
+                ) : isAdded ? (
                   <>
                     <CheckCircle2 className="w-4 h-4 text-white" />
                     <span>Added to Bag ✓</span>
@@ -410,10 +425,15 @@ export function ProductDetailClient({
               {/* Buy Now Mobile */}
               <button
                 onClick={handleBuyNow}
-                className="w-full py-4 px-6 rounded-full bg-[#2B1822] hover:bg-[#1f1118] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 font-sans"
+                disabled={currentStock <= 0}
+                className={`w-full py-4 px-6 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 font-sans ${
+                  currentStock <= 0
+                    ? 'bg-stone-200 text-stone-400 cursor-not-allowed shadow-none'
+                    : 'bg-[#2B1822] hover:bg-[#1f1118] text-white cursor-pointer active:scale-98'
+                }`}
               >
-                <Zap className="w-4 h-4 text-[#E8C4D4]" />
-                <span>Buy Now • Instant Checkout</span>
+                <Zap className={`w-4 h-4 ${currentStock <= 0 ? 'text-stone-400' : 'text-[#E8C4D4]'}`} />
+                <span>{currentStock <= 0 ? 'Currently Unavailable' : 'Buy Now • Instant Checkout'}</span>
               </button>
             </div>
 
@@ -421,18 +441,20 @@ export function ProductDetailClient({
             <div className="hidden sm:block space-y-3">
               <div className="flex items-center gap-3">
                 {/* Quantity */}
-                <div className="flex items-center border border-[#E8C4D4]/70 rounded-full px-4 py-3 bg-[#FBF6F8] shrink-0">
+                <div className={`flex items-center border border-[#E8C4D4]/70 rounded-full px-4 py-3 bg-[#FBF6F8] shrink-0 ${currentStock <= 0 ? 'opacity-50 pointer-events-none' : ''}`}>
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-1.5 transition-colors cursor-pointer text-sm"
+                    disabled={currentStock <= 0 || quantity <= 1}
+                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-1.5 transition-colors cursor-pointer text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                     aria-label="Decrease quantity"
                   >
                     -
                   </button>
-                  <span className="px-3 text-xs font-bold text-[#2B1822]">{quantity}</span>
+                  <span className="px-3 text-xs font-bold text-[#2B1822]">{currentStock <= 0 ? 0 : quantity}</span>
                   <button
                     onClick={() => setQuantity(Math.min(currentStock, quantity + 1))}
-                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-1.5 transition-colors cursor-pointer text-sm"
+                    disabled={currentStock <= 0 || quantity >= currentStock}
+                    className="text-stone-600 hover:text-[#6B2D5C] font-bold px-1.5 transition-colors cursor-pointer text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                     aria-label="Increase quantity"
                   >
                     +
@@ -443,13 +465,17 @@ export function ProductDetailClient({
                 <button
                   onClick={handleAddToCart}
                   disabled={currentStock <= 0}
-                  className={`flex-1 py-3.5 px-6 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-full transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer font-sans ${
-                    isAdded
-                      ? 'bg-emerald-700 text-white'
-                      : 'bg-[#6B2D5C] hover:bg-[#562349] text-white hover:shadow-lg'
+                  className={`flex-1 py-3.5 px-6 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-full transition-all shadow-md flex items-center justify-center gap-2 font-sans ${
+                    currentStock <= 0
+                      ? 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
+                      : isAdded
+                      ? 'bg-emerald-700 text-white cursor-pointer'
+                      : 'bg-[#6B2D5C] hover:bg-[#562349] text-white hover:shadow-lg cursor-pointer'
                   }`}
                 >
-                  {isAdded ? (
+                  {currentStock <= 0 ? (
+                    <span>Out of Stock</span>
+                  ) : isAdded ? (
                     <>
                       <CheckCircle2 className="w-4 h-4 text-white" />
                       <span>Added to Bag ✓</span>
@@ -489,10 +515,15 @@ export function ProductDetailClient({
               {/* Buy Now Desktop */}
               <button
                 onClick={handleBuyNow}
-                className="w-full py-3.5 px-6 rounded-full bg-[#2B1822] hover:bg-[#1f1118] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:shadow-lg font-sans"
+                disabled={currentStock <= 0}
+                className={`w-full py-3.5 px-6 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 font-sans ${
+                  currentStock <= 0
+                    ? 'bg-stone-200 text-stone-400 cursor-not-allowed shadow-none'
+                    : 'bg-[#2B1822] hover:bg-[#1f1118] text-white cursor-pointer hover:shadow-lg'
+                }`}
               >
-                <Zap className="w-4 h-4 text-[#E8C4D4]" />
-                <span>Buy Now • Instant Checkout</span>
+                <Zap className={`w-4 h-4 ${currentStock <= 0 ? 'text-stone-400' : 'text-[#E8C4D4]'}`} />
+                <span>{currentStock <= 0 ? 'Currently Unavailable' : 'Buy Now • Instant Checkout'}</span>
               </button>
             </div>
           </div>

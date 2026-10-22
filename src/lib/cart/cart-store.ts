@@ -90,6 +90,10 @@ export const useCartStore = create<CartStore>()(
 
       addItem: (newItem: CartItem) =>
         set((state: CartStore) => {
+          if (newItem.quantity <= 0 || (newItem.maxStock !== undefined && newItem.maxStock <= 0)) {
+            return state
+          }
+
           const existingIndex = state.items.findIndex(
             (i: CartItem) => i.productId === newItem.productId && i.variantId === newItem.variantId
           )
