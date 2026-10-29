@@ -40,7 +40,7 @@ export interface TaxConfig {
 const DEFAULT_SHIPPING_CONFIG: ShippingConfig = {
   flatRate: Number(process.env.NEXT_PUBLIC_SHIPPING_FLAT_RATE) || 99,
   freeShippingThreshold: Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD) || 999,
-  freeShippingEnabled: true,
+  freeShippingEnabled: false,
 }
 
 const DEFAULT_TAX_CONFIG: TaxConfig = {
@@ -88,8 +88,20 @@ export const useCartStore = create<CartStore>()(
       closeCart: () => set({ isOpen: false }),
       toggleCart: () => set((state: CartStore) => ({ isOpen: !state.isOpen })),
 
-      addItem: (newItem: CartItem) =>
+      addItem: (rawItem: any) =>
         set((state: CartStore) => {
+          const productId = String(rawItem.productId || rawItem.id || rawItem.slug || 'prod')
+          const title = String(rawItem.title || rawItem.name || 'LOVIXA Product')
+          const quantity = Math.max(1, Number(rawItem.quantity) || 1)
+          const price = Math.max(0, Number(rawItem.price) || 0)
+          const newItem: CartItem = {
+            ...rawItem,
+            productId,
+            title,
+            quantity,
+            price,
+          }
+
           if (newItem.quantity <= 0 || (newItem.maxStock !== undefined && newItem.maxStock <= 0)) {
             return state
           }
@@ -218,13 +230,8 @@ export const useCartStore = create<CartStore>()(
         const taxableAmount = Math.max(0, getSubtotal() - getDiscountAmount())
         const taxRate = (typeof cfg.ratePercentage === 'number' ? cfg.ratePercentage : 18) / 100
 
-        // If prices include tax (default for India & cosmetics):
-        if (cfg.pricesIncludeTax !== false) {
-          // Included tax portion = amount - (amount / (1 + rate))
-          return Math.round((taxableAmount - taxableAmount / (1 + taxRate)) * 100) / 100
-        }
-
-        return Math.round((taxableAmount * taxRate) * 100) / 100
+        // Standard 18% GST calculation on price: ₹649 * 18% = ₹116.82, ₹399 * 18% = ₹71.82
+        return Math.round(taxableAmount * taxRate * 100) / 100
       },
 
       getGrandTotal: () => {

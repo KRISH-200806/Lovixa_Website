@@ -5,6 +5,7 @@ import { Check, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import type { StorefrontCommunityData } from '@/lib/cms/products'
+import { useStoreSettings } from '@/components/providers/StoreSettingsProvider'
 
 function InstagramIcon({ className = 'w-6 h-6' }: { className?: string }) {
   return (
@@ -44,10 +45,20 @@ interface Props {
 }
 
 export function LovixaCommunity({ data }: Props) {
+  const storeSettings = useStoreSettings()
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+
+  const rawCommunityWhatsApp =
+    storeSettings?.whatsappCheckout?.businessNumber ||
+    storeSettings?.contact?.whatsappNumber ||
+    '919712460509'
+  let cleanCommunityWhatsApp = rawCommunityWhatsApp.replace(/[^0-9]/g, '')
+  if (cleanCommunityWhatsApp.length === 10) {
+    cleanCommunityWhatsApp = `91${cleanCommunityWhatsApp}`
+  }
 
   const heading = data?.heading || 'Moments of Botanical Self-Care'
   const subtitle =
@@ -181,14 +192,14 @@ export function LovixaCommunity({ data }: Props) {
           )}
           {subscribed && (
             <p className="text-xs text-emerald-700 mt-3 font-medium">
-              Welcome to the LOVIXA Privilege Circle! Message our WhatsApp support at <strong>+91 97124 60509</strong> with your email to claim your exclusive personal coupon code.
+              Welcome to the LOVIXA Privilege Circle! Message our WhatsApp support at <strong>+{cleanCommunityWhatsApp}</strong> with your email to claim your exclusive personal coupon code.
             </p>
           )}
 
           <div className="mt-6 pt-5 border-t border-[#E8C4D4]/40 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs text-[#2B1822]/75">
             <span>Prefer instant WhatsApp assistance?</span>
             <a
-              href="https://wa.me/919712460509?text=Hello%20Lovixa%2C%20I%20would%20like%20to%20receive%20my%20VIP%20welcome%20discount%20coupon"
+              href={`https://wa.me/${cleanCommunityWhatsApp}?text=${encodeURIComponent('Hello Lovixa, I would like to receive my VIP welcome discount coupon')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-bold text-[#6B2D5C] hover:underline"

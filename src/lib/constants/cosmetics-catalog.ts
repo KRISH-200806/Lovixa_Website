@@ -25,7 +25,7 @@ export const COSMETIC_CATEGORIES: CosmeticCategory[] = [
     name: 'Refreshing Shampoo',
     slug: 'shampoo',
     tag: 'Gentle Everyday Cleansing',
-    itemCount: 'Botanical Blend • 500ml',
+    itemCount: 'Botanical Blend • 200ml',
     image: '/images/lovixa-shampoo.jpg',
     accentColor: '#2B1822',
   },
@@ -34,7 +34,7 @@ export const COSMETIC_CATEGORIES: CosmeticCategory[] = [
     name: 'Nourishing Hair Oil',
     slug: 'hair-oil',
     tag: 'Self-Care Ritual Elixir',
-    itemCount: 'Cold-Pressed Botanical • 50ml',
+    itemCount: 'Cold-Pressed Botanical • 100ml',
     image: '/images/lovixa-hairoil.jpg',
     accentColor: '#6B2D5C',
   },
@@ -121,12 +121,12 @@ export const COSMETIC_PRODUCT_DETAILS: Record<string, StorefrontProductDetail> =
     stock: 100,
     isPublished: true,
     images: [
-      { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Refreshing Shampoo Bottle 500ml' },
+      { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Refreshing Shampoo Bottle 200ml' },
       { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Shampoo and Hair Oil Pair' },
       { url: '/images/lovixa-insta-4.jpg', alt: 'LOVIXA Shampoo Gentle Foaming Lather' },
     ],
     variants: [
-      { id: 'var_shampoo_500', sku: 'LVX-SHMP-500ML', title: '500ml Bottle', price: 299, compareAtPrice: 399, inventory: 100 },
+      { id: 'var_shampoo_200', sku: 'LVX-SHMP-200ML', title: '200ml Bottle', price: 299, compareAtPrice: 399, inventory: 100 },
     ],
   },
   'lovixa-hair-oil': {
@@ -143,12 +143,12 @@ export const COSMETIC_PRODUCT_DETAILS: Record<string, StorefrontProductDetail> =
     stock: 100,
     isPublished: true,
     images: [
-      { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Nourishing Hair Oil Dropper Bottle 50ml' },
+      { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Nourishing Hair Oil Bottle 100ml' },
       { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Hair Oil with Shampoo' },
       { url: '/images/lovixa-insta-1.jpg', alt: 'LOVIXA Hair Oil Botanical Formulation' },
     ],
     variants: [
-      { id: 'var_oil_50', sku: 'LVX-OIL-50ML', title: '50ml Dropper Bottle', price: 299, compareAtPrice: 399, inventory: 100 },
+      { id: 'var_oil_100', sku: 'LVX-OIL-100ML', title: '100ml Comb Bottle', price: 299, compareAtPrice: 399, inventory: 100 },
     ],
   },
   'lovixa-hair-care-duo': {
@@ -166,11 +166,11 @@ export const COSMETIC_PRODUCT_DETAILS: Record<string, StorefrontProductDetail> =
     isPublished: true,
     images: [
       { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Complete Hair Care Duo' },
-      { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Shampoo 500ml' },
-      { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Hair Oil 50ml' },
+      { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Shampoo 200ml' },
+      { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Hair Oil 100ml' },
     ],
     variants: [
-      { id: 'var_duo_set', sku: 'LVX-DUO-SET', title: 'Complete Ritual Duo Set (500ml + 50ml)', price: 549, compareAtPrice: 699, inventory: 50 },
+      { id: 'var_duo_set', sku: 'LVX-DUO-SET', title: 'Complete Ritual Duo Set (200ml + 100ml)', price: 549, compareAtPrice: 699, inventory: 50 },
     ],
   },
 }

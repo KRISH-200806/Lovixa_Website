@@ -295,11 +295,11 @@ export default function CheckoutPage() {
         currency: orderCurrency,
         currencySymbol: orderCurrencySymbol,
         items: items.map((item) => ({
-          productId: item.productId,
+          productId: item.productId || (item as any).id || (item as any).slug || '',
           variantId: item.variantId,
-          title: item.title,
+          title: item.title || (item as any).name || 'LOVIXA Product',
           price: Number((item.price * rate).toFixed(2)),
-          quantity: item.quantity,
+          quantity: item.quantity || 1,
           image: item.image,
           optionsSummary: item.optionsSummary,
         })),
@@ -1009,7 +1009,7 @@ export default function CheckoutPage() {
                 {taxConfig?.enabled !== false && (
                   <div className="flex justify-between text-xs text-stone-500">
                     <span>
-                      {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
+                      GST ({taxConfig?.ratePercentage || 18}%)
                     </span>
                     <span className="font-medium text-[#2B1822]">
                       {taxConfig?.pricesIncludeTax !== false

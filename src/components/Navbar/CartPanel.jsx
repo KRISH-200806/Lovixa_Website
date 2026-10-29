@@ -77,11 +77,11 @@ const CartPanel = ({ isOpen = true, onClose = () => {} }) => {
           </button>
         </div>
 
-        {/* Free Shipping Progress Indicator */}
+        {/* Delivery Indicator */}
         <div className="px-5 py-2.5 bg-emerald-50/80 border-b border-emerald-100 flex items-center justify-between text-xs">
           <span className="text-brand font-semibold flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
-            {cartTotal >= 499 ? "Eligible for FREE Express Delivery" : `Add ₹${(499 - cartTotal).toFixed(0)} more for FREE Delivery`}
+            Reliable Pan-India Tracked Delivery
           </span>
           <span className="text-[10px] uppercase font-bold text-brand bg-white px-2 py-0.5 rounded-full border border-emerald-200">
             FAST DISPATCH

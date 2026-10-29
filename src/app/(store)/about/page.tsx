@@ -6,6 +6,9 @@ import { PageHeaderBanner } from '@/components/common/PageHeaderBanner'
 import { getPageBySlug } from '@/lib/cms/pages'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug('about')
   return {
@@ -201,6 +204,34 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Brand Commitments Cards if populated */}
+      {page?.aboutStory?.commitments && page.aboutStory.commitments.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {page.aboutStory.commitments.map((c) => (
+              <div key={c.title} className="bg-white rounded-2xl border border-[#E8C4D4]/60 p-6 space-y-2 shadow-2xs">
+                <h4 className="font-sans font-bold text-base text-[#2B1822]">{c.title}</h4>
+                <p className="text-xs sm:text-sm text-[#2B1822]/70 leading-relaxed font-sans">{c.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Structured Policy / Story Sections if populated */}
+      {page?.sections && page.sections.length > 0 && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+          {page.sections.map((sec, idx) => (
+            <div key={sec.heading || idx} className="bg-white rounded-2xl border border-[#E8C4D4]/60 p-6 sm:p-8 space-y-3 shadow-2xs">
+              <h3 className="text-xl font-sans font-bold text-[#2B1822]">{sec.heading}</h3>
+              <div className="text-sm sm:text-base text-[#2B1822]/75 whitespace-pre-line leading-relaxed font-sans">
+                {sec.content}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* WYSIWYG Content if populated */}
       {page?.content && (

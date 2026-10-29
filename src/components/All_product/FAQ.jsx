@@ -31,7 +31,7 @@ const faqData = [
   {
     question: "What is your average delivery timeline and shipping policy?",
     answer:
-      "We provide Free Shipping across India on orders above ₹499. Orders are usually dispatched within 24 hours and delivered within 3-5 business days.",
+      "We provide reliable shipping across India. Orders are usually dispatched within 24 hours and delivered within 3-5 business days.",
   },
 ];
 

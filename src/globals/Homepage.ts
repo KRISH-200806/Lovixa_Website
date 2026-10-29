@@ -137,7 +137,7 @@ export const Homepage: GlobalConfig = {
         { name: 'sectionSubtitle', type: 'text', label: 'Section Subtitle', defaultValue: 'Combine our Botanical Cleanser and Cold-Pressed Scalp Elixir for lasting flake defense, root strength, and mirror gloss' },
         { name: 'badge', type: 'text', label: 'Badge', defaultValue: 'SIGNATURE CEREMONY SET' },
         { name: 'ritualTitle', type: 'text', label: 'Ritual Step Tag', defaultValue: 'TWO-STEP RESTORATIVE CEREMONY' },
-        { name: 'productTitle', type: 'text', label: 'Product Bundle Title', defaultValue: 'Botanical Shampoo (500ml) + Hair Oil (50ml)' },
+        { name: 'productTitle', type: 'text', label: 'Product Bundle Title', defaultValue: 'Botanical Shampoo (200ml) + Hair Oil (100ml)' },
         { name: 'description', type: 'textarea', label: 'Description', defaultValue: 'The ultimate Ayurvedic hair ritual. Deeply purifies scalp pores with gentle plant surfactants while locking in root nutrients for lasting softness and hair fall resistance.' },
         {
           name: 'features',
@@ -154,7 +154,7 @@ export const Homepage: GlobalConfig = {
         { name: 'ctaLink', type: 'text', label: 'Button URL', defaultValue: '/products/lovixa-hair-care-duo' },
         { name: 'image', type: 'upload', relationTo: 'media', label: 'Bundle Image (Upload)' },
         { name: 'imageUrl', type: 'text', label: 'Fallback Image Path (e.g. /images/lovixa-duo.jpg)' },
-        { name: 'freeShippingText', type: 'text', label: 'Free Shipping Note', defaultValue: 'Free Express Shipping Included' },
+        { name: 'freeShippingText', type: 'text', label: 'Shipping Note', defaultValue: '' },
         { name: 'trustText', type: 'text', label: 'Trust Note', defaultValue: '100% Authentic Ayurvedic' },
       ],
     },

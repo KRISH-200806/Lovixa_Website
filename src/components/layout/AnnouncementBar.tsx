@@ -12,7 +12,7 @@ const MARQUEE_ITEMS = [
   },
   {
     icon: Truck,
-    text: 'FREE EXPRESS SHIPPING ON ALL ORDERS ABOVE ₹999',
+    text: 'EXPRESS PAN-INDIA DELIVERY WITH REAL-TIME TRACKING',
     link: '/shipping-policy',
   },
   {

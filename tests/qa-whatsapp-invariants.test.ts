@@ -163,4 +163,52 @@ describe('Comprehensive WhatsApp Handoff & State Invariants Suite (WA-001 to WA-
     const msg = generateWhatsAppOrderMessage(freeShippingOrder)
     assert.ok(msg.includes('Shipping: FREE'), 'Zero shipping fee must display as FREE')
   })
+
+  it('WA-026: Verifies full product names are preserved and never replaced by generic or variant-only titles', () => {
+    const orderWithVariants: WhatsAppOrderDetails = {
+      ...baseSampleOrder,
+      items: [
+        {
+          title: 'LOVIXA Botanical Refreshing Shampoo (200ml Bottle)',
+          quantity: 1,
+          price: 399,
+          optionsSummary: '200ml Bottle',
+        },
+        {
+          title: 'LOVIXA 14 Herbs Rosemary Hair Oil (100ml Comb Bottle)',
+          quantity: 1,
+          price: 299,
+          optionsSummary: '100ml Comb Bottle',
+        },
+      ],
+      subtotal: 698,
+      grandTotal: 797,
+    }
+    const msg = generateWhatsAppOrderMessage(orderWithVariants)
+    assert.ok(msg.includes('1. LOVIXA Botanical Refreshing Shampoo (200ml Bottle)'), 'Shampoo full product name must be present')
+    assert.ok(msg.includes('2. LOVIXA 14 Herbs Rosemary Hair Oil (100ml Comb Bottle)'), 'Hair oil full product name must be present')
+    assert.ok(!msg.includes('1. 200ml Bottle'), 'Must not display variant alone as the product line item')
+  })
+
+  it('WA-027: Dynamically customizes order message header, note, and footer from Admin config', () => {
+    const customConfig = {
+      orderMessageHeader: '*LOVIXA STORE — VIP ORDER INQUIRY*',
+      orderMessageNote: 'Please confirm express courier dispatch and send UPI QR.',
+      orderMessageFooter: 'Warm regards from LOVIXA Customer Delight Team.',
+    }
+    const msg = generateWhatsAppOrderMessage(baseSampleOrder, customConfig)
+    assert.ok(msg.startsWith('*LOVIXA STORE — VIP ORDER INQUIRY*'), 'Custom header must be at the top')
+    assert.ok(msg.includes('Please confirm express courier dispatch and send UPI QR.'), 'Custom note must be present')
+    assert.ok(msg.endsWith('Warm regards from LOVIXA Customer Delight Team.'), 'Custom footer must be at the bottom')
+    assert.ok(msg.includes('Order Reference: LVX-2026-7842'), 'Order number still present')
+  })
+
+  it('WA-028: Supports advanced custom template with placeholder replacement', () => {
+    const customTemplate = 'Hello {customerName}! Order #{orderNumber} for {grandTotal} is received. Delivery to {city}.'
+    const msg = generateWhatsAppOrderMessage(baseSampleOrder, { customOrderTemplate: customTemplate })
+    assert.strictEqual(
+      msg,
+      'Hello Pooja Verma! Order #LVX-2026-7842 for ₹861.45 is received. Delivery to Surat.'
+    )
+  })
 })

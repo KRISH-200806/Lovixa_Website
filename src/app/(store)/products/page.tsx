@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'Hair Care Collection — LOVIXA COSMETIC',
   description:
-    'Discover LOVIXA Ayurvedic Shampoo (500ml) and Nourishing Hair Oil (50ml). Thoughtfully crafted, nature-inspired hair care essentials.',
+    'Discover LOVIXA Ayurvedic Shampoo (200ml) and Nourishing Hair Oil (100ml). Thoughtfully crafted, nature-inspired hair care essentials.',
 }
 
 export default async function ProductsPage() {

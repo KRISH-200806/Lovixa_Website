@@ -635,7 +635,7 @@ export interface InventoryTransaction {
   createdAt: string;
 }
 /**
- * Manage Our Story, Contact Us, Terms & Conditions, Privacy Policy, Shipping Policy, and Return Policy
+ * Edit content for About Us (Our Story), Privacy Policy, Terms & Conditions, Shipping Policy, Return & Refund Policy, FAQ, and Contact Us
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -724,6 +724,17 @@ export interface Page {
         }[]
       | null;
   };
+  /**
+   * Manage Q&A items for this page (e.g. /faq or policy questions).
+   */
+  faqItems?:
+    | {
+        question: string;
+        answer: string;
+        category?: ('all' | 'products' | 'usage' | 'orders' | 'shipping') | null;
+        id?: string | null;
+      }[]
+    | null;
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -744,20 +755,31 @@ export interface Page {
   createdAt: string;
 }
 /**
+ * Manage hair wellness articles, scalp care guides, routine stories, and SEO metadata.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-posts".
  */
 export interface BlogPost {
   id: string;
   title: string;
+  /**
+   * Unique URL path (e.g. rosemary-oil-benefits-for-hair-growth)
+   */
   slug: string;
+  status?: ('published' | 'draft' | 'scheduled') | null;
   isPublished?: boolean | null;
   publishedAt?: string | null;
   category: 'hair-wellness' | 'rituals' | 'botanical-science' | 'ayurvedic-care';
   author?: string | null;
   readTime?: string | null;
+  /**
+   * Displayed on the blog listing cards and search results.
+   */
   excerpt: string;
-  featuredImage: string | Media;
+  featuredImage?: (string | null) | Media;
+  featuredImageUrl?: string | null;
+  featuredImageAlt?: string | null;
   content: {
     root: {
       type: string;
@@ -779,11 +801,26 @@ export interface BlogPost {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Add related questions to display at the end of the post and generate Google FAQ Rich Snippets.
+   */
+  faqSection?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
     focusKeywords?: string | null;
+    canonicalUrl?: string | null;
+    ogTitle?: string | null;
+    ogDescription?: string | null;
     ogImage?: (string | null) | Media;
+    twitterCard?: ('summary_large_image' | 'summary') | null;
+    noIndex?: boolean | null;
   };
   meta?: {
     title?: string | null;
@@ -821,16 +858,20 @@ export interface AuditLog {
   createdAt: string;
 }
 /**
+ * View customer contact messages, routine inquiries, and update reply status.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
   id: string;
+  status?: ('new' | 'read' | 'replied') | null;
   formType: string;
   name?: string | null;
   email: string;
   phone?: string | null;
   message?: string | null;
+  adminNotes?: string | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -1513,6 +1554,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  faqItems?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        category?: T;
+        id?: T;
+      };
   seo?:
     | T
     | {
@@ -1540,6 +1589,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  status?: T;
   isPublished?: T;
   publishedAt?: T;
   category?: T;
@@ -1547,11 +1597,20 @@ export interface BlogPostsSelect<T extends boolean = true> {
   readTime?: T;
   excerpt?: T;
   featuredImage?: T;
+  featuredImageUrl?: T;
+  featuredImageAlt?: T;
   content?: T;
   tags?:
     | T
     | {
         tag?: T;
+        id?: T;
+      };
+  faqSection?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
         id?: T;
       };
   seo?:
@@ -1560,7 +1619,12 @@ export interface BlogPostsSelect<T extends boolean = true> {
         metaTitle?: T;
         metaDescription?: T;
         focusKeywords?: T;
+        canonicalUrl?: T;
+        ogTitle?: T;
+        ogDescription?: T;
         ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
       };
   meta?:
     | T
@@ -1592,11 +1656,13 @@ export interface AuditLogsSelect<T extends boolean = true> {
  * via the `definition` "form-submissions_select".
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
+  status?: T;
   formType?: T;
   name?: T;
   email?: T;
   phone?: T;
   message?: T;
+  adminNotes?: T;
   metadata?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1872,6 +1938,75 @@ export interface StoreSetting {
   id: string;
   storeName: string;
   /**
+   * Configure official business WhatsApp number, order message formats, floating WhatsApp chat icon, UPI ID, and manual payment instructions.
+   */
+  whatsappCheckout?: {
+    enabled?: boolean | null;
+    /**
+     * International format without + or spaces (e.g. 919712460509). Used for WhatsApp checkout and customer redirect.
+     */
+    businessNumber?: string | null;
+    /**
+     * Title line sent at top of WhatsApp order message. Use *text* for bold in WhatsApp.
+     */
+    orderMessageHeader?: string | null;
+    /**
+     * Instructions shown towards the bottom of the WhatsApp order message before closing.
+     */
+    orderMessageNote?: string | null;
+    /**
+     * Closing line at the end of the WhatsApp order message.
+     */
+    orderMessageFooter?: string | null;
+    /**
+     * Leave empty to use standard formatted layout. Available placeholders: {orderNumber}, {customerName}, {customerMobile}, {customerEmail}, {items}, {subtotal}, {discount}, {shipping}, {grandTotal}, {address}, {landmark}, {city}, {state}, {pincode}, {paymentMethod}, {paymentStatus}, {orderStatus}, {note}, {footer}, {storeName}.
+     */
+    customOrderTemplate?: string | null;
+    /**
+     * Pre-filled message when customer clicks WhatsApp button on the checkout success page. {orderNumber} will be replaced automatically.
+     */
+    orderSuccessMessage?: string | null;
+    /**
+     * Show or hide the floating WhatsApp chat button at bottom-right corner of the website.
+     */
+    floatingIconEnabled?: boolean | null;
+    /**
+     * If left blank, uses the Official Business WhatsApp Number above.
+     */
+    floatingIconNumber?: string | null;
+    /**
+     * The pre-filled message that automatically opens in WhatsApp when a visitor clicks the floating WhatsApp icon on the site.
+     */
+    floatingIconMessage?: string | null;
+    floatingIconTooltip?: string | null;
+    /**
+     * The UPI ID shared with customers on WhatsApp for manual payments (GPay, PhonePe, Paytm, etc.).
+     */
+    upiId?: string | null;
+    bankDetails?: string | null;
+    privacyNotice?: string | null;
+  };
+  /**
+   * Customer helpline, support email, address, WhatsApp, and working hours displayed across the footer and store.
+   */
+  contact?: {
+    phone?: string | null;
+    supportHours?: string | null;
+    email?: string | null;
+    address?: string | null;
+    whatsappNumber?: string | null;
+    googleMapsEmbedUrl?: string | null;
+    googleMapsShareLink?: string | null;
+  };
+  socialLinks?:
+    | {
+        platform: 'instagram' | 'facebook' | 'youtube' | 'whatsapp' | 'twitter' | 'linkedin';
+        url: string;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Declare your primary base currency. All product prices in Admin are entered in this currency (Base value = 1.0).
    */
   currency: {
@@ -1904,12 +2039,6 @@ export interface StoreSetting {
         id?: string | null;
       }[]
     | null;
-  tax?: {
-    enabled?: boolean | null;
-    ratePercentage?: number | null;
-    pricesIncludeTax?: boolean | null;
-    taxLabel?: string | null;
-  };
   shipping?: {
     flatRate?: number | null;
     freeShippingThreshold?: number | null;
@@ -1921,30 +2050,18 @@ export interface StoreSetting {
     shippingPolicyNote?: string | null;
     deliveryTimeline?: string | null;
   };
-  /**
-   * Configure official business WhatsApp number, UPI ID, and instructions for WhatsApp checkout.
-   */
-  whatsappCheckout?: {
+  tax?: {
     enabled?: boolean | null;
-    /**
-     * International format without + or spaces (e.g. 919712460509). Click-to-chat links will redirect customers here.
-     */
-    businessNumber?: string | null;
-    /**
-     * The UPI ID shared with customers on WhatsApp for manual payments (GPay, PhonePe, Paytm, etc.).
-     */
-    upiId?: string | null;
-    bankDetails?: string | null;
-    privacyNotice?: string | null;
+    ratePercentage?: number | null;
+    pricesIncludeTax?: boolean | null;
+    taxLabel?: string | null;
   };
-  /**
-   * Customer helpline, support email, address, and working hours displayed across the footer and store.
-   */
-  contact?: {
-    phone?: string | null;
-    supportHours?: string | null;
-    email?: string | null;
-    address?: string | null;
+  branding?: {
+    logo?: (string | null) | Media;
+    logoUrl?: string | null;
+    logoAlt?: string | null;
+    copyrightText?: string | null;
+    footerTagline?: string | null;
   };
   gateways?: {
     enableWhatsApp?: boolean | null;
@@ -1992,6 +2109,15 @@ export interface SeoSetting {
   ogImage?: (string | null) | Media;
   googleVerification?: string | null;
   bingVerification?: string | null;
+  /**
+   * Enables automatic GA4 pageview tracking when set.
+   */
+  googleAnalyticsId?: string | null;
+  googleTagManagerId?: string | null;
+  /**
+   * Enables Meta Pixel conversion tracking when set.
+   */
+  metaPixelId?: string | null;
   organization?: {
     name?: string | null;
     legalName?: string | null;
@@ -2268,6 +2394,43 @@ export interface HomepageSelect<T extends boolean = true> {
  */
 export interface StoreSettingsSelect<T extends boolean = true> {
   storeName?: T;
+  whatsappCheckout?:
+    | T
+    | {
+        enabled?: T;
+        businessNumber?: T;
+        orderMessageHeader?: T;
+        orderMessageNote?: T;
+        orderMessageFooter?: T;
+        customOrderTemplate?: T;
+        orderSuccessMessage?: T;
+        floatingIconEnabled?: T;
+        floatingIconNumber?: T;
+        floatingIconMessage?: T;
+        floatingIconTooltip?: T;
+        upiId?: T;
+        bankDetails?: T;
+        privacyNotice?: T;
+      };
+  contact?:
+    | T
+    | {
+        phone?: T;
+        supportHours?: T;
+        email?: T;
+        address?: T;
+        whatsappNumber?: T;
+        googleMapsEmbedUrl?: T;
+        googleMapsShareLink?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   currency?:
     | T
     | {
@@ -2285,14 +2448,6 @@ export interface StoreSettingsSelect<T extends boolean = true> {
         exchangeRate?: T;
         id?: T;
       };
-  tax?:
-    | T
-    | {
-        enabled?: T;
-        ratePercentage?: T;
-        pricesIncludeTax?: T;
-        taxLabel?: T;
-      };
   shipping?:
     | T
     | {
@@ -2303,22 +2458,22 @@ export interface StoreSettingsSelect<T extends boolean = true> {
         shippingPolicyNote?: T;
         deliveryTimeline?: T;
       };
-  whatsappCheckout?:
+  tax?:
     | T
     | {
         enabled?: T;
-        businessNumber?: T;
-        upiId?: T;
-        bankDetails?: T;
-        privacyNotice?: T;
+        ratePercentage?: T;
+        pricesIncludeTax?: T;
+        taxLabel?: T;
       };
-  contact?:
+  branding?:
     | T
     | {
-        phone?: T;
-        supportHours?: T;
-        email?: T;
-        address?: T;
+        logo?: T;
+        logoUrl?: T;
+        logoAlt?: T;
+        copyrightText?: T;
+        footerTagline?: T;
       };
   gateways?:
     | T
@@ -2365,6 +2520,9 @@ export interface SeoSettingsSelect<T extends boolean = true> {
   ogImage?: T;
   googleVerification?: T;
   bingVerification?: T;
+  googleAnalyticsId?: T;
+  googleTagManagerId?: T;
+  metaPixelId?: T;
   organization?:
     | T
     | {

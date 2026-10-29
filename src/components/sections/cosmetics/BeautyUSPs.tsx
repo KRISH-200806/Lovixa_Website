@@ -19,7 +19,7 @@ const USPs = [
   {
     icon: '🚚',
     title: 'Express Shipping & Returns',
-    description: 'Fast, secure Pan-India delivery with free shipping above ₹499 and hassle-free 7-day returns.',
+    description: 'Fast, secure Pan-India delivery with trusted courier partners and hassle-free 7-day returns.',
   },
 ]
 

@@ -38,7 +38,7 @@ interface ProductKnowledge {
 
 const PRODUCT_KNOWLEDGE: Record<string, ProductKnowledge> = {
   'lovixa-shampoo': {
-    size: '500ml e (16.9 fl. oz)',
+    size: '200ml e (6.76 fl. oz)',
     actives: [
       {
         name: 'Botanical Cleansing Complex',
@@ -68,7 +68,7 @@ const PRODUCT_KNOWLEDGE: Record<string, ProductKnowledge> = {
       'For external use only. Avoid contact with eyes. In case of contact, rinse immediately with clean water. Keep out of reach of children.',
   },
   'lovixa-hair-oil': {
-    size: '50ml | 1.69 fl. oz Dropper Bottle',
+    size: '100ml Comb Applicator Bottle',
     actives: [
       {
         name: 'Cold-Pressed Botanical Elixir',
@@ -90,7 +90,7 @@ const PRODUCT_KNOWLEDGE: Record<string, ProductKnowledge> = {
       'Ideal for relaxing evening or pre-wash scalp massage',
     ],
     ritualSteps: [
-      'Fill the glass dropper and dispense 4–6 drops into clean palms.',
+      'Apply LOVIXA Hair Oil directly to scalp using the comb applicator nozzle.',
       'Gently massage into scalp using small circular fingertip motions to nourish roots and relieve tension.',
       'Work any remaining oil through hair lengths and ends. Leave on for 20–30 minutes (or overnight) before washing with LOVIXA Shampoo.',
     ],
@@ -98,7 +98,7 @@ const PRODUCT_KNOWLEDGE: Record<string, ProductKnowledge> = {
       'For external use only. Perform a patch test before first use. Store in a cool, dry place away from direct sunlight.',
   },
   'lovixa-hair-care-duo': {
-    size: 'Complete Ritual Pair: 500ml Shampoo + 50ml Hair Oil',
+    size: 'Complete Ritual Pair: 200ml Shampoo + 100ml Hair Oil',
     actives: [
       {
         name: 'Synergistic Care System',

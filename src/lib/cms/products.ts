@@ -249,6 +249,9 @@ export interface StorefrontSEOSettingsData {
   canonicalBaseUrl: string
   googleVerification?: string | null
   bingVerification?: string | null
+  googleAnalyticsId?: string | null
+  googleTagManagerId?: string | null
+  metaPixelId?: string | null
   organization?: {
     name?: string | null
     legalName?: string | null
@@ -431,19 +434,19 @@ export const getStorefrontProductBySlug = cache(async function getStorefrontProd
 
       const defaultGalleryMap: Record<string, Array<{ url: string; alt?: string }>> = {
         'lovixa-shampoo': [
-          { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Refreshing Shampoo Bottle 500ml' },
+          { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Refreshing Shampoo Bottle 200ml' },
           { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Shampoo and Hair Oil Pair' },
           { url: '/images/lovixa-insta-4.jpg', alt: 'LOVIXA Shampoo Gentle Foaming Lather' },
         ],
         'lovixa-hair-oil': [
-          { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Nourishing Hair Oil Dropper Bottle 50ml' },
+          { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Nourishing Hair Oil Bottle 100ml' },
           { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Hair Oil with Shampoo' },
           { url: '/images/lovixa-insta-1.jpg', alt: 'LOVIXA Hair Oil Botanical Formulation' },
         ],
         'lovixa-hair-care-duo': [
           { url: '/images/lovixa-duo.jpg', alt: 'LOVIXA Complete Hair Care Duo' },
-          { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Shampoo 500ml' },
-          { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Hair Oil 50ml' },
+          { url: '/images/lovixa-shampoo.jpg', alt: 'LOVIXA Shampoo 200ml' },
+          { url: '/images/lovixa-hairoil.jpg', alt: 'LOVIXA Hair Oil 100ml' },
         ],
       }
 
@@ -785,7 +788,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
     ),
     badge: cleanTitle(globalDoc?.promoBanner?.badge, ['SAVE 15% COMBO DEAL', 'SAVE 15%'], 'SIGNATURE CEREMONY SET'),
     ritualTitle: cleanTitle(globalDoc?.promoBanner?.ritualTitle, ['2-STEP DAILY RITUAL'], 'TWO-STEP RESTORATIVE CEREMONY'),
-    productTitle: globalDoc?.promoBanner?.productTitle || 'Botanical Shampoo (500ml) + Hair Oil (50ml)',
+    productTitle: globalDoc?.promoBanner?.productTitle || 'Botanical Shampoo (200ml) + Hair Oil (100ml)',
     description: globalDoc?.promoBanner?.description || 'The ultimate Ayurvedic hair ritual. Deeply purifies scalp pores with gentle plant surfactants while locking in root nutrients for lasting softness and hair fall resistance.',
     features:
       globalDoc?.promoBanner?.features && Array.isArray(globalDoc.promoBanner.features) && globalDoc.promoBanner.features.length > 0
@@ -801,7 +804,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
     ctaText: globalDoc?.promoBanner?.ctaText || 'ADD COMPLETE DUO TO BAG',
     ctaLink: globalDoc?.promoBanner?.ctaLink || '/products/lovixa-hair-care-duo',
     image: extractMediaUrl(globalDoc?.promoBanner?.image) || globalDoc?.promoBanner?.imageUrl || '/images/lovixa-duo.jpg',
-    freeShippingText: globalDoc?.promoBanner?.freeShippingText || 'Free Express Shipping Included',
+    freeShippingText: '',
     trustText: globalDoc?.promoBanner?.trustText || '100% Authentic Ayurvedic',
   }
 
@@ -848,7 +851,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
               customerName: 'Ananya M., Delhi',
               views: '3.8k',
               videoThumbnail: '/images/reel-2.jpg',
-              productTitle: 'LOVIXA Nourishing Hair Oil (50ml)',
+              productTitle: 'LOVIXA 14 Herbs Rosemary Hair Oil (100ml)',
               productImage: '/images/lovixa-hairoil.jpg',
               productSlug: 'lovixa-hair-oil',
               price: 299,
@@ -874,7 +877,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
               customerName: 'Sneha P., Bengaluru',
               views: '4.2k',
               videoThumbnail: '/images/lovixa-insta-2.jpg',
-              productTitle: 'LOVIXA Nourishing Hair Oil (50ml)',
+              productTitle: 'LOVIXA 14 Herbs Rosemary Hair Oil (100ml)',
               productImage: '/images/lovixa-hairoil.jpg',
               productSlug: 'lovixa-hair-oil',
               price: 299,
@@ -887,7 +890,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
               customerName: 'Rhea D., Pune',
               views: '2.1k',
               videoThumbnail: '/images/lovixa-insta-3.jpg',
-              productTitle: 'LOVIXA Hair Care Duo (Shampoo + Oil)',
+              productTitle: 'LOVIXA Hair Care Duo (200ml Shampoo + 100ml Oil)',
               productImage: '/images/lovixa-duo.jpg',
               productSlug: 'lovixa-hair-care-duo',
               price: 549,
@@ -1013,7 +1016,7 @@ export const getStorefrontHomepage = cache(async function getStorefrontHomepage(
             },
             {
               question: 'What are the shipping charges and delivery timelines across India?',
-              answer: 'We provide Free Express Shipping on all orders across India above ₹999. For orders below ₹999, shipping charges are calculated dynamically based on your delivery pincode at checkout. Orders are packed within 24 to 48 business hours from our certified botanical facility and usually reach your doorstep in 3 to 5 business days with full tracking.',
+              answer: 'We provide reliable Pan-India delivery with live tracking. Orders are packed within 24 to 48 business hours from our certified botanical facility and usually reach your doorstep in 3 to 5 business days with full tracking.',
             },
             {
               question: 'Are LOVIXA products 100% cruelty-free and vegan?',
@@ -1086,7 +1089,7 @@ export const getStorefrontAnnouncementBar = cache(async function getStorefrontAn
     return {
       enabled: true,
       messages: [
-        { text: 'FREE PAN-INDIA EXPRESS SHIPPING ON ALL ORDERS OVER ₹999', highlight: 'FREE SHIPPING', link: '/products' },
+        { text: 'EXPRESS PAN-INDIA DELIVERY WITH REAL-TIME TRACKING', highlight: 'PAN-INDIA DELIVERY', link: '/products' },
         { text: 'CONNECT WITH US ON WHATSAPP FOR EXCLUSIVE VIP OFFERS & PERSONAL VOUCHERS', highlight: 'VIP OFFERS', link: 'https://wa.me/919712460509?text=Hello%20Lovixa%2C%20I%20would%20like%20to%20receive%20an%20exclusive%20VIP%20discount%20code' },
         { text: '100% PURE BOTANICAL EXTRACTS • CRUELTY-FREE • AYURVEDIC FORMULATION', highlight: '100% BOTANICAL' },
       ],
@@ -1112,7 +1115,7 @@ export const getStorefrontSEOSettings = cache(async function getStorefrontSEOSet
           : 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care'
         const cleanDesc = (globalDoc.defaultMetaDescription && !globalDoc.defaultMetaDescription.includes('launching soon'))
           ? globalDoc.defaultMetaDescription
-          : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.'
+          : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.'
 
         return {
           siteTitle: cleanTitle,
@@ -1122,6 +1125,9 @@ export const getStorefrontSEOSettings = cache(async function getStorefrontSEOSet
           canonicalBaseUrl: globalDoc.canonicalBaseUrl || 'https://www.lovixacosmetic.com',
           googleVerification: globalDoc.googleVerification,
           bingVerification: globalDoc.bingVerification,
+          googleAnalyticsId: (globalDoc as any).googleAnalyticsId,
+          googleTagManagerId: (globalDoc as any).googleTagManagerId,
+          metaPixelId: (globalDoc as any).metaPixelId,
           organization: globalDoc.organization,
         }
       }
@@ -1132,7 +1138,7 @@ export const getStorefrontSEOSettings = cache(async function getStorefrontSEOSet
     return {
       siteTitle: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
       titleSeparator: '—',
-      defaultMetaDescription: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+      defaultMetaDescription: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.',
       keywords: 'botanical shampoo, ayurvedic hair oil, sulfate free clarifying shampoo, hair fall control oil, anti-frizz hair ritual, rosemary scalp care, herbal hair cosmetics, LOVIXA cosmetic',
       canonicalBaseUrl: 'https://www.lovixacosmetic.com',
       organization: {

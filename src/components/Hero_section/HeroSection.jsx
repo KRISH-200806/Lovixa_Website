@@ -21,7 +21,7 @@ import Product from "../Product_card/Product";
 
 const features = [
   {
-    name: "Free Shipping",
+    name: "Fast Delivery",
     icon: Truck,
   },
   {

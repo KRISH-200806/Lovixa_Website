@@ -37,6 +37,8 @@ export async function POST(req: Request) {
       collection: 'form-submissions',
       data: {
         formType: 'newsletter',
+        status: 'new',
+        name: 'Newsletter Subscriber',
         email: email.toLowerCase().trim(),
         message: 'Subscribed to LOVIXA newsletter updates.',
       },

@@ -10,6 +10,8 @@
 
 export interface WhatsAppProductItem {
   title: string
+  name?: string
+  productTitle?: string
   optionsSummary?: string
   variantTitle?: string
   quantity: number
@@ -26,6 +28,7 @@ export interface WhatsAppOrderDetails {
   shippingTotal: number
   discountTotal?: number
   couponCode?: string
+  taxTotal?: number
   grandTotal: number
   currencySymbol?: string
   shippingAddress: {
@@ -162,21 +165,35 @@ function formatCurrency(amount: number, symbol = '₹'): string {
   return `${symbol}${formattedNumber}`
 }
 
+export interface WhatsAppMessageConfig {
+  orderMessageHeader?: string
+  orderMessageNote?: string
+  orderMessageFooter?: string
+  customOrderTemplate?: string
+  storeName?: string
+}
+
 /**
  * Generates the official LOVIXA WhatsApp Order Request message
+ * Supports dynamic CMS header, custom instructions, footer sign-off, or custom template
  */
-export function generateWhatsAppOrderMessage(order: WhatsAppOrderDetails): string {
+export function generateWhatsAppOrderMessage(
+  order: WhatsAppOrderDetails,
+  config?: WhatsAppMessageConfig
+): string {
   const sym = order.currencySymbol || '₹'
 
   // Build numbered products list
   const productBlocks = order.items.map((item, idx) => {
+    const rawTitle = item.title || item.name || item.productTitle || 'LOVIXA Product'
     const unitPrice = formatCurrency(item.price, sym)
     const lineTotal = formatCurrency(item.price * item.quantity, sym)
-    const variantLine = (item.optionsSummary || item.variantTitle)
-      ? `Variant: ${item.optionsSummary || item.variantTitle}\n`
+    const variant = item.optionsSummary || item.variantTitle
+    const variantLine = variant && !rawTitle.toLowerCase().includes(variant.toLowerCase())
+      ? `Variant: ${variant}\n`
       : ''
 
-    return `${idx + 1}. ${item.title}\n${variantLine}Quantity: ${item.quantity}\nPrice: ${unitPrice} each\nTotal: ${lineTotal}`
+    return `${idx + 1}. ${rawTitle}\n${variantLine}Quantity: ${item.quantity}\nPrice: ${unitPrice} each\nTotal: ${lineTotal}`
   })
 
   const discountBlock = order.discountTotal && order.discountTotal > 0
@@ -193,7 +210,52 @@ export function generateWhatsAppOrderMessage(order: WhatsAppOrderDetails): strin
     ? `Email: ${order.customerEmail.trim()}\n`
     : ''
 
-  return `*LOVIXA COSMETIC — NEW ORDER REQUEST*
+  const header = (config?.orderMessageHeader || '').trim() || '*LOVIXA COSMETIC — NEW ORDER REQUEST*'
+  const note = (config?.orderMessageNote || '').trim() || 'Please confirm product availability, shipping charges, and payment instructions.'
+  const footer = (config?.orderMessageFooter || '').trim() || 'Thank you for choosing LOVIXA COSMETIC.'
+  const storeName = (config?.storeName || '').trim() || 'LOVIXA COSMETIC'
+
+  // Check if fully custom template is configured in CMS Store Settings
+  if (config?.customOrderTemplate && config.customOrderTemplate.trim()) {
+    const fullAddress = [
+      `House / Building: ${order.shippingAddress.house}`,
+      `Area: ${order.shippingAddress.street}`,
+      order.shippingAddress.landmark ? `Landmark: ${order.shippingAddress.landmark}` : '',
+      `City: ${order.shippingAddress.city}`,
+      `State: ${order.shippingAddress.state}`,
+      `Pincode: ${order.shippingAddress.pincode}`,
+      `Country: ${order.shippingAddress.country || 'India'}`,
+    ].filter(Boolean).join('\n')
+
+    const discountAmount = order.discountTotal && order.discountTotal > 0
+      ? formatCurrency(order.discountTotal, sym)
+      : `${sym}0`
+
+    return config.customOrderTemplate
+      .replace(/\{storeName\}/g, storeName)
+      .replace(/\{orderNumber\}/g, order.orderNumber)
+      .replace(/\{customerName\}/g, order.customerName)
+      .replace(/\{customerMobile\}/g, order.customerMobile)
+      .replace(/\{customerEmail\}/g, order.customerEmail ? order.customerEmail.trim() : '')
+      .replace(/\{items\}/g, productBlocks.join('\n\n'))
+      .replace(/\{subtotal\}/g, formatCurrency(order.subtotal, sym))
+      .replace(/\{discount\}/g, discountAmount)
+      .replace(/\{shipping\}/g, shippingDisplay)
+      .replace(/\{tax\}/g, formatCurrency(order.taxTotal || 0, sym))
+      .replace(/\{grandTotal\}/g, formatCurrency(order.grandTotal, sym))
+      .replace(/\{address\}/g, fullAddress)
+      .replace(/\{landmark\}/g, order.shippingAddress.landmark || '')
+      .replace(/\{city\}/g, order.shippingAddress.city)
+      .replace(/\{state\}/g, order.shippingAddress.state)
+      .replace(/\{pincode\}/g, order.shippingAddress.pincode)
+      .replace(/\{paymentMethod\}/g, 'Manual UPI / Bank Transfer')
+      .replace(/\{paymentStatus\}/g, 'Awaiting Payment')
+      .replace(/\{orderStatus\}/g, 'Awaiting Confirmation')
+      .replace(/\{note\}/g, note)
+      .replace(/\{footer\}/g, footer)
+  }
+
+  return `${header}
 
 Order Reference: ${order.orderNumber}
 
@@ -221,9 +283,9 @@ Payment Status: Awaiting Payment
 
 Order Status: Awaiting Confirmation
 
-Please confirm product availability, shipping charges, and payment instructions.
+${note}
 
-Thank you for choosing LOVIXA COSMETIC.`
+${footer}`
 }
 
 /**

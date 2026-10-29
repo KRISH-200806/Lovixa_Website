@@ -49,13 +49,13 @@ const HERO_SLIDES: BannerSlide[] = [
     title: 'GENTLE CLEANSING & DEEP',
     highlight: 'ROOT NOURISHMENT.',
     subtitle:
-      'LOVIXA Botanical Refreshing Shampoo (500ml) & Nourishing Hair Oil (50ml). The perfect daily routine for clean scalp, glossy ends, and zero frizz.',
+      'LOVIXA Botanical Refreshing Shampoo (200ml) & Nourishing Hair Oil (100ml). The perfect daily routine for clean scalp, glossy ends, and zero frizz.',
     primaryCtaText: 'EXPLORE THE DUO',
     primaryCtaLink: '#concerns',
     secondaryCtaText: 'VIEW PRODUCTS',
     secondaryCtaLink: '#collection',
     image: '/images/lovixa-hero-banner-products.jpg',
-    badgeText: '500ML SHAMPOO + 50ML HAIR OIL',
+    badgeText: '200ML SHAMPOO + 100ML HAIR OIL',
   },
   {
     id: 'slide-duo',
@@ -63,7 +63,7 @@ const HERO_SLIDES: BannerSlide[] = [
     title: 'COMPLETE BOTANICAL',
     highlight: 'HAIR CARE DUO SET.',
     subtitle:
-      'Nourish your scalp from root to tip with cold-pressed botanical hair care. Free express pan-India shipping on orders above ₹999.',
+      'Nourish your scalp from root to tip with cold-pressed botanical hair care. Mindfully crafted with 100% Ayurvedic integrity and Pan-India delivery.',
     primaryCtaText: 'SHOP THE DUO',
     primaryCtaLink: '#collection',
     secondaryCtaText: 'WHY LOVIXA',

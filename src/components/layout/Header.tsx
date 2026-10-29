@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { useCartStore } from '@/lib/cart/cart-store'
 import { useWishlistStore } from '@/lib/wishlist/wishlist-store'
 import { useAuth } from '@/components/providers/AuthProvider'
-import { useCurrency } from '@/components/providers/StoreSettingsProvider'
+import { useCurrency, useStoreSettings } from '@/components/providers/StoreSettingsProvider'
 
 export function Header({
   storeName = 'LOVIXA COSMETIC',
@@ -68,6 +68,13 @@ export function Header({
     )
     : []
 
+  const storeSettings = useStoreSettings()
+  const logoSrc =
+    (typeof storeSettings?.branding?.logo === 'object' && storeSettings?.branding?.logo?.url) ||
+    storeSettings?.branding?.logoUrl ||
+    '/images/lovixa-logo.webp'
+  const logoAlt = storeSettings?.branding?.logoAlt || storeSettings?.storeName || storeName || 'LOVIXA COSMETIC'
+
   return (
     <>
       <header
@@ -87,11 +94,11 @@ export function Header({
           </button>
 
           {/* Luxury Brand Logo */}
-          <Link href="/" className="flex flex-col justify-center shrink-0 py-1" aria-label="LOVIXA COSMETIC - Home">
+          <Link href="/" className="flex flex-col justify-center shrink-0 py-1" aria-label={`${logoAlt} - Home`}>
             <div className="relative h-7 sm:h-9 md:h-10 w-28 sm:w-36 md:w-40">
               <Image
-                src="/images/lovixa-logo.webp"
-                alt="LOVIXA COSMETIC"
+                src={logoSrc}
+                alt={logoAlt}
                 fill
                 priority
                 className="object-contain object-left"
@@ -113,6 +120,9 @@ export function Header({
             </Link>
             <Link href="/about" prefetch={true} className="hover:text-[#6B2D5C] transition-colors whitespace-nowrap shrink-0">
               Our Story
+            </Link>
+            <Link href="/blog" prefetch={true} className="hover:text-[#6B2D5C] transition-colors whitespace-nowrap shrink-0">
+              Journal
             </Link>
             <Link
               href="/contact"
@@ -260,6 +270,14 @@ export function Header({
               className="block text-base font-medium text-[#2B1822] hover:text-[#6B2D5C]"
             >
               Our Story
+            </Link>
+            <Link
+              href="/blog"
+              prefetch={true}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-base font-medium text-[#2B1822] hover:text-[#6B2D5C]"
+            >
+              Journal & Guides
             </Link>
             <Link
               href="/contact"

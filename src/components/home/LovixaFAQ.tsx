@@ -19,7 +19,7 @@ const DEFAULT_FAQS = [
   {
     question: 'What are the shipping charges and delivery timelines across India?',
     answer:
-      'We offer FREE express shipping across India on all orders above ₹999. For orders below ₹999, shipping charges are calculated dynamically based on your delivery pincode at checkout. Orders are carefully packed within 24 to 48 hours and typically reach your doorstep in 3 to 5 business days with live WhatsApp and SMS tracking.',
+      'We provide reliable Pan-India delivery with live tracking. Orders are carefully packed within 24 to 48 hours and typically reach your doorstep in 3 to 5 business days with live WhatsApp and SMS tracking.',
   },
   {
     question: 'Are LOVIXA products 100% cruelty-free and vegan?',

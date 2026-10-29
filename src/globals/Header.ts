@@ -15,7 +15,7 @@ export const Header: GlobalConfig = {
       type: 'group',
       fields: [
         { name: 'enabled', type: 'checkbox', defaultValue: true },
-        { name: 'text', type: 'text', defaultValue: '🎉 Free Express Shipping on Pan-India orders over ₹999!' },
+        { name: 'text', type: 'text', defaultValue: '🌿 100% Authentic Ayurvedic Botanical Hair Care | Pan-India Delivery' },
         { name: 'link', type: 'text', defaultValue: '/products' },
       ],
     },

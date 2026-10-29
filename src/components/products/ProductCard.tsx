@@ -26,9 +26,9 @@ export interface ProductCardProps {
 }
 
 const SIZES: Record<string, string> = {
-  'lovixa-shampoo': '500ml',
-  'lovixa-hair-oil': '50ml',
-  'lovixa-hair-care-duo': '500ml + 50ml',
+  'lovixa-shampoo': '200ml',
+  'lovixa-hair-oil': '100ml',
+  'lovixa-hair-care-duo': '200ml + 100ml',
 }
 
 export function ProductCard(props: ProductCardProps) {

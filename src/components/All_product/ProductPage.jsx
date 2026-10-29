@@ -371,7 +371,7 @@ function ProductPage() {
               <div className="grid grid-cols-3 gap-3 pt-2 text-center">
                 <div className="p-3 bg-white rounded-xl border border-border shadow-2xs flex flex-col items-center">
                   <Truck size={18} className="text-brand mb-1" />
-                  <span className="text-[11px] font-semibold text-text-main">Free Delivery</span>
+                  <span className="text-[11px] font-semibold text-text-main">Fast Delivery</span>
                   <span className="text-[10px] text-text-secondary">Within 3-5 days</span>
                 </div>
                 <div className="p-3 bg-white rounded-xl border border-border shadow-2xs flex flex-col items-center">

@@ -145,8 +145,22 @@ export function Footer({ data }: { data?: any } = {}) {
   const phone = storeSettings?.contact?.phone || '+91 97124 60509'
   const email = storeSettings?.contact?.email || 'lovixacosmetic@gmail.com'
   const address = storeSettings?.contact?.address || 'Yogi Chowk Rd, Jai Bhawani Society, Punagam, Varachha, Surat, Gujarat 395011'
+  const copyrightText = storeSettings?.branding?.copyrightText || '© 2026 LOVIXA COSMETIC. All rights reserved.'
+  const footerTagline = storeSettings?.branding?.footerTagline || 'Get exclusive offers and updates from Lovixa'
+  const logoUrl =
+    (typeof storeSettings?.branding?.logo === 'object' && storeSettings?.branding?.logo?.url) ||
+    storeSettings?.branding?.logoUrl ||
+    '/images/lovixa-logo-white.webp'
 
-  // Mobile Accordion States
+  const instagramUrl =
+    storeSettings?.socialLinks?.find((s) => s.platform === 'instagram')?.url ||
+    'https://www.instagram.com/lovixa_cosmetic'
+  const facebookUrl =
+    storeSettings?.socialLinks?.find((s) => s.platform === 'facebook')?.url ||
+    'https://www.facebook.com/p/Lovixa-Harbel-Care-61574511437687/'
+  const youtubeUrl =
+    storeSettings?.socialLinks?.find((s) => s.platform === 'youtube')?.url ||
+    'https://youtube.com/@lovixacosmetic'
   const [linksOpen, setLinksOpen] = useState(false)
   const [categoriesOpen, setCategoriesOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
@@ -165,6 +179,7 @@ export function Footer({ data }: { data?: any } = {}) {
 
   const usefulLinks = [
     { name: 'Our Story', href: '/about' },
+    { name: 'Hair Wellness Journal', href: '/blog' },
     { name: 'Return & Refund Policy', href: '/return-refund-policy' },
     { name: 'Terms & Conditions', href: '/terms-conditions' },
     { name: 'Privacy Policy', href: '/privacy-policy' },
@@ -196,7 +211,7 @@ export function Footer({ data }: { data?: any } = {}) {
               <div className="flex flex-col">
                 <div className="relative h-8 sm:h-9 w-32 sm:w-36 transition-transform ">
                   <Image
-                    src="/images/lovixa-logo-white.webp"
+                    src={logoUrl}
                     alt="LOVIXA COSMETIC"
                     fill
                     className="object-contain object-left"
@@ -207,7 +222,7 @@ export function Footer({ data }: { data?: any } = {}) {
             </Link>
 
             <p className="text-[13px] font-bold text-[#FBF6F8]/80 leading-snug max-w-[210px] pt-1 font-sans">
-              Get exclusive offers and updates from Lovixa
+              {footerTagline}
             </p>
 
             <div className="pt-2 space-y-1.5 text-xs text-[#FBF6F8]/75 font-sans leading-relaxed">
@@ -360,7 +375,7 @@ export function Footer({ data }: { data?: any } = {}) {
               <div className="flex flex-col items-center text-center">
                 <FreeShippingIcon className="w-6 h-6 sm:w-7 sm:h-7 text-[#E8C4D4] mb-1.5 shrink-0" />
                 <span className="text-[10px] sm:text-[11px] font-bold text-[#FBF6F8] leading-tight">
-                  Free Shipping
+                  Fast Delivery
                 </span>
               </div>
               <div className="flex flex-col items-center text-center">
@@ -547,13 +562,13 @@ export function Footer({ data }: { data?: any } = {}) {
             </h4>
 
             <div className="flex items-center justify-center gap-5 text-[#FBF6F8]">
-              <a href="https://www.facebook.com/p/Lovixa-Harbel-Care-61574511437687/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href={facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <FacebookIcon className="w-5 h-5 hover:text-[#E8C4D4] transition-colors" />
               </a>
-              <a href="https://www.instagram.com/lovixa_cosmetic" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon className="w-5 h-5 hover:text-[#E8C4D4] transition-colors" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                 <YouTubeIcon className="w-5 h-5 hover:text-[#E8C4D4] transition-colors" />
               </a>
             </div>
@@ -563,7 +578,7 @@ export function Footer({ data }: { data?: any } = {}) {
               <div className="flex flex-col items-center text-center">
                 <FreeShippingIcon className="w-6 h-6 sm:w-7 sm:h-7 text-[#E8C4D4] mb-1.5 shrink-0" />
                 <span className="text-[10px] sm:text-[11px] font-bold text-[#FBF6F8] leading-tight">
-                  Free Shipping
+                  Fast Delivery
                 </span>
               </div>
               <div className="flex flex-col items-center text-center">
@@ -588,7 +603,7 @@ export function Footer({ data }: { data?: any } = {}) {
         {/* ========================================================== */}
         <div className="border-t border-[#3D2633] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-[#FBF6F8]/70">
           <p className="text-[11px] sm:text-xs text-center sm:text-left text-[#FBF6F8]/70">
-            &copy; 2026 Lovixa Cosmetics. All rights reserved.
+            {copyrightText}
           </p>
 
           {/* Authentic Payment Badges for UPI & Bank Transfer */}

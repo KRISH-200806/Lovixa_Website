@@ -155,8 +155,8 @@ export default function CosmeticHero() {
               <div className="flex items-center gap-3">
                 <span className="text-brand-500 text-xl flex-shrink-0">🚚</span>
                 <div>
-                  <h4 className="text-body-xs font-semibold text-foreground">Free Express Shipping</h4>
-                  <p className="text-[11px] text-neutral-500">On all orders ₹499+</p>
+                  <h4 className="text-body-xs font-semibold text-foreground">Pan-India Delivery</h4>
+                  <p className="text-[11px] text-neutral-500">Fast &amp; Tracked Courier</p>
                 </div>
               </div>
             </div>
@@ -216,7 +216,7 @@ export default function CosmeticHero() {
                 </div>
                 <div className="flex items-center gap-2 text-left">
                   <span className="text-brand-500 text-lg">🚚</span>
-                  <span className="text-body-xs text-neutral-500 font-medium">Free Delivery ₹499+</span>
+                  <span className="text-body-xs text-neutral-500 font-medium">Pan-India Delivery</span>
                 </div>
               </div>
             </div>

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: '%s | LOVIXA COSMETIC',
   },
   description:
-    'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+    'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.',
   keywords: [
     'LOVIXA',
     'LOVIXA COSMETIC',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
     description:
-      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.',
     url: 'https://www.lovixacosmetic.com',
     siteName: 'LOVIXA COSMETIC',
     locale: 'en_IN',
@@ -69,24 +69,69 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'LOVIXA COSMETIC | Embrace Your Natural Beauty • Botanical Hair Care',
     description:
-      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Free Pan-India Delivery.',
+      'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml).',
     images: ['https://www.lovixacosmetic.com/images/lovixa-og.jpg'],
   },
 }
 
-export default function StoreLayout({
+import Script from 'next/script'
+import { getStorefrontSEOSettings } from '@/lib/cms/products'
+import { getStoreSettings } from '@/lib/cms/queries'
+
+export default async function StoreLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [seo, storeSettings] = await Promise.all([
+    getStorefrontSEOSettings(),
+    getStoreSettings(),
+  ])
+
   return (
     <html lang="en" className={outfit.variable} suppressHydrationWarning>
       <body
         suppressHydrationWarning
         className={`${outfit.className} min-h-screen flex flex-col bg-[#FBF6F8] text-[#2B1822] antialiased selection:bg-[#6B2D5C] selection:text-white`}
       >
+        {/* Dynamic Google Analytics (GA4) */}
+        {seo.googleAnalyticsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${seo.googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${seo.googleAnalyticsId}');
+              `}
+            </Script>
+          </>
+        )}
+
+        {/* Dynamic Meta Pixel */}
+        {seo.metaPixelId && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${seo.metaPixelId}');
+              fbq('track', 'PageView');
+            `}
+          </Script>
+        )}
+
         <AuthProvider>
-          <StoreSettingsProvider>
+          <StoreSettingsProvider initialSettings={storeSettings as any}>
             <AnnouncementBar />
             <Header />
             <main className="flex-1">{children}</main>

@@ -27,7 +27,7 @@ export const SEOSettings: GlobalConfig = {
       name: 'defaultMetaDescription',
       type: 'textarea',
       required: true,
-      defaultValue: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.',
+      defaultValue: 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.',
       label: 'Default Meta Description',
     },
     {
@@ -60,6 +60,27 @@ export const SEOSettings: GlobalConfig = {
       name: 'bingVerification',
       type: 'text',
       label: 'Bing Webmaster Tools Verification Token',
+    },
+    {
+      name: 'googleAnalyticsId',
+      type: 'text',
+      label: 'Google Analytics 4 Measurement ID (e.g. G-XXXXXXXXXX)',
+      admin: {
+        description: 'Enables automatic GA4 pageview tracking when set.',
+      },
+    },
+    {
+      name: 'googleTagManagerId',
+      type: 'text',
+      label: 'Google Tag Manager Container ID (e.g. GTM-XXXXXXX)',
+    },
+    {
+      name: 'metaPixelId',
+      type: 'text',
+      label: 'Meta / Facebook Pixel ID (e.g. 123456789012345)',
+      admin: {
+        description: 'Enables Meta Pixel conversion tracking when set.',
+      },
     },
     {
       name: 'organization',

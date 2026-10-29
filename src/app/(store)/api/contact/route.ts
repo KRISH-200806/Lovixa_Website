@@ -35,6 +35,7 @@ export async function POST(req: Request) {
         collection: 'form-submissions',
         data: {
           formType: 'contact',
+          status: 'new',
           name: name.trim(),
           email: email.toLowerCase().trim(),
           phone: typeof phone === 'string' ? phone.trim() : '',

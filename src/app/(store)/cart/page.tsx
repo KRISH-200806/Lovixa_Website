@@ -334,7 +334,7 @@ export default function CartPage() {
                   {taxConfig?.enabled !== false && (
                     <div className="flex justify-between text-xs text-stone-500">
                       <span>
-                        {taxConfig?.taxLabel || 'GST'} ({taxConfig?.ratePercentage || 18}%)
+                        GST ({taxConfig?.ratePercentage || 18}%)
                       </span>
                       <span className="font-medium text-[#2B1822]">
                         {taxConfig?.pricesIncludeTax !== false

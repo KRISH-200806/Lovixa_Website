@@ -27,6 +27,13 @@ export interface ContactSocialLink {
   url: string
 }
 
+export interface FAQItem {
+  id?: string
+  question: string
+  answer: string
+  category?: 'all' | 'products' | 'usage' | 'orders' | 'shipping' | string
+}
+
 export interface PageDocument {
   id: string
   title: string
@@ -40,6 +47,7 @@ export interface PageDocument {
   lastUpdated?: string
   content?: any
   sections?: PageSection[]
+  faqItems?: FAQItem[]
   aboutStory?: {
     editorialPurposeBadge?: string
     editorialHeading?: string
@@ -77,9 +85,18 @@ export interface PageDocument {
 
 /**
  * Fetch a published Page from Payload CMS by its slug.
- * Cached with tags: ['pages', `page-${slug}`]
+ * Supports slug aliases (e.g. about/our-story, terms/terms-conditions, refund/return-refund).
+ * Revalidates within seconds so admin edits show up immediately on the storefront.
  */
 export async function getPageBySlug(slug: string): Promise<PageDocument | null> {
+  const targetSlugs = [slug]
+  if (slug === 'about') targetSlugs.push('our-story')
+  if (slug === 'our-story') targetSlugs.push('about')
+  if (slug === 'terms') targetSlugs.push('terms-conditions')
+  if (slug === 'terms-conditions') targetSlugs.push('terms')
+  if (slug === 'refund-policy') targetSlugs.push('return-refund-policy')
+  if (slug === 'return-refund-policy') targetSlugs.push('refund-policy')
+
   return unstable_cache(
     async () => {
       try {
@@ -88,7 +105,7 @@ export async function getPageBySlug(slug: string): Promise<PageDocument | null> 
           collection: 'pages',
           where: {
             and: [
-              { slug: { equals: slug } },
+              { slug: { in: targetSlugs } },
               { isPublished: { not_equals: false } },
             ],
           },
@@ -108,8 +125,8 @@ export async function getPageBySlug(slug: string): Promise<PageDocument | null> 
     },
     [`cms-page-${slug}`],
     {
-      tags: ['pages', `page-${slug}`],
-      revalidate: CMS_CACHE_REVALIDATE_SECONDS,
+      tags: ['pages', `page-${slug}`, ...targetSlugs.map((s) => `page-${s}`)],
+      revalidate: 5,
     },
   )()
 }

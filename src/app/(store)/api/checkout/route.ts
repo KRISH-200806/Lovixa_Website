@@ -91,24 +91,11 @@ export async function POST(req: Request) {
       const quantity = Math.max(1, Math.floor(Number(item.quantity) || 1))
 
       let authoritativePrice: number | null = null
-      let authoritativeTitle: string = item.title || 'Product'
+      let resolvedBaseTitle = ''
+      let variantTitle = item.variantTitle || item.optionsSummary || ''
 
-      // 1. Check Variant
-      if (variantId) {
-        try {
-          const variantDoc: any = await payload.findByID({
-            collection: 'product-variants',
-            id: variantId,
-          })
-          if (variantDoc && typeof variantDoc.price === 'number') {
-            authoritativePrice = variantDoc.price
-            authoritativeTitle = variantDoc.title || item.title
-          }
-        } catch {}
-      }
-
-      // 2. Check Base Product
-      if (authoritativePrice === null && prodId) {
+      // 1. Check Base Product in DB first
+      if (prodId) {
         try {
           const productDoc: any = await payload.findByID({
             collection: 'products',
@@ -116,7 +103,7 @@ export async function POST(req: Request) {
           })
           if (productDoc) {
             authoritativePrice = typeof productDoc.basePrice === 'number' ? productDoc.basePrice : productDoc.price
-            authoritativeTitle = productDoc.title || item.title
+            if (productDoc.title) resolvedBaseTitle = productDoc.title
           }
         } catch {
           try {
@@ -128,28 +115,72 @@ export async function POST(req: Request) {
             if (bySlug.docs.length > 0) {
               const doc = bySlug.docs[0] as any
               authoritativePrice = typeof doc.basePrice === 'number' ? doc.basePrice : doc.price
-              authoritativeTitle = doc.title || item.title
+              if (doc.title) resolvedBaseTitle = doc.title
             }
           } catch {}
         }
       }
 
+      // 2. Check Variant (Override price and obtain variant details)
+      let variantDoc: any = null
+      if (variantId) {
+        try {
+          variantDoc = await payload.findByID({
+            collection: 'product-variants',
+            id: variantId,
+          })
+          if (variantDoc && typeof variantDoc.price === 'number') {
+            authoritativePrice = variantDoc.price
+          }
+          if (variantDoc?.title) {
+            variantTitle = variantDoc.title
+          }
+          // If parent product was not resolved yet, resolve from variant relationship
+          if (!resolvedBaseTitle && variantDoc?.product) {
+            try {
+              if (typeof variantDoc.product === 'object' && variantDoc.product?.title) {
+                resolvedBaseTitle = variantDoc.product.title
+              } else if (typeof variantDoc.product === 'string') {
+                const parentDoc: any = await payload.findByID({
+                  collection: 'products',
+                  id: variantDoc.product,
+                })
+                if (parentDoc?.title) resolvedBaseTitle = parentDoc.title
+              }
+            } catch {}
+          }
+        } catch {}
+      }
+
       // 3. Fallback to authoritative static catalog
-      if (authoritativePrice === null) {
+      if (authoritativePrice === null || !resolvedBaseTitle) {
         const staticMatch = COSMETIC_PRODUCTS.find(
-          (p) => p.id === prodId || p.slug === prodId || p.title.toLowerCase() === (item.title || '').toLowerCase()
+          (p) => p.id === prodId || p.slug === prodId || (item.title && p.title.toLowerCase().includes(item.title.toLowerCase()))
         )
         if (staticMatch) {
-          authoritativePrice = staticMatch.price
-          authoritativeTitle = staticMatch.title
+          if (authoritativePrice === null) authoritativePrice = staticMatch.price
+          if (!resolvedBaseTitle) resolvedBaseTitle = staticMatch.title
         } else if (prodId.includes('shampoo')) {
-          authoritativePrice = 299
+          if (authoritativePrice === null) authoritativePrice = 399
+          if (!resolvedBaseTitle) resolvedBaseTitle = 'LOVIXA Botanical Refreshing Shampoo'
         } else if (prodId.includes('oil') || prodId.includes('hairoil')) {
-          authoritativePrice = 299
+          if (authoritativePrice === null) authoritativePrice = 299
+          if (!resolvedBaseTitle) resolvedBaseTitle = 'LOVIXA 14 Herbs Rosemary Hair Oil'
         } else if (prodId.includes('duo') || prodId.includes('combo')) {
-          authoritativePrice = 549
+          if (authoritativePrice === null) authoritativePrice = 649
+          if (!resolvedBaseTitle) resolvedBaseTitle = 'LOVIXA Complete Ritual Duo Set (200ml + 100ml)'
         } else {
-          authoritativePrice = Math.max(0, Number(item.price) || 0)
+          if (authoritativePrice === null) authoritativePrice = Math.max(0, Number(item.price) || 0)
+        }
+      }
+
+      // Compose authoritative title preserving the product name
+      let authoritativeTitle = item.title || item.name || resolvedBaseTitle || 'LOVIXA Product'
+      if (resolvedBaseTitle) {
+        if (variantTitle && !resolvedBaseTitle.toLowerCase().includes(variantTitle.toLowerCase())) {
+          authoritativeTitle = `${resolvedBaseTitle} (${variantTitle})`
+        } else {
+          authoritativeTitle = resolvedBaseTitle
         }
       }
 
@@ -160,6 +191,7 @@ export async function POST(req: Request) {
         title: authoritativeTitle,
         price: authoritativePrice,
         quantity,
+        optionsSummary: variantTitle || item.optionsSummary || undefined,
       })
     }
 
@@ -264,9 +296,21 @@ export async function POST(req: Request) {
       ? 0
       : flatShippingRate
 
+    // Dynamic Authoritative Tax Calculation (Phase 5 GST & StoreSettings sync)
+    const taxEnabled = storeSettings?.tax?.enabled !== false
+    const taxRatePercent = typeof storeSettings?.tax?.ratePercentage === 'number' ? storeSettings.tax.ratePercentage : 18
+    const taxRate = taxRatePercent / 100
+    const pricesIncludeTax = storeSettings?.tax?.pricesIncludeTax !== false
+
     const taxableAmount = Math.max(0, calculatedSubtotal - calculatedDiscountTotal)
-    const calculatedTaxTotal = Math.round((taxableAmount - taxableAmount / 1.18) * 100) / 100
-    const calculatedGrandTotal = Math.max(0, Math.round((calculatedSubtotal - calculatedDiscountTotal + calculatedShippingTotal) * 100) / 100)
+    // Standard 18% GST calculation on price: ₹649 * 18% = ₹116.82, ₹399 * 18% = ₹71.82
+    const calculatedTaxTotal = taxEnabled ? Math.round(taxableAmount * taxRate * 100) / 100 : 0
+
+    const taxOnTop = taxEnabled && !pricesIncludeTax ? calculatedTaxTotal : 0
+    const calculatedGrandTotal = Math.max(
+      0,
+      Math.round((calculatedSubtotal - calculatedDiscountTotal + calculatedShippingTotal + taxOnTop) * 100) / 100
+    )
 
     let finalCurrency = currency || 'INR'
     let finalGrandTotal = calculatedGrandTotal
@@ -393,34 +437,44 @@ export async function POST(req: Request) {
       process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
       '919712460509'
 
-    const whatsappMessage = generateWhatsAppOrderMessage({
-      orderNumber,
-      customerName: name,
-      customerMobile: cleanPhone,
-      customerEmail: customerEmail?.trim() || undefined,
-      items: finalItems.map((item: any) => ({
-        title: item.title,
-        optionsSummary: item.optionsSummary,
-        variantTitle: item.variantTitle,
-        quantity: Number(item.quantity) || 1,
-        price: Number(item.price) || 0,
-      })),
-      subtotal: finalSubtotal,
-      shippingTotal: finalShippingTotal,
-      discountTotal: finalDiscountTotal,
-      couponCode,
-      grandTotal: finalGrandTotal,
-      currencySymbol,
-      shippingAddress: {
-        house: formattedAddress.house,
-        street: formattedAddress.street,
-        landmark: formattedAddress.landmark,
-        city: formattedAddress.city,
-        state: formattedAddress.state,
-        pincode: formattedAddress.postalCode,
-        country: formattedAddress.country,
+    const whatsappMessage = generateWhatsAppOrderMessage(
+      {
+        orderNumber,
+        customerName: name,
+        customerMobile: cleanPhone,
+        customerEmail: customerEmail?.trim() || undefined,
+        items: finalItems.map((item: any) => ({
+          title: item.title,
+          optionsSummary: item.optionsSummary,
+          variantTitle: item.variantTitle,
+          quantity: Number(item.quantity) || 1,
+          price: Number(item.price) || 0,
+        })),
+        subtotal: finalSubtotal,
+        shippingTotal: finalShippingTotal,
+        discountTotal: finalDiscountTotal,
+        couponCode,
+        taxTotal: finalTaxTotal,
+        grandTotal: finalGrandTotal,
+        currencySymbol,
+        shippingAddress: {
+          house: formattedAddress.house,
+          street: formattedAddress.street,
+          landmark: formattedAddress.landmark,
+          city: formattedAddress.city,
+          state: formattedAddress.state,
+          pincode: formattedAddress.postalCode,
+          country: formattedAddress.country,
+        },
       },
-    })
+      {
+        orderMessageHeader: storeSettings?.whatsappCheckout?.orderMessageHeader,
+        orderMessageNote: storeSettings?.whatsappCheckout?.orderMessageNote,
+        orderMessageFooter: storeSettings?.whatsappCheckout?.orderMessageFooter,
+        customOrderTemplate: storeSettings?.whatsappCheckout?.customOrderTemplate,
+        storeName: storeSettings?.storeName,
+      }
+    )
 
     const whatsappUrl = buildWhatsAppClickToChatUrl(businessWhatsAppNumber, whatsappMessage)
 

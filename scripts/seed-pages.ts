@@ -4,7 +4,7 @@ import config from '../src/payload.config'
 
 const SEED_PAGES = [
   {
-    title: 'Our Story & Philosophy',
+    title: 'About Us (Our Story & Philosophy)',
     slug: 'about',
     isPublished: true,
     badge: 'OUR PHILOSOPHY',
@@ -224,7 +224,7 @@ const SEED_PAGES = [
     },
   },
   {
-    title: 'Return & Replacement Policy',
+    title: 'Return & Refund Policy (Transit Replacement)',
     slug: 'return-refund-policy',
     isPublished: true,
     badge: 'PEACE OF MIND COMMITMENT',
@@ -258,6 +258,70 @@ const SEED_PAGES = [
       metaTitle: 'Return & Replacement Policy — LOVIXA COSMETIC',
       metaDescription: 'Understand the free transit damage replacement guidelines for LOVIXA products.',
       canonicalUrl: 'https://www.lovixacosmetic.com/return-refund-policy',
+    },
+  },
+  {
+    title: 'Frequently Asked Questions (FAQ)',
+    slug: 'faq',
+    isPublished: true,
+    badge: 'CLEAR & HONEST ANSWERS',
+    highlightTitle: 'Frequently Asked Questions',
+    subtitle: 'Everything you need to know about our hair care formulations, everyday rituals, ordering, and delivery.',
+    headerImageUrl: '/images/lovixa-hero-banner-products.jpg',
+    faqItems: [
+      {
+        category: 'products',
+        question: 'What products does LOVIXA currently offer?',
+        answer:
+          'LOVIXA currently offers two foundational hair care essentials: LOVIXA Shampoo (200ml) and LOVIXA Hair Oil (100ml). Both are available individually or together as our Complete Hair Care Ritual Duo. We focus with care on these core products before expanding into other cosmetic categories.',
+      },
+      {
+        category: 'usage',
+        question: 'How should I incorporate LOVIXA into my weekly hair routine?',
+        answer:
+          'There is no fixed 30-minute rule. You can apply LOVIXA Hair Oil whenever convenient for you—including applying it at night and sleeping with it on for deep overnight nourishment. Whenever applying oil, gently massage into your scalp and hair roots. Wash your hair on alternate days (every other day / એક મૂકીને એક દિવસે) with LOVIXA Botanical Refreshing Shampoo to keep your scalp clean, nourished, and residue-free.',
+      },
+      {
+        category: 'products',
+        question: 'Is LOVIXA Shampoo suitable for all hair types?',
+        answer:
+          'LOVIXA Botanical Shampoo is crafted with pure botanical extracts for natural hair wellness and everyday care. Important Note: It is NOT suitable for hair that has undergone chemical treatments such as Keratin treatments, Cysteine treatments, or chemical Hair Smoothening/Straightening. For all natural and non-chemically treated hair types, it gently cleanses without stripping essential oils.',
+      },
+      {
+        category: 'products',
+        question: 'Does LOVIXA Hair Oil feel heavy or greasy?',
+        answer:
+          'No. Our botanical lipid formulation is lightweight and non-comedogenic. It absorbs smoothly into the hair shaft and rinses out completely with LOVIXA Shampoo without leaving heavy or greasy residue.',
+      },
+      {
+        category: 'orders',
+        question: 'How does WhatsApp Checkout and payment work?',
+        answer:
+          'We offer a seamless, personal WhatsApp-based checkout. When you review your bag and submit your delivery address, your order details are sent to our official business WhatsApp (+91 97124 60509). Our team confirms your items and shares our verified UPI QR code (Google Pay, PhonePe, Paytm, BHIM) or Bank Transfer details. Once you share the payment screenshot, we verify and dispatch your order.',
+      },
+      {
+        category: 'shipping',
+        question: 'What are your delivery charges and timelines?',
+        answer:
+          'We provide reliable Pan-India delivery with live tracking. Orders are carefully packaged within 24 to 48 business hours from our certified botanical facility and reach your doorstep within 3 to 5 business days with live WhatsApp and SMS tracking updates.',
+      },
+      {
+        category: 'shipping',
+        question: 'What happens if my package arrives damaged in transit?',
+        answer:
+          'We take great care in packaging our amber bottles. In the rare event of transit damage or leakage, please take clear photos or video and send them via email at lovixacosmetic@gmail.com or via WhatsApp at +91 97124 60509 within 7 calendar days of delivery. Our customer team will promptly arrange a 100% free brand-new replacement bottle (monetary refunds are not provided).',
+      },
+      {
+        category: 'orders',
+        question: 'How can I track my order status?',
+        answer:
+          'Once your order is handed over to our courier partner, you will receive a confirmation message on WhatsApp and email containing your airway bill (AWB) tracking number and a direct tracking link.',
+      },
+    ],
+    seo: {
+      metaTitle: 'Frequently Asked Questions — LOVIXA COSMETIC',
+      metaDescription: 'Answers to your questions regarding LOVIXA Botanical Hair Care formulations, order tracking, WhatsApp checkout, and delivery.',
+      canonicalUrl: 'https://www.lovixacosmetic.com/faq',
     },
   },
 ]

@@ -3,14 +3,14 @@ import type { CollectionConfig } from 'payload'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {
-    singular: 'Store Page',
-    plural: 'Store Pages (Our Story, Contact & Policies)',
+    singular: 'Page & Policy',
+    plural: 'Pages & Policies (About, Privacy, Terms, Shipping, Return)',
   },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'isPublished', 'updatedAt'],
-    group: 'Website Content',
-    description: 'Manage Our Story, Contact Us, Terms & Conditions, Privacy Policy, Shipping Policy, and Return Policy',
+    group: 'Website Pages & Policies',
+    description: 'Edit content for About Us (Our Story), Privacy Policy, Terms & Conditions, Shipping Policy, Return & Refund Policy, FAQ, and Contact Us',
   },
   access: {
     read: () => true,
@@ -157,7 +157,7 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
-          label: 'About Story Details',
+          label: 'About Us Page Story & Content',
           admin: {
             condition: (data) => data?.slug === 'about' || data?.slug === 'our-story',
           },
@@ -347,6 +347,46 @@ export const Pages: CollectionConfig = {
                       required: true,
                       label: 'Profile URL',
                     },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'FAQ Accordions',
+          fields: [
+            {
+              name: 'faqItems',
+              type: 'array',
+              label: 'Frequently Asked Questions',
+              admin: {
+                description: 'Manage Q&A items for this page (e.g. /faq or policy questions).',
+              },
+              fields: [
+                {
+                  name: 'question',
+                  type: 'text',
+                  required: true,
+                  label: 'Question',
+                },
+                {
+                  name: 'answer',
+                  type: 'textarea',
+                  required: true,
+                  label: 'Answer',
+                },
+                {
+                  name: 'category',
+                  type: 'select',
+                  label: 'Category',
+                  defaultValue: 'all',
+                  options: [
+                    { label: 'General / All', value: 'all' },
+                    { label: 'Products & Ingredients', value: 'products' },
+                    { label: 'Usage & Rituals', value: 'usage' },
+                    { label: 'Orders & Payments', value: 'orders' },
+                    { label: 'Shipping & Delivery', value: 'shipping' },
                   ],
                 },
               ],

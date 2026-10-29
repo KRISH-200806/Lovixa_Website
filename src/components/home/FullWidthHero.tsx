@@ -260,7 +260,7 @@ export function FullWidthHero({ slides }: { slides?: StorefrontHeroSlide[] }) {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#6B2D5C] shrink-0" />
-                <span className="font-semibold">Free Express Delivery $60+</span>
+                <span className="font-semibold">Pan-India Express Delivery</span>
               </div>
             </div>
 

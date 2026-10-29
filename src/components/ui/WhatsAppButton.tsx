@@ -1,16 +1,45 @@
 'use client'
 
-export function WhatsAppButton() {
-  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919712460509'
+import { useStoreSettings } from '@/components/providers/StoreSettingsProvider'
 
-  const message = encodeURIComponent('Hello LOVIXA! I would like to know more about your hair care essentials.')
+export function WhatsAppButton() {
+  const settings = useStoreSettings()
+
+  // Allow admin to toggle floating WhatsApp icon on/off
+  const isEnabled = settings?.whatsappCheckout?.floatingIconEnabled !== false
+  if (!isEnabled) {
+    return null
+  }
+
+  const rawNumber =
+    settings?.whatsappCheckout?.floatingIconNumber ||
+    settings?.whatsappCheckout?.businessNumber ||
+    settings?.contact?.whatsappNumber ||
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
+    '919712460509'
+
+  let cleanNumber = rawNumber.replace(/[^0-9]/g, '')
+  if (cleanNumber.length === 10) {
+    cleanNumber = `91${cleanNumber}`
+  }
+
+  const rawMessage =
+    settings?.whatsappCheckout?.floatingIconMessage ||
+    'Hello LOVIXA! I would like to know more about your hair care essentials.'
+
+  const tooltip =
+    settings?.whatsappCheckout?.floatingIconTooltip ||
+    'Chat with LOVIXA on WhatsApp'
+
+  const message = encodeURIComponent(rawMessage)
 
   return (
     <a
-      href={`https://wa.me/${phoneNumber}?text=${message}`}
+      href={`https://wa.me/${cleanNumber}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with LOVIXA on WhatsApp"
+      aria-label={tooltip}
+      title={tooltip}
       className="fixed bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer"
     >
       <svg

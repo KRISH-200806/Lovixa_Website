@@ -23,7 +23,7 @@ export function LovixaPromoBanner({ data }: Props) {
     'Combine our Botanical Cleanser and Cold-Pressed Scalp Elixir for lasting flake defense, root strength, and mirror gloss'
   const badge = data?.badge || 'SIGNATURE CEREMONY SET'
   const ritualTitle = data?.ritualTitle || 'TWO-STEP RESTORATIVE CEREMONY'
-  const productTitle = data?.productTitle || 'Botanical Shampoo (500ml) + Hair Oil (50ml)'
+  const productTitle = data?.productTitle || 'Botanical Shampoo (200ml) + Hair Oil (100ml)'
   const description =
     data?.description ||
     'The ultimate Ayurvedic hair ritual. Deeply purifies scalp pores with gentle plant surfactants while locking in root nutrients for lasting softness and hair fall resistance.'
@@ -40,7 +40,7 @@ export function LovixaPromoBanner({ data }: Props) {
   const discountTag = data?.discountTag || 'Save 21%'
   const ctaText = data?.ctaText || 'ADD COMPLETE DUO TO BAG'
   const image = data?.image || '/images/lovixa-duo.jpg'
-  const freeShippingText = data?.freeShippingText || 'Free Shipping Included'
+  const shippingText = 'Pan-India Express Dispatch'
   const trustText = data?.trustText || '100% Authentic Ayurvedic'
 
   const duoProduct = {
@@ -61,7 +61,7 @@ export function LovixaPromoBanner({ data }: Props) {
       quantity: 1,
       image: duoProduct.image,
       slug: duoProduct.slug,
-      optionsSummary: '500ml Shampoo + 50ml Hair Oil',
+      optionsSummary: '200ml Shampoo + 100ml Hair Oil',
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
@@ -101,7 +101,7 @@ export function LovixaPromoBanner({ data }: Props) {
                 </div>
 
                 <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-[#E8C4D4]/40 text-[11px] font-bold text-[#2B1822] shadow-xs">
-                  500ml + 50ml Duo Set
+                  200ml + 100ml Duo Set
                 </div>
               </div>
             </div>
@@ -176,7 +176,7 @@ export function LovixaPromoBanner({ data }: Props) {
                 <div className="mt-3 flex items-center justify-center sm:justify-start gap-4 text-[11px] text-[#2B1822]/60 font-sans">
                   <span className="flex items-center gap-1">
                     <Truck className="w-3.5 h-3.5 text-[#6B2D5C]" />
-                    <span>{freeShippingText}</span>
+                    <span>{shippingText}</span>
                   </span>
                   <span>•</span>
                   <span className="flex items-center gap-1">

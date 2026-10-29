@@ -18,7 +18,7 @@ export function LovixaProductSpotlight() {
     slug: 'lovixa-hair-oil',
     price: 28.0,
     compareAtPrice: 32.0,
-    size: '50ml | 1.69 fl. oz',
+    size: '100ml | 3.38 fl. oz',
     image: '/images/lovixa-hairoil.jpg',
   }
 
@@ -51,7 +51,7 @@ export function LovixaProductSpotlight() {
             <div className="relative mx-auto max-w-md lg:max-w-none rounded-3xl sm:rounded-[2.5rem] overflow-hidden bg-white border-4 border-white shadow-2xl aspect-square sm:aspect-[4/3] lg:aspect-[5/6]">
               <Image
                 src={product.image}
-                alt="LOVIXA Hair Oil Bottle on Travertine Stone"
+                alt="LOVIXA 14 Herbs Rosemary Hair Oil 100ml"
                 fill
                 priority
                 className="object-cover hover:scale-105 transition-transform duration-700"
@@ -60,7 +60,7 @@ export function LovixaProductSpotlight() {
 
               <div className="absolute top-4 left-4 z-10">
                 <span className="px-3.5 py-1 rounded-full bg-[#2B1822]/90 backdrop-blur-md text-white text-[10px] font-bold tracking-widest uppercase">
-                  BESTSELLER • 50ML
+                  BESTSELLER • 100ML
                 </span>
               </div>
             </div>

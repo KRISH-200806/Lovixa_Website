@@ -31,6 +31,15 @@ export interface StoreSettingsData {
   whatsappCheckout?: {
     enabled?: boolean
     businessNumber?: string
+    orderMessageHeader?: string
+    orderMessageNote?: string
+    orderMessageFooter?: string
+    customOrderTemplate?: string
+    orderSuccessMessage?: string
+    floatingIconEnabled?: boolean
+    floatingIconNumber?: string
+    floatingIconMessage?: string
+    floatingIconTooltip?: string
     upiId?: string
     bankDetails?: string
     privacyNotice?: string
@@ -47,12 +56,27 @@ export interface StoreSettingsData {
     enableRazorpay?: boolean
     enableCashOnDelivery?: boolean
   }
+  branding?: {
+    logo?: any
+    logoUrl?: string
+    logoAlt?: string
+    copyrightText?: string
+    footerTagline?: string
+  }
   contact?: {
     phone?: string
     supportHours?: string
     email?: string
     address?: string
+    whatsappNumber?: string
+    googleMapsEmbedUrl?: string
+    googleMapsShareLink?: string
   }
+  socialLinks?: Array<{
+    platform: string
+    url: string
+    label?: string
+  }>
 }
 
 export interface StoreSettingsContextValue {

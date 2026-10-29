@@ -15,6 +15,7 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
+import { useStoreSettings } from '@/components/providers/StoreSettingsProvider'
 
 function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
@@ -63,16 +64,29 @@ function SuccessContent() {
       .catch((err) => console.warn('Could not fetch order from server:', err))
   }, [orderId, tokenFromUrl])
 
-  const businessNumber =
+  const storeSettings = useStoreSettings()
+
+  const rawBusinessNumber =
     orderSnapshot?.businessNumber ||
+    storeSettings?.whatsappCheckout?.businessNumber ||
+    storeSettings?.contact?.whatsappNumber ||
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
     '919712460509'
 
+  let cleanBusinessNumber = rawBusinessNumber.replace(/[^0-9]/g, '')
+  if (cleanBusinessNumber.length === 10) {
+    cleanBusinessNumber = `91${cleanBusinessNumber}`
+  }
+
+  const successMessageTemplate =
+    storeSettings?.whatsappCheckout?.orderSuccessMessage ||
+    'Hello LOVIXA! I have placed order #{orderNumber}. Please confirm product availability and payment instructions.'
+
+  const dynamicFallbackMessage = successMessageTemplate.replace(/\{orderNumber\}/g, orderId || '')
+
   const whatsappUrl =
     orderSnapshot?.whatsappUrl ||
-    `https://wa.me/${businessNumber}?text=${encodeURIComponent(
-      `Hello LOVIXA! I have placed order #${orderId}. Please confirm product availability and payment instructions.`
-    )}`
+    `https://wa.me/${cleanBusinessNumber}?text=${encodeURIComponent(dynamicFallbackMessage)}`
 
   const orderStatus = liveOrder?.orderStatus || 'awaiting_confirmation'
   const isPaid = liveOrder?.paymentStatus === 'paid'

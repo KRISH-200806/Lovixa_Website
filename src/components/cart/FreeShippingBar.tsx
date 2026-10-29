@@ -40,8 +40,8 @@ export function FreeShippingBar({
 
   const isEnabled =
     settings?.shipping?.freeShippingEnabled !== undefined
-      ? settings.shipping.freeShippingEnabled
-      : shippingConfig?.freeShippingEnabled !== false
+      ? Boolean(settings.shipping.freeShippingEnabled)
+      : Boolean(shippingConfig?.freeShippingEnabled)
 
   if (!isEnabled) return null
 

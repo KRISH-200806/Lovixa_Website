@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteDescription =
     seo.defaultMetaDescription && !seo.defaultMetaDescription.includes('launching soon')
       ? seo.defaultMetaDescription
-      : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (500ml) & Nourishing Hair Oil (50ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair. Free Pan-India Delivery.'
+      : 'Discover LOVIXA Botanical Hair Care Essentials — Refreshing Botanical Shampoo (200ml) & Nourishing Hair Oil (100ml). Thoughtfully formulated with Rosemary, Eucalyptus & Cold-Pressed oils for healthier, radiant hair.'
   const canonicalUrl = seo.canonicalBaseUrl || 'https://www.lovixacosmetic.com'
   const ogImageUrl = `${canonicalUrl.replace(/\/$/, '')}/images/lovixa-og.jpg`
 
