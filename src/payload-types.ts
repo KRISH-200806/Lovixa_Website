@@ -644,7 +644,7 @@ export interface Page {
   id: string;
   title: string;
   /**
-   * Unique URL path (e.g. about, contact, terms-conditions, privacy-policy, shipping-policy, return-refund-policy)
+   * Unique URL path (e.g. about, contact, terms-conditions, privacy-policy, shipping-policy, return-refund-policy, faq)
    */
   slug: string;
   isPublished?: boolean | null;
@@ -673,7 +673,7 @@ export interface Page {
     [k: string]: unknown;
   } | null;
   /**
-   * Add numbered sections for terms, privacy, shipping, or returns policies.
+   * Add or edit numbered sections for terms, privacy, shipping, returns, or story.
    */
   sections?:
     | {
@@ -692,6 +692,13 @@ export interface Page {
     storyParagraph2?: string | null;
     storyImage?: (string | null) | Media;
     storyImageUrl?: string | null;
+    storyButtonText?: string | null;
+    storyButtonLink?: string | null;
+    storySecondaryButtonText?: string | null;
+    storySecondaryButtonLink?: string | null;
+    pillarsBadge?: string | null;
+    pillarsHeading?: string | null;
+    pillarsSubtitle?: string | null;
     brandPillars?:
       | {
           iconType?: ('leaf' | 'shield' | 'sparkles' | 'heart') | null;
@@ -707,6 +714,13 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    showcaseImage?: (string | null) | Media;
+    showcaseImageUrl?: string | null;
+    ctaBadge?: string | null;
+    ctaHeading?: string | null;
+    ctaSubtitle?: string | null;
+    ctaButtonText?: string | null;
+    ctaButtonLink?: string | null;
   };
   contactInfo?: {
     phone?: string | null;
@@ -1520,6 +1534,13 @@ export interface PagesSelect<T extends boolean = true> {
         storyParagraph2?: T;
         storyImage?: T;
         storyImageUrl?: T;
+        storyButtonText?: T;
+        storyButtonLink?: T;
+        storySecondaryButtonText?: T;
+        storySecondaryButtonLink?: T;
+        pillarsBadge?: T;
+        pillarsHeading?: T;
+        pillarsSubtitle?: T;
         brandPillars?:
           | T
           | {
@@ -1535,6 +1556,13 @@ export interface PagesSelect<T extends boolean = true> {
               desc?: T;
               id?: T;
             };
+        showcaseImage?: T;
+        showcaseImageUrl?: T;
+        ctaBadge?: T;
+        ctaHeading?: T;
+        ctaSubtitle?: T;
+        ctaButtonText?: T;
+        ctaButtonLink?: T;
       };
   contactInfo?:
     | T

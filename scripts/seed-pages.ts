@@ -20,6 +20,21 @@ const SEED_PAGES = [
       storyParagraph1: "We believe your beauty routine shouldn't feel complicated. Whether it is our rosemary-infused botanical shampoo, cold-pressed hair oil, or gentle daily skin essentials, each LOVIXA formula is created to wash cleanly, moisturize deeply, and feel wonderful on your body.",
       storyParagraph2: 'We focus on what matters most: gentle cleansing agents, nourishing plant oils, balanced pH levels, and clear usage guidance so you can care for yourself with complete peace of mind.',
       storyImageUrl: '/images/about-follower.webp',
+      storyButtonText: 'Explore Collection',
+      storyButtonLink: '/products',
+      storySecondaryButtonText: 'Get in Touch',
+      storySecondaryButtonLink: '/contact',
+      pillarsBadge: 'OUR COMMITMENTS',
+      pillarsHeading: 'What Guides Every Formula',
+      pillarsSubtitle:
+        'Honest beauty care based on transparency, botanical integrity, and respectful customer relationships.',
+      showcaseImageUrl: '/images/about-all-products.webp',
+      ctaBadge: 'HERE FOR YOU',
+      ctaHeading: 'Have a Question About Our Formulations?',
+      ctaSubtitle:
+        'Our customer concierge team is available to assist you with product details, order inquiries, and care recommendations.',
+      ctaButtonText: 'Contact Concierge',
+      ctaButtonLink: '/contact',
       brandPillars: [
         {
           iconType: 'leaf',

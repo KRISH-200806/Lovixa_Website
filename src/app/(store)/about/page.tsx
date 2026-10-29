@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ArrowRight, Sparkles, Heart, ShieldCheck, Leaf } from 'lucide-react'
 import { PageHeaderBanner } from '@/components/common/PageHeaderBanner'
-import { getPageBySlug } from '@/lib/cms/pages'
+import { getPageBySlug, hasRichTextContent } from '@/lib/cms/pages'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 export const dynamic = 'force-dynamic'
@@ -41,6 +41,12 @@ export default async function AboutPage() {
     (typeof page?.aboutStory?.storyImage === 'object' && page?.aboutStory?.storyImage?.url) ||
     page?.aboutStory?.storyImageUrl ||
     '/images/about-follower.webp'
+
+  // Resolve Showcase Banner Image
+  const showcaseImg =
+    (typeof page?.aboutStory?.showcaseImage === 'object' && page?.aboutStory?.showcaseImage?.url) ||
+    page?.aboutStory?.showcaseImageUrl ||
+    '/images/about-all-products.webp'
 
   // Brand Pillars from CMS or default
   const brandPillars =
@@ -144,21 +150,21 @@ export default async function AboutPage() {
 
               <div className="pt-4 flex flex-wrap gap-4">
                 <Link
-                  href="/products"
+                  href={page?.aboutStory?.storyButtonLink || '/products'}
                   prefetch={true}
                   scroll={true}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-sm font-sans"
                 >
-                  <span>Explore Collection</span>
+                  <span>{page?.aboutStory?.storyButtonText || 'Explore Collection'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href={page?.aboutStory?.storySecondaryButtonLink || '/contact'}
                   prefetch={true}
                   scroll={true}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white hover:bg-[#FBF6F8] text-[#2B1822] border border-[#E8C4D4]/60 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors font-sans"
                 >
-                  <span>Get in Touch</span>
+                  <span>{page?.aboutStory?.storySecondaryButtonText || 'Get in Touch'}</span>
                 </Link>
               </div>
             </div>
@@ -171,13 +177,14 @@ export default async function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-[#6B2D5C] font-sans">
-              OUR COMMITMENTS
+              {page?.aboutStory?.pillarsBadge || 'OUR COMMITMENTS'}
             </span>
             <h2 className="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] tracking-tight">
-              What Guides Every Formula
+              {page?.aboutStory?.pillarsHeading || 'What Guides Every Formula'}
             </h2>
             <p className="text-xs sm:text-sm text-[#2B1822]/70 font-sans">
-              Honest beauty care based on transparency, botanical integrity, and respectful customer relationships.
+              {page?.aboutStory?.pillarsSubtitle ||
+                'Honest beauty care based on transparency, botanical integrity, and respectful customer relationships.'}
             </p>
           </div>
 
@@ -219,7 +226,7 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Structured Policy / Story Sections if populated */}
+      {/* Structured Custom Sections if populated */}
       {page?.sections && page.sections.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           {page.sections.map((sec, idx) => (
@@ -234,10 +241,10 @@ export default async function AboutPage() {
       )}
 
       {/* WYSIWYG Content if populated */}
-      {page?.content && (
+      {hasRichTextContent(page?.content) && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="bg-white rounded-2xl border border-[#E8C4D4]/60 p-8 sm:p-12 shadow-xs prose prose-stone max-w-none font-sans">
-            <RichText data={page.content} />
+            <RichText data={page!.content} />
           </div>
         </section>
       )}
@@ -246,7 +253,7 @@ export default async function AboutPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="relative w-full aspect-[2.4/1] sm:aspect-[3.2/1] rounded-3xl overflow-hidden shadow-sm border border-[#E8C4D4]/50">
           <Image
-            src="/images/about-all-products.webp"
+            src={showcaseImg}
             alt="LOVIXA Botanical Formulations Showcase"
             fill
             className="object-cover object-center"
@@ -259,22 +266,23 @@ export default async function AboutPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-28 text-center">
         <div className="bg-[#E8C4D4]/25 border border-[#E8C4D4]/60 rounded-3xl p-10 sm:p-14 space-y-6">
           <span className="text-xs uppercase tracking-widest text-[#6B2D5C] font-bold font-sans">
-            HERE FOR YOU
+            {page?.aboutStory?.ctaBadge || 'HERE FOR YOU'}
           </span>
           <h2 className="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#2B1822] tracking-tight">
-            Have a Question About Our Formulations?
+            {page?.aboutStory?.ctaHeading || 'Have a Question About Our Formulations?'}
           </h2>
           <p className="text-xs sm:text-sm text-[#2B1822]/70 max-w-xl mx-auto font-sans leading-relaxed">
-            Our customer concierge team is available to assist you with product details, order inquiries, and care recommendations.
+            {page?.aboutStory?.ctaSubtitle ||
+              'Our customer concierge team is available to assist you with product details, order inquiries, and care recommendations.'}
           </p>
           <div>
             <Link
-              href="/contact"
+              href={page?.aboutStory?.ctaButtonLink || '/contact'}
               prefetch={true}
               scroll={true}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#6B2D5C] hover:bg-[#562349] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-sm font-sans"
             >
-              <span>Contact Concierge</span>
+              <span>{page?.aboutStory?.ctaButtonText || 'Contact Concierge'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

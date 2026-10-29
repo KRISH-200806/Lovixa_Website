@@ -4,7 +4,7 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {
     singular: 'Page & Policy',
-    plural: 'Pages & Policies (About, Privacy, Terms, Shipping, Return)',
+    plural: 'Pages & Policies (About, Privacy, Terms, Shipping, Return, FAQ, Contact)',
   },
   admin: {
     useAsTitle: 'title',
@@ -23,21 +23,27 @@ export const Pages: CollectionConfig = {
       async ({ doc, previousDoc }) => {
         try {
           const { revalidatePath, revalidateTag } = await import('next/cache')
-          if (doc?.slug) {
-            revalidatePath(`/${doc.slug}`)
-            if (doc.slug === 'about') revalidatePath('/our-story')
-            if (doc.slug === 'our-story') revalidatePath('/about')
-            if (doc.slug === 'terms-conditions') revalidatePath('/terms')
-            if (doc.slug === 'terms') revalidatePath('/terms-conditions')
-            if (doc.slug === 'return-refund-policy') revalidatePath('/refund-policy')
-            if (doc.slug === 'refund-policy') revalidatePath('/return-refund-policy')
+          const slugsToRevalidate = new Set<string>()
+          if (doc?.slug) slugsToRevalidate.add(doc.slug)
+          if (previousDoc?.slug) slugsToRevalidate.add(previousDoc.slug)
+          if (slugsToRevalidate.has('about') || slugsToRevalidate.has('our-story')) {
+            slugsToRevalidate.add('about')
+            slugsToRevalidate.add('our-story')
           }
-          if (previousDoc?.slug && previousDoc.slug !== doc?.slug) {
-            revalidatePath(`/${previousDoc.slug}`)
+          if (slugsToRevalidate.has('terms') || slugsToRevalidate.has('terms-conditions')) {
+            slugsToRevalidate.add('terms')
+            slugsToRevalidate.add('terms-conditions')
+          }
+          if (slugsToRevalidate.has('return-refund-policy') || slugsToRevalidate.has('refund-policy')) {
+            slugsToRevalidate.add('return-refund-policy')
+            slugsToRevalidate.add('refund-policy')
+          }
+          for (const s of slugsToRevalidate) {
+            revalidatePath(`/${s}`)
+            revalidateTag(`page-${s}`)
           }
           revalidatePath('/', 'layout')
           revalidateTag('pages')
-          revalidateTag(`page-${doc?.slug}`)
         } catch {}
       },
     ],
@@ -45,12 +51,26 @@ export const Pages: CollectionConfig = {
       async ({ doc }) => {
         try {
           const { revalidatePath, revalidateTag } = await import('next/cache')
-          if (doc?.slug) {
-            revalidatePath(`/${doc.slug}`)
+          const slugsToRevalidate = new Set<string>()
+          if (doc?.slug) slugsToRevalidate.add(doc.slug)
+          if (slugsToRevalidate.has('about') || slugsToRevalidate.has('our-story')) {
+            slugsToRevalidate.add('about')
+            slugsToRevalidate.add('our-story')
+          }
+          if (slugsToRevalidate.has('terms') || slugsToRevalidate.has('terms-conditions')) {
+            slugsToRevalidate.add('terms')
+            slugsToRevalidate.add('terms-conditions')
+          }
+          if (slugsToRevalidate.has('return-refund-policy') || slugsToRevalidate.has('refund-policy')) {
+            slugsToRevalidate.add('return-refund-policy')
+            slugsToRevalidate.add('refund-policy')
+          }
+          for (const s of slugsToRevalidate) {
+            revalidatePath(`/${s}`)
+            revalidateTag(`page-${s}`)
           }
           revalidatePath('/', 'layout')
           revalidateTag('pages')
-          revalidateTag(`page-${doc?.slug}`)
         } catch {}
       },
     ],
@@ -75,7 +95,7 @@ export const Pages: CollectionConfig = {
               unique: true,
               admin: {
                 position: 'sidebar',
-                description: 'Unique URL path (e.g. about, contact, terms-conditions, privacy-policy, shipping-policy, return-refund-policy)',
+                description: 'Unique URL path (e.g. about, contact, terms-conditions, privacy-policy, shipping-policy, return-refund-policy, faq)',
               },
             },
             {
@@ -130,14 +150,14 @@ export const Pages: CollectionConfig = {
             {
               name: 'content',
               type: 'richText',
-              label: 'WYSIWYG Rich Text Content (Optional - overrides or supplements sections)',
+              label: 'WYSIWYG Rich Text Content (Optional - formatted text, paragraphs, or lists)',
             },
             {
               name: 'sections',
               type: 'array',
               label: 'Structured Policy Sections (Numbered Headings & Paragraphs)',
               admin: {
-                description: 'Add numbered sections for terms, privacy, shipping, or returns policies.',
+                description: 'Add or edit numbered sections for terms, privacy, shipping, returns, or story.',
               },
               fields: [
                 {
@@ -170,53 +190,95 @@ export const Pages: CollectionConfig = {
                 {
                   name: 'editorialPurposeBadge',
                   type: 'text',
-                  label: 'Purpose Badge',
+                  label: 'Purpose Section Badge',
                   defaultValue: 'OUR PURPOSE',
                 },
                 {
                   name: 'editorialHeading',
                   type: 'text',
-                  label: 'Purpose Main Headline',
+                  label: 'Purpose Section Main Headline',
                   defaultValue: 'Care that feels thoughtful, gentle, and authentically personal.',
                 },
                 {
                   name: 'editorialText',
                   type: 'textarea',
-                  label: 'Purpose Editorial Text',
+                  label: 'Purpose Section Editorial Text',
                 },
                 {
                   name: 'storyBadge',
                   type: 'text',
-                  label: 'Difference Badge',
+                  label: 'Difference Section Badge',
                   defaultValue: 'THE LOVIXA DIFFERENCE',
                 },
                 {
                   name: 'storyHeading',
                   type: 'text',
-                  label: 'Difference Headline',
+                  label: 'Difference Section Headline',
                   defaultValue: 'Formulated for real hair and skin, designed for everyday confidence.',
                 },
                 {
                   name: 'storyParagraph1',
                   type: 'textarea',
-                  label: 'Story Paragraph 1',
+                  label: 'Difference Story Paragraph 1',
                 },
                 {
                   name: 'storyParagraph2',
                   type: 'textarea',
-                  label: 'Story Paragraph 2',
+                  label: 'Difference Story Paragraph 2',
                 },
                 {
                   name: 'storyImage',
                   type: 'upload',
                   relationTo: 'media',
-                  label: 'Split Story Image Upload',
+                  label: 'Difference Story Split Image Upload',
                 },
                 {
                   name: 'storyImageUrl',
                   type: 'text',
                   label: 'Fallback Story Image Path (e.g. /images/about-follower.webp)',
                   defaultValue: '/images/about-follower.webp',
+                },
+                {
+                  name: 'storyButtonText',
+                  type: 'text',
+                  label: 'Story Primary Button Text',
+                  defaultValue: 'Explore Collection',
+                },
+                {
+                  name: 'storyButtonLink',
+                  type: 'text',
+                  label: 'Story Primary Button Link',
+                  defaultValue: '/products',
+                },
+                {
+                  name: 'storySecondaryButtonText',
+                  type: 'text',
+                  label: 'Story Secondary Button Text',
+                  defaultValue: 'Get in Touch',
+                },
+                {
+                  name: 'storySecondaryButtonLink',
+                  type: 'text',
+                  label: 'Story Secondary Button Link',
+                  defaultValue: '/contact',
+                },
+                {
+                  name: 'pillarsBadge',
+                  type: 'text',
+                  label: 'Pillars & Commitments Section Badge',
+                  defaultValue: 'OUR COMMITMENTS',
+                },
+                {
+                  name: 'pillarsHeading',
+                  type: 'text',
+                  label: 'Pillars & Commitments Main Headline',
+                  defaultValue: 'What Guides Every Formula',
+                },
+                {
+                  name: 'pillarsSubtitle',
+                  type: 'textarea',
+                  label: 'Pillars & Commitments Subtitle Text',
+                  defaultValue: 'Honest beauty care based on transparency, botanical integrity, and respectful customer relationships.',
                 },
                 {
                   name: 'brandPillars',
@@ -267,6 +329,48 @@ export const Pages: CollectionConfig = {
                       label: 'Commitment Description',
                     },
                   ],
+                },
+                {
+                  name: 'showcaseImage',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Full-Width Showcase Banner Image Upload',
+                },
+                {
+                  name: 'showcaseImageUrl',
+                  type: 'text',
+                  label: 'Fallback Full-Width Showcase Banner Image Path',
+                  defaultValue: '/images/about-all-products.webp',
+                },
+                {
+                  name: 'ctaBadge',
+                  type: 'text',
+                  label: 'Bottom Support CTA Badge',
+                  defaultValue: 'HERE FOR YOU',
+                },
+                {
+                  name: 'ctaHeading',
+                  type: 'text',
+                  label: 'Bottom Support CTA Headline',
+                  defaultValue: 'Have a Question About Our Formulations?',
+                },
+                {
+                  name: 'ctaSubtitle',
+                  type: 'textarea',
+                  label: 'Bottom Support CTA Subtitle Text',
+                  defaultValue: 'Our customer concierge team is available to assist you with product details, order inquiries, and care recommendations.',
+                },
+                {
+                  name: 'ctaButtonText',
+                  type: 'text',
+                  label: 'Bottom Support CTA Button Text',
+                  defaultValue: 'Contact Concierge',
+                },
+                {
+                  name: 'ctaButtonLink',
+                  type: 'text',
+                  label: 'Bottom Support CTA Button Link',
+                  defaultValue: '/contact',
                 },
               ],
             },

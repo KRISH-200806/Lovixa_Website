@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getPageBySlug } from '@/lib/cms/pages'
+import { getPageBySlug, hasRichTextContent } from '@/lib/cms/pages'
 import { PageHeaderBanner } from '@/components/common/PageHeaderBanner'
 import { PolicyNavigation } from '@/components/common/PolicyNavigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
-export const revalidate = 300
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 type DynamicPageProps = {
   params: Promise<{ slug: string }>
@@ -76,6 +77,9 @@ export default async function GenericDynamicPage({ params }: DynamicPageProps) {
     page.headerImageUrl ||
     '/images/lovixa-panoramic-hero.jpg'
 
+  const hasRichText = hasRichTextContent(page.content)
+  const hasSections = Boolean(page.sections && page.sections.length > 0)
+
   return (
     <div className="bg-[#FBF6F8] min-h-[75vh] py-6 sm:py-10 text-[#2B1822]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,16 +105,16 @@ export default async function GenericDynamicPage({ params }: DynamicPageProps) {
         )}
 
         {/* Dynamic Rich Text */}
-        {page.content && (
+        {hasRichText && (
           <div className="bg-white rounded-2xl border border-[#E8C4D4]/60 p-8 sm:p-12 shadow-xs prose prose-stone max-w-none font-sans">
             <RichText data={page.content} />
           </div>
         )}
 
         {/* Structured Sections Fallback/Supplement */}
-        {page.sections && page.sections.length > 0 && (
+        {hasSections && (
           <div className="space-y-8 text-sm sm:text-base text-[#2B1822]/80 leading-relaxed font-sans">
-            {page.sections.map((sec, idx) => (
+            {page.sections!.map((sec, idx) => (
               <section key={sec.heading || idx} className="space-y-3">
                 <h2 className="text-lg sm:text-xl font-sans font-bold text-[#2B1822] flex items-baseline gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#6B2D5C] shrink-0" />
@@ -138,7 +142,7 @@ export default async function GenericDynamicPage({ params }: DynamicPageProps) {
                 <h4 className="text-base font-bold text-[#2B1822] font-sans">
                   {faq.question}
                 </h4>
-                <p className="text-xs sm:text-sm text-[#2B1822]/75 font-sans leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2B1822]/75 leading-relaxed font-sans whitespace-pre-line">
                   {faq.answer}
                 </p>
               </div>

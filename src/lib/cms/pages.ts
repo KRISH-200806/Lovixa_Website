@@ -58,8 +58,22 @@ export interface PageDocument {
     storyParagraph2?: string
     storyImage?: any
     storyImageUrl?: string
+    storyButtonText?: string
+    storyButtonLink?: string
+    storySecondaryButtonText?: string
+    storySecondaryButtonLink?: string
+    pillarsBadge?: string
+    pillarsHeading?: string
+    pillarsSubtitle?: string
     brandPillars?: BrandPillar[]
     commitments?: CommitmentCard[]
+    showcaseImage?: any
+    showcaseImageUrl?: string
+    ctaBadge?: string
+    ctaHeading?: string
+    ctaSubtitle?: string
+    ctaButtonText?: string
+    ctaButtonLink?: string
   }
   contactInfo?: {
     phone?: string
@@ -84,8 +98,34 @@ export interface PageDocument {
 }
 
 /**
+ * Checks whether a Payload CMS Lexical RichText document actually contains non-empty text content.
+ * Prevents an empty Lexical root `{ root: { children: [...] } }` from behaving as truthy content
+ * and accidentally suppressing fallback or structured sections.
+ */
+export function hasRichTextContent(content: any): boolean {
+  if (!content || typeof content !== 'object') return false
+  const root = content.root
+  if (!root || !Array.isArray(root.children) || root.children.length === 0) return false
+
+  const hasTextInNodes = (nodes: any[]): boolean => {
+    for (const node of nodes) {
+      if (node.text && typeof node.text === 'string' && node.text.trim().length > 0) {
+        return true
+      }
+      if (Array.isArray(node.children) && node.children.length > 0) {
+        if (hasTextInNodes(node.children)) return true
+      }
+    }
+    return false
+  }
+
+  return hasTextInNodes(root.children)
+}
+
+/**
  * Fetch a published Page from Payload CMS by its slug.
  * Supports slug aliases (e.g. about/our-story, terms/terms-conditions, refund/return-refund).
+ * Sorts by -updatedAt so the latest modified alias document takes precedence.
  * Revalidates within seconds so admin edits show up immediately on the storefront.
  */
 export async function getPageBySlug(slug: string): Promise<PageDocument | null> {
@@ -109,6 +149,7 @@ export async function getPageBySlug(slug: string): Promise<PageDocument | null> 
               { isPublished: { not_equals: false } },
             ],
           },
+          sort: '-updatedAt',
           depth: 1,
           limit: 1,
         })
