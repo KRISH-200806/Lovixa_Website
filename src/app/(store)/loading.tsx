@@ -1,146 +1,119 @@
 import React from 'react'
+import Image from 'next/image'
 
 export default function StoreLoading() {
   return (
     <div
-      className="w-full min-h-screen bg-[#FBF6F8] pb-16 animate-in fade-in duration-200"
+      className="relative min-h-[75vh] w-full flex flex-col items-center justify-center px-4 py-16 bg-[#FBF6F8] overflow-hidden select-none"
       aria-busy="true"
-      aria-label="Loading page content"
+      aria-label="Loading Lovixa Cosmetic"
     >
-      {/* 1. Top Ambient Progress Line */}
+      {/* 1. Ambient Background Glowing Orbs */}
+      <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#E8C4D4]/30 blur-3xl pointer-events-none animate-[pulse-slow_4s_ease-in-out_infinite]" />
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#6B2D5C]/10 blur-3xl pointer-events-none animate-[pulse-slow_4s_ease-in-out_infinite_2s]" />
+
+      {/* 2. Top Progress Streamer */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-[#E8C4D4]/30 z-50 overflow-hidden">
-        <div className="h-full bg-[#6B2D5C] animate-[loading-bar_1.2s_ease-in-out_infinite]" />
+        <div className="h-full bg-gradient-to-r from-[#6B2D5C] via-[#E8C4D4] to-[#6B2D5C] animate-[streamer_1.4s_ease-in-out_infinite]" />
       </div>
 
-      {/* 2. Hero Section Skeleton */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#F7EDF2] via-[#FBF6F8] to-[#FBF6F8] pt-6 sm:pt-10 pb-12 sm:pb-16 border-b border-[#E8C4D4]/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-5">
-              {/* Eyebrow Badge Skeleton */}
-              <div className="h-7 w-48 sm:w-56 rounded-full bg-[#E8C4D4]/60 animate-pulse" />
+      {/* 3. Central Animated Luxury Emblem Card */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Animated Rings & Logo Container */}
+        <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center mb-6">
+          {/* Outer Dashed Spinning Halo */}
+          <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#6B2D5C]/30 animate-[spin_12s_linear_infinite]" />
 
-              {/* Headline Skeletons */}
-              <div className="space-y-3 mt-1">
-                <div className="h-9 sm:h-12 w-full max-w-xl rounded-2xl bg-stone-200/80 animate-pulse" />
-                <div className="h-9 sm:h-12 w-4/5 max-w-lg rounded-2xl bg-[#E8C4D4]/50 animate-pulse" />
-              </div>
+          {/* Middle Counter-Rotating Shimmer Ring */}
+          <div className="absolute inset-2 rounded-full border border-t-transparent border-r-[#6B2D5C] border-b-[#E8C4D4] border-l-transparent animate-[spin-reverse_6s_linear_infinite]" />
 
-              {/* Subtitle Lines */}
-              <div className="space-y-2 mt-2">
-                <div className="h-4 w-full max-w-lg rounded-lg bg-stone-200/70 animate-pulse" />
-                <div className="h-4 w-5/6 max-w-md rounded-lg bg-stone-200/60 animate-pulse" />
-              </div>
+          {/* Soft Glowing Pulsing Backdrop */}
+          <div className="absolute inset-4 rounded-full bg-gradient-to-br from-[#F5EBF0] via-[#EEDAE5] to-white shadow-lg shadow-[#6B2D5C]/10 animate-[breathe_3s_ease-in-out_infinite]" />
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <div className="h-12 w-40 sm:w-44 rounded-full bg-[#6B2D5C]/25 animate-pulse" />
-                <div className="h-12 w-32 sm:w-36 rounded-full bg-stone-200/80 animate-pulse" />
-              </div>
-
-              {/* Trust Bullet Strip */}
-              <div className="pt-4 flex flex-wrap items-center gap-4 sm:gap-6 border-t border-[#E8C4D4]/40">
-                <div className="h-4 w-36 rounded-md bg-stone-200/70 animate-pulse" />
-                <div className="h-4 w-32 rounded-md bg-stone-200/70 animate-pulse" />
-                <div className="h-4 w-40 rounded-md bg-stone-200/70 animate-pulse" />
-              </div>
-            </div>
-
-            {/* Right Media / Bottle Skeleton Card */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-md aspect-[4/5] rounded-3xl bg-gradient-to-br from-[#F0DFE8] via-[#E8D4DF] to-[#F5EBF0] border border-[#E8C4D4]/60 p-6 flex flex-col justify-between shadow-sm animate-pulse">
-                <div className="flex justify-between items-center">
-                  <div className="h-6 w-24 rounded-full bg-white/70" />
-                  <div className="h-8 w-8 rounded-full bg-white/70" />
-                </div>
-                <div className="my-auto mx-auto w-36 h-56 rounded-2xl bg-white/40" />
-                <div className="space-y-2">
-                  <div className="h-5 w-3/4 rounded-lg bg-white/70" />
-                  <div className="h-4 w-1/2 rounded-md bg-white/50" />
-                </div>
-              </div>
+          {/* Centered Brand Emblem / Icon */}
+          <div className="relative z-10 flex items-center justify-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/95 shadow-md flex items-center justify-center border border-[#E8C4D4]/60 p-2.5 animate-[float_3s_ease-in-out_infinite]">
+              <Image
+                src="/images/lovixa-logo.png"
+                alt="LOVIXA"
+                width={64}
+                height={64}
+                priority
+                className="w-full h-auto object-contain max-h-12"
+              />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* 3. Value Props / Trust Badges Strip Skeleton */}
-      <section className="py-6 bg-white border-b border-[#E8C4D4]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 p-3 rounded-xl bg-[#FBF6F8] border border-[#E8C4D4]/40 animate-pulse"
-              >
-                <div className="w-10 h-10 rounded-full bg-[#E8C4D4]/50 shrink-0" />
-                <div className="flex-1 space-y-1.5">
-                  <div className="h-3.5 w-4/5 rounded bg-stone-200" />
-                  <div className="h-2.5 w-3/5 rounded bg-stone-200/60" />
-                </div>
-              </div>
-            ))}
+          {/* Orbiting Satellite Sparkle */}
+          <div className="absolute inset-0 animate-[spin_4s_linear_infinite]">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#6B2D5C] shadow-sm shadow-[#6B2D5C]/50 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           </div>
         </div>
-      </section>
 
-      {/* 4. Products Grid Skeleton */}
-      <section className="py-12 sm:py-16 bg-[#FBF6F8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-10 flex flex-col items-center gap-2.5">
-            <div className="h-5 w-36 rounded-full bg-[#E8C4D4]/60 animate-pulse" />
-            <div className="h-8 sm:h-9 w-64 sm:w-80 rounded-xl bg-stone-300/70 animate-pulse" />
-            <div className="h-4 w-80 max-w-full rounded-md bg-stone-200/70 animate-pulse" />
+        {/* Shimmering Brand Typography */}
+        <div className="text-center space-y-2 max-w-sm">
+          <h2 className="text-xl sm:text-2xl font-heading font-extrabold tracking-[0.28em] text-[#6B2D5C] uppercase">
+            LOVIXA
+          </h2>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-[#E8C4D4]/60 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#6B2D5C] animate-ping" />
+            <span className="text-[10px] sm:text-[11px] font-sans font-semibold tracking-[0.2em] uppercase text-[#6B2D5C]">
+              Ayurvedic & Botanical Hair Care
+            </span>
           </div>
 
-          {/* Product Cards Grid (3 cards matching Lovixa's core catalog) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((card) => (
-              <div
-                key={card}
-                className="bg-white rounded-2xl border border-[#E8C4D4]/50 p-4 shadow-xs flex flex-col gap-3 animate-pulse"
-              >
-                {/* Product Image Area */}
-                <div className="w-full aspect-[4/5] rounded-xl bg-gradient-to-br from-[#F5EBF0] via-[#EEDAE5] to-[#F7EEF3] relative overflow-hidden">
-                  <div className="absolute top-3 left-3 h-5 w-24 rounded-full bg-white/70" />
-                  <div className="absolute top-3 right-3 h-8 w-8 rounded-full bg-white/70" />
-                </div>
-
-                {/* Rating & Size Line */}
-                <div className="flex items-center justify-between pt-1">
-                  <div className="h-4 w-24 rounded bg-amber-100/80" />
-                  <div className="h-4 w-14 rounded-full bg-[#E8C4D4]/40" />
-                </div>
-
-                {/* Title Lines */}
-                <div className="space-y-2">
-                  <div className="h-4 w-11/12 rounded bg-stone-200" />
-                  <div className="h-4 w-3/4 rounded bg-stone-200/70" />
-                </div>
-
-                {/* Price & Action */}
-                <div className="flex items-center justify-between pt-3 mt-auto border-t border-[#E8C4D4]/30">
-                  <div className="space-y-1">
-                    <div className="h-5 w-16 rounded bg-stone-300" />
-                    <div className="h-3 w-10 rounded bg-stone-200" />
-                  </div>
-                  <div className="h-10 w-28 rounded-full bg-[#6B2D5C]/30" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-xs text-[#2B1822]/60 font-sans tracking-wide pt-1">
+            Preparing your formulation...
+          </p>
         </div>
-      </section>
 
+        {/* Animated Fluid Progress Bar */}
+        <div className="mt-6 w-48 sm:w-56 h-1.5 bg-[#E8C4D4]/40 rounded-full overflow-hidden p-0.5 border border-[#E8C4D4]/60 shadow-inner">
+          <div className="h-full bg-gradient-to-r from-[#6B2D5C] via-[#D498B7] to-[#6B2D5C] rounded-full animate-[progress-fluid_1.8s_ease-in-out_infinite]" />
+        </div>
+
+        {/* Triple Sync Dots */}
+        <div className="flex items-center gap-1.5 mt-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#6B2D5C]/60 animate-[dot-pulse_1.4s_infinite_0ms]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#6B2D5C]/80 animate-[dot-pulse_1.4s_infinite_200ms]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#6B2D5C] animate-[dot-pulse_1.4s_infinite_400ms]" />
+        </div>
+      </div>
+
+      {/* Scoped Keyframes for Silky 60fps Animation */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @keyframes loading-bar {
-              0% { transform: translateX(-100%); width: 40%; }
-              50% { transform: translateX(50%); width: 60%; }
-              100% { transform: translateX(200%); width: 40%; }
+            @keyframes streamer {
+              0% { transform: translateX(-100%); width: 35%; }
+              50% { transform: translateX(50%); width: 55%; }
+              100% { transform: translateX(200%); width: 35%; }
+            }
+            @keyframes spin-reverse {
+              from { transform: rotate(360deg); }
+              to { transform: rotate(0deg); }
+            }
+            @keyframes breathe {
+              0%, 100% { transform: scale(1); opacity: 0.85; }
+              50% { transform: scale(1.08); opacity: 1; }
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0px); }
+              50% { transform: translateY(-4px); }
+            }
+            @keyframes progress-fluid {
+              0% { transform: translateX(-100%); width: 30%; }
+              50% { transform: translateX(40%); width: 60%; }
+              100% { transform: translateX(220%); width: 30%; }
+            }
+            @keyframes pulse-slow {
+              0%, 100% { opacity: 0.3; transform: scale(1); }
+              50% { opacity: 0.6; transform: scale(1.15); }
+            }
+            @keyframes dot-pulse {
+              0%, 100% { opacity: 0.3; transform: scale(0.8); }
+              50% { opacity: 1; transform: scale(1.3); }
             }
           `,
         }}
