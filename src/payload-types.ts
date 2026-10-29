@@ -657,31 +657,6 @@ export interface Page {
    * Displayed at the top of policy pages.
    */
   lastUpdated?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Add or edit numbered sections for terms, privacy, shipping, returns, or story.
-   */
-  sections?:
-    | {
-        heading: string;
-        content: string;
-        id?: string | null;
-      }[]
-    | null;
   aboutStory?: {
     editorialPurposeBadge?: string | null;
     editorialHeading?: string | null;
@@ -722,6 +697,31 @@ export interface Page {
     ctaButtonText?: string | null;
     ctaButtonLink?: string | null;
   };
+  /**
+   * Add or edit numbered sections for terms, privacy, shipping, returns, or generic pages.
+   */
+  sections?:
+    | {
+        heading: string;
+        content: string;
+        id?: string | null;
+      }[]
+    | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   contactInfo?: {
     phone?: string | null;
     supportHours?: string | null;
@@ -1514,14 +1514,6 @@ export interface PagesSelect<T extends boolean = true> {
   headerImage?: T;
   headerImageUrl?: T;
   lastUpdated?: T;
-  content?: T;
-  sections?:
-    | T
-    | {
-        heading?: T;
-        content?: T;
-        id?: T;
-      };
   aboutStory?:
     | T
     | {
@@ -1564,6 +1556,14 @@ export interface PagesSelect<T extends boolean = true> {
         ctaButtonText?: T;
         ctaButtonLink?: T;
       };
+  sections?:
+    | T
+    | {
+        heading?: T;
+        content?: T;
+        id?: T;
+      };
+  content?: T;
   contactInfo?:
     | T
     | {

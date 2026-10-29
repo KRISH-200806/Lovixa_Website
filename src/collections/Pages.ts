@@ -44,7 +44,7 @@ export const Pages: CollectionConfig = {
           }
           revalidatePath('/', 'layout')
           revalidateTag('pages')
-        } catch {}
+        } catch { }
       },
     ],
     afterDelete: [
@@ -71,7 +71,7 @@ export const Pages: CollectionConfig = {
           }
           revalidatePath('/', 'layout')
           revalidateTag('pages')
-        } catch {}
+        } catch { }
       },
     ],
   },
@@ -80,7 +80,8 @@ export const Pages: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Hero & Overview',
+          label: 'Hero Banner (All Pages)',
+          description: 'Top panoramic banner with pill badge, title, highlight title, subtitle and banner image',
           fields: [
             {
               name: 'title',
@@ -145,42 +146,8 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
-          label: 'Policy & Content Sections',
-          fields: [
-            {
-              name: 'content',
-              type: 'richText',
-              label: 'WYSIWYG Rich Text Content (Optional - formatted text, paragraphs, or lists)',
-            },
-            {
-              name: 'sections',
-              type: 'array',
-              label: 'Structured Policy Sections (Numbered Headings & Paragraphs)',
-              admin: {
-                description: 'Add or edit numbered sections for terms, privacy, shipping, returns, or story.',
-              },
-              fields: [
-                {
-                  name: 'heading',
-                  type: 'text',
-                  required: true,
-                  label: 'Section Heading (e.g. 1. Our Privacy Commitment)',
-                },
-                {
-                  name: 'content',
-                  type: 'textarea',
-                  required: true,
-                  label: 'Section Content Text (Paragraphs or bullet points)',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: 'About Us Page Story & Content',
-          admin: {
-            condition: (data) => data?.slug === 'about' || data?.slug === 'our-story',
-          },
+          label: 'Our Story (Full Page Sections)',
+          description: 'Edit full page content for About Us / Our Story: Purpose headline, Difference story paragraphs, 4 Brand Pillars, Showcase banner, and Concierge CTA',
           fields: [
             {
               name: 'aboutStory',
@@ -377,10 +344,41 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
-          label: 'Contact Details',
-          admin: {
-            condition: (data) => data?.slug === 'contact',
-          },
+          label: 'Policy Sections (Terms, Privacy, Shipping, Return)',
+          description: 'Edit numbered clauses and paragraphs for Terms & Conditions, Privacy Policy, Shipping Policy, and Return Policy',
+          fields: [
+            {
+              name: 'sections',
+              type: 'array',
+              label: 'Structured Policy Sections (Numbered Headings & Paragraphs)',
+              admin: {
+                description: 'Add or edit numbered sections for terms, privacy, shipping, returns, or generic pages.',
+              },
+              fields: [
+                {
+                  name: 'heading',
+                  type: 'text',
+                  required: true,
+                  label: 'Section Heading (e.g. 1. Our Privacy Commitment)',
+                },
+                {
+                  name: 'content',
+                  type: 'textarea',
+                  required: true,
+                  label: 'Section Content Text (Paragraphs or bullet points)',
+                },
+              ],
+            },
+            {
+              name: 'content',
+              type: 'richText',
+              label: 'WYSIWYG Rich Text Content (Optional - formatted text, paragraphs, or lists)',
+            },
+          ],
+        },
+        {
+          label: 'Contact Details & Business Info',
+          description: 'Customer care phone, email, working hours, address, WhatsApp, and social media links',
           fields: [
             {
               name: 'contactInfo',

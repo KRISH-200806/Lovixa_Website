@@ -1,6 +1,4 @@
-import { unstable_cache } from 'next/cache'
 import { getPayloadCached } from '@/lib/cms/get-payload-cached'
-import { CMS_CACHE_REVALIDATE_SECONDS } from '@/lib/cms/cache-tags'
 
 export interface PageSection {
   id?: string
@@ -137,37 +135,28 @@ export async function getPageBySlug(slug: string): Promise<PageDocument | null> 
   if (slug === 'refund-policy') targetSlugs.push('return-refund-policy')
   if (slug === 'return-refund-policy') targetSlugs.push('refund-policy')
 
-  return unstable_cache(
-    async () => {
-      try {
-        const payload = await getPayloadCached()
-        const result = await payload.find({
-          collection: 'pages',
-          where: {
-            and: [
-              { slug: { in: targetSlugs } },
-              { isPublished: { not_equals: false } },
-            ],
-          },
-          sort: '-updatedAt',
-          depth: 1,
-          limit: 1,
-        })
+  try {
+    const payload = await getPayloadCached()
+    const result = await payload.find({
+      collection: 'pages',
+      where: {
+        and: [
+          { slug: { in: targetSlugs } },
+          { isPublished: { not_equals: false } },
+        ],
+      },
+      sort: '-updatedAt',
+      depth: 1,
+      limit: 1,
+    })
 
-        if (!result.docs || result.docs.length === 0) {
-          return null
-        }
+    if (!result.docs || result.docs.length === 0) {
+      return null
+    }
 
-        return result.docs[0] as unknown as PageDocument
-      } catch (error) {
-        console.error(`[CMS] Error fetching page "${slug}":`, error)
-        return null
-      }
-    },
-    [`cms-page-${slug}`],
-    {
-      tags: ['pages', `page-${slug}`, ...targetSlugs.map((s) => `page-${s}`)],
-      revalidate: 5,
-    },
-  )()
+    return result.docs[0] as unknown as PageDocument
+  } catch (error) {
+    console.error(`[CMS] Error fetching page "${slug}":`, error)
+    return null
+  }
 }
